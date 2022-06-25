@@ -1,8 +1,9 @@
 package br.com.petshop.moldes.pets;
 
+import br.com.petshop.interfaces.Desconto;
 import br.com.petshop.interfaces.Servicos;
 
-public abstract class Animal implements Servicos {
+public abstract class Animal implements Servicos, Desconto {
     private String nome;
     private String raca;
     private int pelagem;
@@ -34,6 +35,19 @@ public abstract class Animal implements Servicos {
         this.adicionarValorNoContrato(20);
         setQuantidadeContratos(getQuantidadeContratos() +1);
         System.out.println("O servico de cortar unha no valor de R$20 foi contratado com sucesso");
+    }
+
+    @Override
+    public double valorDesconto() {
+        if(quantidadeContratos == 2){
+            return this.valorDoContrato / 1.05;
+        } else if (quantidadeContratos == 4){
+            return this.valorDoContrato / 1.10;
+        } else if (quantidadeContratos == 6) {
+            return this.valorDoContrato / 1.15;
+        } else {
+            return this.valorDoContrato;
+        }
     }
 
     public String getNome() {
