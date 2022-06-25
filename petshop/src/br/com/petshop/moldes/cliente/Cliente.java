@@ -39,15 +39,15 @@ public class Cliente {
         return contatos;
     }
 
-    public void setContatos(Contato contato) {
-        contatos.add(contato);
+    public void setContatos(ArrayList<Contato> contatos) {
+        this.contatos = contatos;
     }
 
     public ArrayList<Animal> getPets() {
         return pets;
     }
 
-    public void setPets(Animal pet) {
-        pets.add(pet);
+    public void setPets(ArrayList<Animal> pets) {
+        this.pets = pets;
     }
 }
