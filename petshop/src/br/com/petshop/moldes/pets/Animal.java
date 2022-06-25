@@ -8,17 +8,32 @@ public abstract class Animal implements Servicos {
     private int pelagem;
     private int porte;
     private double valorDoContrato;
+    private int quantidadeContratos;
 
+
+    public void cancelarContrato() {
+        if(getValorDoContrato() != 0) {
+            this.setValorDoContrato(0);
+            this.setQuantidadeContratos(0);
+            System.out.println("O seu contrato foi cancelado\n");
+        } else {
+            System.out.println("Você ainda não tem um contrato");
+        }
+    }
     public void adicionarValorNoContrato(double valor) {
         this.setValorDoContrato(getValorDoContrato() + valor);
     }
     
     public void adestrar() {
         this.adicionarValorNoContrato(200);
+        setQuantidadeContratos(getQuantidadeContratos() +1);
+        System.out.println("O servico de adestramento no valor de R$200 foi contratado com sucesso");
     }
 
-    public void cortarUnha() {
+    public void contratarCorteDeUnha() {
         this.adicionarValorNoContrato(20);
+        setQuantidadeContratos(getQuantidadeContratos() +1);
+        System.out.println("O servico de cortar unha no valor de R$20 foi contratado com sucesso");
     }
 
     public String getNome() {
@@ -58,5 +73,13 @@ public abstract class Animal implements Servicos {
     }
     public void setValorDoContrato(double valor){
         this.valorDoContrato = valor;
+    }
+
+    public int getQuantidadeContratos() {
+        return quantidadeContratos;
+    }
+
+    public void setQuantidadeContratos(int quantidadeContratos) {
+        this.quantidadeContratos = quantidadeContratos;
     }
 }
