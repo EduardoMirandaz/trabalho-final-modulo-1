@@ -66,6 +66,7 @@ public class Main {
                 boolean novoLoginValido = cadastrarNovoLogin(scan, logins);
                 if(novoLoginValido){
                     boolean novoClienteValido = clienteManipulacao.cadastrarNovoCliente(logins.get(logins.size()-1), clientes);
+
                 }
             }
 //            switch (opcao) {
