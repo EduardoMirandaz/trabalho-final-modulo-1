@@ -1,6 +1,5 @@
 package br.com.petshop.manipulacao;
 
-import br.com.petshop.moldes.cliente.Contato;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.moldes.pets.Cachorro;
 import br.com.petshop.moldes.pets.Gato;
@@ -15,6 +14,14 @@ public class PetManipulacao {
     private List<Animal> listaDeAnimais;
     static int MAXIMO_DE_ANIMAIS = 5;
 
+    public List<Animal> getListaDeAnimais() {
+        return listaDeAnimais;
+    }
+
+    public void setListaDeAnimais(List<Animal> listaDeAnimais) {
+        this.listaDeAnimais = listaDeAnimais;
+    }
+
     public PetManipulacao() {
         this.listaDeAnimais = new ArrayList<>();
     }
@@ -27,45 +34,68 @@ public class PetManipulacao {
         this.listaDeAnimais.remove(index.intValue());
     }
 
+    public boolean adicionarNovoPet(Scanner scan, ArrayList<Animal> listaDeAnimais){
+        listaDeAnimais.add(popularNovoAnimal(scan));
+        return true;
+    }
+
     public ArrayList<Animal> inserirPets(Scanner scan, ArrayList<Animal> listaDeAnimais){
         boolean temMaisAnimaisParaCadastrar = true;
         Animal novoAnimal = null;
         while(temMaisAnimaisParaCadastrar && listaDeAnimais.size() <= 5){
-            //  ============ TIPO DE ANIMAL ============
-            String stringAux = selecionarTipoDeAnimal(scan);
-            //  ============ CRIANDO ANIMAL DEPENDENDO DO TIPO ============
-            switch (Integer.parseInt(stringAux)){
-                case 1 -> {
-                    Cachorro cachorro = new Cachorro();
-                    popularCaracteristicasGeraisDoAnimal(scan, cachorro);
-                    popularCaracteristicasEspecificasCachorro(scan, cachorro);
-                    novoAnimal = cachorro;
-                }
-                case 2 -> {
-                    Gato gato = new Gato();
-                    popularCaracteristicasGeraisDoAnimal(scan, gato);
-                    popularCaracteristicasEspecificasGato(scan, gato);
-                    novoAnimal = gato;
-                }
-            }
-
+            novoAnimal = popularNovoAnimal(scan);
+            String stringAux;
             if(novoAnimal != null){
                 listaDeAnimais.add(novoAnimal);
             }
+            temMaisAnimaisParaCadastrar = temMaisAnimaisParaCadastrar(scan);
+        }
+        if (listaDeAnimais.size() == 5) {
+            System.out.println("Limite de animais atingido!\n" +
+                    "Não será possivel cadastrar mais animais agora!");
+        }
+        System.out.println("Cadastro de pets finalizado!");
+        this.setListaDeAnimais(listaDeAnimais);
+        return listaDeAnimais;
+    }
 
-            System.out.println("Deseja cadastrar mais animais ?\n1 - sim\n2 - nao");
+    private boolean temMaisAnimaisParaCadastrar(Scanner scan) {
+        boolean temMaisAnimaisParaCadastrar = true;
+        String stringAux;
+        System.out.println("Deseja cadastrar mais animais ?\n1 - sim\n2 - nao");
+        stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
+        while(!isValidDigit(stringAux)){
+            System.out.println("Indique se deseja cadastrar mais animais com\n1 - para sim\n2 - para nao");
             stringAux = scan.nextLine();
             System.out.println("stringAux: "+stringAux);
-            while(!isValidDigit(stringAux)){
-                System.out.println("Indique se deseja cadastrar mais animais com\n1 - para sim\n2 - para nao");
-                stringAux = scan.nextLine();
-                System.out.println("stringAux: "+stringAux);
+        }
+        if(stringAux.equals("2")){
+            temMaisAnimaisParaCadastrar = false;
+        }
+        return temMaisAnimaisParaCadastrar;
+    }
+
+    private Animal popularNovoAnimal(Scanner scan) {
+        Animal novoAnimal = null;
+        //  ============ TIPO DE ANIMAL ============
+        String stringAux = selecionarTipoDeAnimal(scan);
+        //  ============ CRIANDO ANIMAL DEPENDENDO DO TIPO ============
+        switch (Integer.parseInt(stringAux)){
+            case 1 -> {
+                Cachorro cachorro = new Cachorro();
+                popularCaracteristicasGeraisDoAnimal(scan, cachorro);
+                popularCaracteristicasEspecificasCachorro(scan, cachorro);
+                novoAnimal = cachorro;
             }
-            if(stringAux.equals("2")){
-                temMaisAnimaisParaCadastrar = false;
+            case 2 -> {
+                Gato gato = new Gato();
+                popularCaracteristicasGeraisDoAnimal(scan, gato);
+                popularCaracteristicasEspecificasGato(scan, gato);
+                novoAnimal = gato;
             }
         }
-        return listaDeAnimais;
+        return novoAnimal;
     }
 
     private void popularCaracteristicasGeraisDoAnimal(Scanner scan, Animal animal) {
@@ -127,7 +157,7 @@ public class PetManipulacao {
         System.out.println("Insira a idade do seu animal:");
         stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
-        while(!isValidDigit(stringAux)){
+        while(!isValidNUM(stringAux)){
             stringAux = scan.nextLine();
             System.out.println("Insira a idade do seu animal, apenas digitos");
             System.out.println("stringAux: "+stringAux);
@@ -136,7 +166,7 @@ public class PetManipulacao {
     }
     private void popularCaracteristicasEspecificasCachorro(Scanner scan, Cachorro cachorro){
         // ============= O CACHORRO PODE ROER OSSO ? ===============
-        System.out.println("Nos indique se seu cachorro pode roer osso!\n1 - sim\n2 - nao:");
+        System.out.println("Nos indique se seu cachorro pode roer osso:\n1 - para sim\n2 - para nao");
         String stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
@@ -150,14 +180,14 @@ public class PetManipulacao {
         cachorro.setPodeRoerOsso(stringAux.equals("1"));
     }
     private void popularCaracteristicasEspecificasGato(Scanner scan, Gato gato){
-        System.out.println("Nos indique se seu gato pode brincar com a bolinha! \n1 - sim\n 2 - nao:");
+        System.out.println("Nos indique se seu gato pode brincar com a bolinha! \n1 - sim\n2 - nao");
         String stringAux = scan.nextLine();
         System.out.println("stringAux: "+ stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("" +
                     "Insira um valor valido:" +
                     "1 - pode brincar com bola ou\s" +
-                    "2 - nao pode brincar com a bola:");
+                    "2 - nao pode brincar com a bola");
             stringAux = scan.nextLine();
             System.out.println("stringAux: " +stringAux);
         }
@@ -165,7 +195,7 @@ public class PetManipulacao {
     }
 
     private String selecionarTipoDeAnimal(Scanner scan) {
-        System.out.println("Insira a especie do seu animal\n1- Cachorro\n2- Gato\n3- Roedor");
+        System.out.println("Insira a especie do seu animal\n1- Cachorro\n2- Gato\n");
         String stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
@@ -189,7 +219,7 @@ public class PetManipulacao {
 
     public void listarAnimais() {
         for(int i=0; i < listaDeAnimais.size(); i++) {
-            System.out.println("id=" + i + "||" + listaDeAnimais.get(i));
+            System.out.println("id=" + i + "||" + listaDeAnimais.get(i).toString());
         }
     }
 }

@@ -9,6 +9,7 @@ import br.com.petshop.moldes.pets.Cachorro;
 import br.com.petshop.moldes.pets.Gato;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -138,7 +139,7 @@ public class ClienteManipulacao {
 
 
 
-    public boolean cadastrarNovoCliente(Login login, ArrayList<Cliente> listaDeClientes){
+    public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<Login,Cliente> mapa){
 //        System.out.println("ultimo login criado:");
 //        System.out.println(login);
 
@@ -150,26 +151,23 @@ public class ClienteManipulacao {
         System.out.println("Insira seu nome completo:");
         String nomeAux = inserirNome(scan.nextLine(), scan);
         cliente.setNome(nomeAux);
+//
+//        // Inserir id:
+//        cliente.setId(++ID);
+//
+//        // Inserir endereco:
+//        cliente.setEndereco(inserirEndereco(scan));
+//        System.out.println(cliente.getEndereco());
+//
+//        // Inserir contatos:
+//        cliente.setContatos(inserirContatos(scan));
+//        System.out.println(cliente.getContatos());
 
-        // Inserir id:
-        cliente.setId(++ID);
-
-        // Inserir endereco:
-        cliente.setEndereco(inserirEndereco(scan));
-        System.out.println(cliente.getEndereco());
-
-        // Inserir contatos:
-        cliente.setContatos(inserirContatos(scan));
-        System.out.println(cliente.getContatos());
-
-//        // todo organizar como a lista de pets será setada
 //        // Inserir pets:
-        PetManipulacao petManipulacao = new PetManipulacao();
-        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
-        System.out.println(cliente.getPets());
+//        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
 
         System.out.println("Cadastro realizado com sucesso.\n==================================");
-        scan.close();
+        mapa.put(login, cliente);
         this.adicionarCliente(cliente);
         return true;
     }
@@ -194,7 +192,7 @@ public class ClienteManipulacao {
     public void listarCliente (){
         if (listaCliente != null) {
             for (int i = 0; i < listaCliente.size(); i++) {
-                System.out.println("id =" + i + " | " + listaCliente.get(i));
+                System.out.println("id = " + i + " | " + listaCliente.get(i).toString());
             }
         }
     }

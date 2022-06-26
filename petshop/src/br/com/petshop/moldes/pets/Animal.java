@@ -12,6 +12,16 @@ public abstract class Animal implements Servicos, Desconto {
     private double valorDoContrato;
     private int quantidadeContratos;
 
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "nome='" + nome + '\'' +
+                ", raca='" + raca + '\'' +
+                ", pelagem=" + pelagem +
+                ", porte=" + porte +
+                ", idade=" + idade +
+                '}';
+    }
 
     public void cancelarContrato() {
         if(getValorDoContrato() != 0) {

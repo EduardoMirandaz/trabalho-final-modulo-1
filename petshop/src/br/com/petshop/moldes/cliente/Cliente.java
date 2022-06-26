@@ -11,6 +11,17 @@ public class Cliente {
     private ArrayList<Contato> contatos = new ArrayList<Contato>();
     private ArrayList<Animal> pets = new ArrayList<Animal>();
 
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "nome='" + nome + '\'' +
+                ", id=" + id +
+                ", endereco=" + endereco +
+                ", contatos=" + contatos +
+                ", pets=" + pets +
+                '}';
+    }
+
     public String getNome() {
         return nome;
     }
