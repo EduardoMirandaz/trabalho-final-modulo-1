@@ -135,37 +135,7 @@ public class ClienteManipulacao {
         return endereco;
     }
 
-    public Cachorro inserirCachorro(Scanner scan) {
-        Cachorro cachorro = new Cachorro();
-        return cachorro;
-    }
 
-    public Gato inserirGato(Scanner scan){
-        Gato gato = new Gato();
-//        ===============NOME===============
-        System.out.println("Insira o nome do seu gato:");
-        String stringAux = scan.nextLine();
-        gato.setNome(stringAux);
-
-//        ===============RACA===============
-        System.out.println("Insira o nome da raca, se houver");
-        stringAux = scan.nextLine();
-        gato.setRaca(stringAux);
-
-//        ===============PELAGEM===============
-        System.out.println("Informe o tipo de pelagem dele (1-curto | 2-medio | 1-longo):");
-        int intAux = scan.nextInt();
-        scan.nextLine();
-        while(intAux > 3 || intAux < 1) {
-            System.out.println("Tipagem invalida, por favor informe novamente");
-            intAux = scan.nextInt();
-            scan.nextLine();
-        }
-        gato.setPelagem(intAux);
-
-
-        return gato;
-    }
 
 
     public boolean cadastrarNovoCliente(Login login, ArrayList<Cliente> listaDeClientes){

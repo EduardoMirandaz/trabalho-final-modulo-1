@@ -36,7 +36,7 @@ public class PetManipulacao {
             switch (Integer.parseInt(stringAux)){
                 case 1 -> {
                     Cachorro cachorro = new Cachorro();
-//                    popularCaracteristicasGeraisDoAnimal(scan, cachorro);
+                    popularCaracteristicasGeraisDoAnimal(scan, cachorro);
                     popularCaracteristicasEspecificasCachorro(scan, cachorro);
                     novoAnimal = cachorro;
                 }
@@ -54,7 +54,9 @@ public class PetManipulacao {
                 stringAux = scan.nextLine();
                 System.out.println("stringAux: "+stringAux);
             }
-            temMaisAnimaisParaCadastrar = stringAux.equals("1");
+            if(stringAux.equals("2")){
+                temMaisAnimaisParaCadastrar = false;
+            }
         }
         return listaDeAnimais;
     }
@@ -84,7 +86,7 @@ public class PetManipulacao {
         animal.setRaca(stringAux);
 
         // ============= PELAGEM DO ANIMAL ===============
-        System.out.println("Insira o nivel de pelagem do seu animal:");
+        System.out.println("Insira o nivel de pelagem do seu animal(0-pelado ate 9-pelo maximo da raca):");
         stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
@@ -98,15 +100,18 @@ public class PetManipulacao {
         animal.setPelagem(Integer.parseInt(stringAux));
 
         // ============= PORTE DO ANIMAL ===============
-        System.out.println("Insira o porte do seu animal:");
+        System.out.println(
+                "Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:\n" +
+                "0 - Pinscher, Maltes, Shih Tzu, Yorkshire\n" +
+                "9 - Pastor Alemao, Dobberman, Labrador, Dalmata\"\"\");");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
+        System.out.println("stringAux: " + stringAux);
         while(!isValidDigit(stringAux)){
             stringAux = scan.nextLine();
             System.out.println("""
                     Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:
                     0 - Pinscher, Maltes, Shih Tzu, Yorkshire
-                    10 - Pastor Alemao, Dobberman, Labrador, Dalmata""");
+                    9 - Pastor Alemao, Dobberman, Labrador, Dalmata""");
             System.out.println("stringAux: "+stringAux);
         }
         animal.setPorte(Integer.parseInt(stringAux));
@@ -115,7 +120,7 @@ public class PetManipulacao {
         System.out.println("Insira a idade do seu animal:");
         stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
-        while(!isValidSenha(stringAux)){
+        while(!isValidDigit(stringAux)){
             stringAux = scan.nextLine();
             System.out.println("Insira a idade do seu animal, apenas digitos");
             System.out.println("stringAux: "+stringAux);
@@ -146,8 +151,7 @@ public class PetManipulacao {
             System.out.println("""
                     Insira uma espécie como especificado.
                     1- Caso seu pet seja um cachorro
-                    2- Caso seu pet seja um gato
-                    3- Caso seu pet seja um roedor""");
+                    2- Caso seu pet seja um gato""");
             stringAux = scan.nextLine();
             System.out.println("stringAux: "+stringAux);
         }
