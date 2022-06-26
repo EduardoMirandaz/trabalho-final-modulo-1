@@ -3,6 +3,7 @@ package br.com.petshop.manipulacao;
 import br.com.petshop.moldes.cliente.Contato;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.moldes.pets.Cachorro;
+import br.com.petshop.moldes.pets.Gato;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,12 @@ public class PetManipulacao {
                     popularCaracteristicasGeraisDoAnimal(scan, cachorro);
                     popularCaracteristicasEspecificasCachorro(scan, cachorro);
                     novoAnimal = cachorro;
+                }
+                case 2 -> {
+                    Gato gato = new Gato();
+                    popularCaracteristicasGeraisDoAnimal(scan, gato);
+                    popularCaracteristicasEspecificasGato(scan, gato);
+                    novoAnimal = gato;
                 }
             }
 
@@ -134,13 +141,27 @@ public class PetManipulacao {
         System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("""
-                    Indique se seu cachorro pode roer osso com
-                    1 - caso ele possa ou\s
-                    2 - caso nao possa:""");
+                    Insira um valor valido:
+                    1 - pode roer o osso ou\s
+                    2 - nao pode roer o osso:""");
             stringAux = scan.nextLine();
             System.out.println("stringAux: "+stringAux);
         }
         cachorro.setPodeRoerOsso(stringAux.equals("1"));
+    }
+    private void popularCaracteristicasEspecificasGato(Scanner scan, Gato gato){
+        System.out.println("Nos indique se seu gato pode brincar com a bolinha! \n1 - sim\n 2 - nao:");
+        String stringAux = scan.nextLine();
+        System.out.println("stringAux: "+ stringAux);
+        while(!isValidDigit(stringAux)){
+            System.out.println("" +
+                    "Insira um valor valido:" +
+                    "1 - pode brincar com bola ou\s" +
+                    "2 - nao pode brincar com a bola:");
+            stringAux = scan.nextLine();
+            System.out.println("stringAux: " +stringAux);
+        }
+        gato.setPodeBrincarComBolaDeLa(stringAux.equals("1"));
     }
 
     private String selecionarTipoDeAnimal(Scanner scan) {
