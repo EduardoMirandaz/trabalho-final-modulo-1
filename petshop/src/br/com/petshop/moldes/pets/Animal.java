@@ -8,6 +8,7 @@ public abstract class Animal implements Servicos, Desconto {
     private String raca;
     private int pelagem;
     private int porte;
+    private int idade;
     private double valorDoContrato;
     private int quantidadeContratos;
 
@@ -95,5 +96,13 @@ public abstract class Animal implements Servicos, Desconto {
 
     public void setQuantidadeContratos(int quantidadeContratos) {
         this.quantidadeContratos = quantidadeContratos;
+    }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
     }
 }

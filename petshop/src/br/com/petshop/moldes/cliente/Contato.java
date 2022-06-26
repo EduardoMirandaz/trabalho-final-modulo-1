@@ -4,6 +4,14 @@ public class Contato {
     private String descricao;
     private String telefone;
 
+    @Override
+    public String toString() {
+        return "Contato{" +
+                "descricao='" + descricao + '\'' +
+                ", telefone='" + telefone + '\'' +
+                '}';
+    }
+
     public String getDescricao() {
         return descricao;
     }

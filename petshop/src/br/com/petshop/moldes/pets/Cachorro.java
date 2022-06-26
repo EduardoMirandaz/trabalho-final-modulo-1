@@ -1,6 +1,17 @@
 package br.com.petshop.moldes.pets;
 
 public class Cachorro extends Animal {
+
+    boolean podeRoerOsso;
+
+    public boolean isPodeRoerOsso() {
+        return podeRoerOsso;
+    }
+
+    public void setPodeRoerOsso(boolean podeRoerOsso) {
+        this.podeRoerOsso = podeRoerOsso;
+    }
+
     @Override
     public void contratarBanho() {
         switch (this.getPorte()){

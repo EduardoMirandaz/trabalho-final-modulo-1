@@ -21,14 +21,12 @@ public class Main {
             System.out.println("Login inválido ou já existente, tente outro por favor");
             loginDesejado = scan.nextLine();
         }
-        System.out.println("___LOGIN VÁLIDO___\n");
         System.out.println("Insira a senha desejada, apenas números");
         String senhaDesejada = scan.nextLine();
         while (!isValidSenha(senhaDesejada)){
-            System.out.println("Senha inválida, tente novamente por favor");
+            System.out.println("Senha inválida, insira uma senha numérica com 6 a 8 dígitos");
             senhaDesejada = scan.nextLine();
         }
-        System.out.println("___SENHA VALIDA___\n");
         logins.add(new Login(loginDesejado, senhaDesejada));
         System.out.println("Login e senha válidos, vamos agora preencher seus dados e dos seus bixinhos\n=============================");
         return true;
@@ -67,7 +65,7 @@ public class Main {
                 System.out.println("/-- Cadastro /--\n");
                 boolean novoLoginValido = cadastrarNovoLogin(scan, logins);
                 if(novoLoginValido){
-                    boolean novoClienteValido = clienteManipulacao.cadastrarNovoCliente(logins.get(logins.size() - 1), clientes);
+                    boolean novoClienteValido = clienteManipulacao.cadastrarNovoCliente(logins.get(logins.size()-1), clientes);
                 }
             }
 //            switch (opcao) {

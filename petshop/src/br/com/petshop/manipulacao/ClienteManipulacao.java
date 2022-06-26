@@ -22,15 +22,66 @@ public class ClienteManipulacao {
         return nome;
     }
 
+
+    public ArrayList<Contato> inserirContatos(Scanner scan){
+        Contato telefonePrincipal = new Contato();
+        //  ============ TELEFONEMOVEL ============
+        System.out.println("Insira seu telefone móvel para contato:\nUtilize o formato 00 90000-0000");
+        String stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
+        while(!isValidFONENUMBER(stringAux)){
+            System.out.println("Utilize o formato 00 00000-0000");
+            stringAux = scan.nextLine();
+            System.out.println("stringAux: "+stringAux);
+        }
+        telefonePrincipal.setTelefone(stringAux);
+        //  ============ DESCRICAO TELEFONEMOVEL ============
+        System.out.println("Insira a descricao do contato");
+        stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
+        while(!isValidName(stringAux)){
+            System.out.println("A descricao não pode conter símbolos ou números");
+            stringAux = scan.nextLine();
+            System.out.println("stringAux: "+stringAux);
+        }
+        telefonePrincipal.setDescricao(stringAux);
+
+        Contato telefoneReserva = new Contato();
+        //  ============ TELEFONEMOVEL ============
+        System.out.println("Insira seu telefone reserva para contato:\nUtilize o formato 00 90000-0000");
+        stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
+        while(!isValidFONENUMBER(stringAux)){
+            System.out.println("Utilize o formato 00 00000-0000");
+            stringAux = scan.nextLine();
+            System.out.println("stringAux: "+stringAux);
+        }
+        telefoneReserva.setTelefone(stringAux);
+        //  ============ DESCRICAO TELEFONEMOVEL ============
+        System.out.println("Insira a descricao do contato");
+        stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
+        while(!isValidName(stringAux)){
+            System.out.println("A descricao não pode conter símbolos ou números");
+            stringAux = scan.nextLine();
+            System.out.println("stringAux: "+stringAux);
+        }
+        telefoneReserva.setDescricao(stringAux);
+
+        return new ArrayList<Contato>(List.of(telefonePrincipal, telefoneReserva));
+    }
+
     public Endereco inserirEndereco(Scanner scan){
 
         Endereco endereco = new Endereco();
         //  ============ CEP ============
-        System.out.println("Insira seu CEP:");
+        System.out.println("Insira seu CEP no formato 00000-000:");
         String stringAux = scan.nextLine();
+        System.out.println("stringAux: "+stringAux);
         while(!isValidCEP(stringAux)){
-            System.out.println("O CEP deve conter somente numeros");
+            System.out.println("O CEP deve estar no formato 00000-000");
             stringAux = scan.nextLine();
+            System.out.println("stringAux: "+stringAux);
         }
         endereco.setCep(stringAux);
 
@@ -64,7 +115,7 @@ public class ClienteManipulacao {
         //  ============ NUMERO ============
         System.out.println("Insira o número da residencia (0 se não houver):");
         stringAux = scan.nextLine();
-        while(!isValidSenha(stringAux)){
+        while(!isValidNUM(stringAux)){
             System.out.println("Você deve inserir apenas números nesse campo");
             stringAux = scan.nextLine();
         }
@@ -86,8 +137,6 @@ public class ClienteManipulacao {
 //        System.out.println("ultimo login criado:");
 //        System.out.println(login);
 
-//        private Endereco endereco;
-//        private ArrayList<Contato> contatos = new ArrayList<Contato>();
 //        private ArrayList<Animal> pets = new ArrayList<Animal>();
         Cliente cliente = new Cliente();
         Scanner scan = new Scanner(System.in);
@@ -104,7 +153,18 @@ public class ClienteManipulacao {
         cliente.setEndereco(inserirEndereco(scan));
         System.out.println(cliente.getEndereco());
 
+        // Inserir contatos:
+        cliente.setContatos(inserirContatos(scan));
+        System.out.println(cliente.getContatos());
 
+//        // todo organizar como a lista de pets será setada
+//        // Inserir pets:
+//        PetManipulacao petManipulacao = new PetManipulacao();
+//        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
+//        System.out.println(cliente.getPets());
+
+        System.out.println("Cadastro realizado com sucesso.\n==================================");
+        scan.close();
         this.adicionarCliente(cliente);
         return true;
     }

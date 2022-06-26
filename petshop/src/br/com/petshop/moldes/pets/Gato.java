@@ -1,6 +1,17 @@
 package br.com.petshop.moldes.pets;
 
 public class Gato extends Animal {
+
+    boolean podeBrincarComBolaDeLa;
+
+    public boolean podeBrincarComBolaDeLa() {
+        return podeBrincarComBolaDeLa;
+    }
+
+    public void setPodeBrincarComBolaDeLa(boolean podeBrincarComBolaDeLa) {
+        this.podeBrincarComBolaDeLa = podeBrincarComBolaDeLa;
+    }
+
     @Override
     public void contratarBanho() {
         switch (this.getPorte()){
