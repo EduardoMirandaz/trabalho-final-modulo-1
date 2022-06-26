@@ -13,8 +13,17 @@ public class UsernameValidator {
             "^[a-zA-Z\\d]([._-](?![._-])|[a-zA-Z\\d]){3,18}[a-zA-Z\\d]$";
     private static final String PASSWORD_PATTERN =
             "^\\d+$";
+    private static final String NAME_PATTERN =
+            "^[a-zA-Z ]+$";
+
+    private static final String CEP_PATTERN =
+            "^\\d+$";
     private static final Pattern loginPattern = Pattern.compile(USERNAME_PATTERN);
     private static final Pattern passwordPattern = Pattern.compile(PASSWORD_PATTERN);
+
+    private static final Pattern namePattern = Pattern.compile(NAME_PATTERN);
+
+    private static final Pattern cepPattern = Pattern.compile(CEP_PATTERN);
 
     public static boolean isValidLogin(final String login) {
         Matcher matcher = loginPattern.matcher(login);
@@ -25,5 +34,14 @@ public class UsernameValidator {
         return matcher.matches();
     }
 
+    public static boolean isValidName(final String senha) {
+        Matcher matcher = namePattern.matcher(senha);
+        return matcher.matches();
+    }
+
+    public static boolean isValidCEP(final String cep) {
+        Matcher matcher = namePattern.matcher(cep);
+        return matcher.matches();
+    }
 
 }

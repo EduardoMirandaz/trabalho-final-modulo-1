@@ -1,5 +1,6 @@
 package br.com.petshop;
 
+import br.com.petshop.manipulacao.ClienteManipulacao;
 import br.com.petshop.manipulacao.PetManipulacao;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
@@ -12,9 +13,7 @@ import static br.com.petshop.manipulacao.UsernameValidator.*;
 
 public class Main {
 
-    static boolean cadastrarNovoCliente(){
-        return true;
-    }
+
     static boolean cadastrarNovoLogin(Scanner scan, ArrayList<Login> logins){
         System.out.println("Insira o login desejado");
         String loginDesejado = scan.nextLine();
@@ -31,14 +30,11 @@ public class Main {
         }
         System.out.println("___SENHA VALIDA___\n");
         logins.add(new Login(loginDesejado, senhaDesejada));
-        System.out.println("Login e senha válidos, vamos agora preencher seus dados e dos seus bixinhos");
+        System.out.println("Login e senha válidos, vamos agora preencher seus dados e dos seus bixinhos\n=============================");
         return true;
     }
 
     private static boolean loginJaExiste(ArrayList<Login> logins, String loginDesejado) {
-        System.out.println("VERIFICANDO SE O LOGIN JÁ EXISTE");
-        System.out.println("LOGINS::");
-        System.out.println(logins);
         return logins.stream().anyMatch(login -> login.getLogin().equals(loginDesejado));
     }
 
@@ -46,6 +42,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         PetManipulacao petManipulacao = new PetManipulacao();
+        ClienteManipulacao clienteManipulacao = new ClienteManipulacao();
         ArrayList<Login> logins = new ArrayList<>();
         ArrayList<Cliente> clientes = new ArrayList<>();
         HashMap<Login, Cliente> mapaLoginCliente = new HashMap<>();
@@ -70,7 +67,7 @@ public class Main {
                 System.out.println("/-- Cadastro /--\n");
                 boolean novoLoginValido = cadastrarNovoLogin(scan, logins);
                 if(novoLoginValido){
-                    boolean novoCliente = cadastrarNovoCliente();
+                    boolean novoClienteValido = clienteManipulacao.cadastrarNovoCliente(logins.get(logins.size() - 1), clientes);
                 }
             }
 //            switch (opcao) {
