@@ -71,8 +71,8 @@ public class Main {
                             System.out.println("Lista de pets atualizada!");
                             System.out.println(clienteVigente.getPets());
                         }
-<<<<<<< HEAD
-                        case 2 -> {
+
+                        case "2" -> {
                             System.out.println("Informe o id do pet que deseja editar");
                             petManipulacao.listarAnimais(clienteVigente);
                             int index = scan.nextInt();
@@ -80,21 +80,12 @@ public class Main {
                             Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente.getPets());
                             petManipulacao.editarAnimal(clienteVigente, petEditado, index);
                             petManipulacao.removerPetPorIndice(index, clienteVigente);
-=======
-                        case "2" -> {
-
->>>>>>> f8760160b9faea04dc621879ad730acbbb512cc4
                         }
                         case "3" -> {
 
                         }
-<<<<<<< HEAD
-                        case 4 -> {
-                            petManipulacao.listarAnimais(clienteVigente);
-=======
                         case "4" -> {
-
->>>>>>> f8760160b9faea04dc621879ad730acbbb512cc4
+                            petManipulacao.listarAnimais(clienteVigente);
                         }
                     }
                     loginManipulacao.selecionarContratosDeServico();
