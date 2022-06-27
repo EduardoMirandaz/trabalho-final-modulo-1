@@ -7,10 +7,7 @@ import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
 import br.com.petshop.moldes.pets.Animal;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static br.com.petshop.manipulacao.UsernameValidator.*;
 
@@ -21,8 +18,7 @@ public class Main {
         PetManipulacao petManipulacao = new PetManipulacao();
         ClienteManipulacao clienteManipulacao = new ClienteManipulacao();
         ArrayList<Login> logins = new ArrayList<>();
-        HashMap<Login,Cliente>  mapaDeAssociacaoLoginCliente = new HashMap<>();
-        Cliente clienteVigente = new Cliente();
+        HashMap<String,Cliente>  mapaDeAssociacaoLoginCliente = new HashMap<>();
 
         System.out.println("BEM-VINDO AO SISTEMA DE OPERAÇÕES DO PETSHOP");
         String opcao = "0";
@@ -51,9 +47,11 @@ public class Main {
             if(opcao.equals("2")){
                 Login loginVigente = loginManipulacao.verificarLogin(scan, logins);
                 while(loginVigente != null){
-                    for (Login login : mapaDeAssociacaoLoginCliente.keySet()) {
-                        //Capturamos o valor a partir da chave
-                        clienteVigente = mapaDeAssociacaoLoginCliente.get(login);
+                    Cliente clienteVigente = null;
+                    clienteVigente = mapaDeAssociacaoLoginCliente.get(loginVigente.getLogin());
+                    if(clienteVigente == null){
+                        System.out.println("Não foi possível encontrar o cliente");
+                        break;
                     }
                     loginManipulacao.telaInicialLogin();
                     opcao = scan.nextLine();
@@ -64,46 +62,63 @@ public class Main {
                     switch (opcao) {
                         case "0" -> {
                             loginVigente = null;
+                            clienteVigente = null;
                             continue;
                         }
                         case "1" -> {
-                            petManipulacao.adicionarNovoPet(scan, clienteVigente.getPets());
-                            System.out.println("Lista de pets atualizada!");
-                            System.out.println(clienteVigente.getPets());
+                                petManipulacao.adicionarNovoPet(scan, clienteVigente);
+                                System.out.println("Lista de pets atualizada!");
                         }
-
                         case "2" -> {
                             System.out.println("Informe o id do pet que deseja editar");
                             petManipulacao.listarAnimais(clienteVigente);
-                            int index = scan.nextInt();
-                            scan.nextLine();
-                            Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente.getPets());
-                            petManipulacao.editarAnimal(clienteVigente, petEditado, index);
-                            petManipulacao.removerPetPorIndice(index, clienteVigente);
+                            opcao = scan.nextLine();
+                            while(!isValidNUM(opcao)){
+                                System.out.println("Infelizmente, esse ID não é válido");
+                                opcao = scan.nextLine();
+                            }
+                            // Verifico se é um pet possivel na lista
+                            if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                break;
+                            }
+                            System.out.println("Insira agora as informacoes corrigidas");
+                            Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente);
+                            petManipulacao.editarAnimal(clienteVigente, petEditado, Integer.parseInt(opcao));
+                            petManipulacao.removerPetPorIndice(Integer.parseInt(opcao), clienteVigente);
                         }
                         case "3" -> {
                             System.out.println("Qual pet voce deseja excluir?");
-                            int index = scan.nextInt();
-                            petManipulacao.removerPetPorIndice(index, clienteVigente);
-                            System.out.println("Lista atualizada: ");
                             petManipulacao.listarAnimais(clienteVigente);
+                            opcao = scan.nextLine();
+                            while(!isValidNUM(opcao)){
+                                System.out.println("Infelizmente, o nome do seu animal nao pode ter digitos nem simbolos");
+                                opcao = scan.nextLine();
+                            }
+                            if(Integer.parseInt(opcao) > clienteVigente.getPets().size()-1 ||
+                                    Integer.parseInt(opcao) < 0){
+                                System.out.println("Index de pet inválido");
+                                break;
+                            }
+                            petManipulacao.removerPetPorIndice(Integer.parseInt(opcao), clienteVigente);
                         }
                         case "4" -> {
                             petManipulacao.listarAnimais(clienteVigente);
                         }
                         case "5" -> {
-                            System.out.println("Quais contratos voce quer contratar?\n" +
-                                    "1- Banho\n" +
-                                    "2- Tosa\n" +
-                                    "3- Corte de unha\n" +
-                                    "4- Adestramento\n" +
-                                    "5- Meu valor atual\n" +
-                                    "6- Confirmar");
+                            System.out.println("""
+                                    Quais contratos voce quer contratar?
+                                    1- Banho
+                                    2- Tosa
+                                    3- Corte de unha
+                                    4- Adestramento
+                                    5- Meu valor atual
+                                    6- Confirmar""");
                             opcao = scan.nextLine();
                             while(!isValidDigit(opcao)) {
                                 System.out.println("\n--/ opcao invalida =( /--\n");
                                 opcao = scan.nextLine();
                             }
+
                             switch (opcao){
                                 case "1" -> {
                                     System.out.println("Selecione o index do pet que deseja adicionar o banho: ");
@@ -112,6 +127,9 @@ public class Main {
                                     while (!isValidDigit(opcao)) {
                                         System.out.println("\n--/ opcao invalida =( /--\n");
                                         opcao = scan.nextLine();
+                                    }
+                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                        break;
                                     }
                                     int opcaoConvertida = Integer.parseInt(opcao);
                                     petManipulacao.adicionarContratoDeBanho(clienteVigente, opcaoConvertida);
@@ -124,6 +142,9 @@ public class Main {
                                         System.out.println("\n--/ opcao invalida =( /--\n");
                                         opcao = scan.nextLine();
                                     }
+                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                        break;
+                                    }
                                     int opcaoConvertida = Integer.parseInt(opcao);
                                     petManipulacao.adicionarContratoDeTosa(clienteVigente, opcaoConvertida);
                                 }
@@ -131,6 +152,9 @@ public class Main {
                                     System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
                                     petManipulacao.listarAnimais(clienteVigente);
                                     opcao = scan.nextLine();
+                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                        break;
+                                    }
                                     while (!isValidDigit(opcao)) {
                                         System.out.println("\n--/ opcao invalida =( /--\n");
                                         opcao = scan.nextLine();
@@ -142,6 +166,9 @@ public class Main {
                                     System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
                                     petManipulacao.listarAnimais(clienteVigente);
                                     opcao = scan.nextLine();
+                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                        break;
+                                    }
                                     while (!isValidDigit(opcao)) {
                                         System.out.println("\n--/ opcao invalida =( /--\n");
                                         opcao = scan.nextLine();
@@ -152,6 +179,10 @@ public class Main {
                                 case "5" -> {
                                     System.out.println("Selecione o index do pet para ver o valor: ");
                                     opcao = scan.nextLine();
+                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+                                        break;
+                                    }
+
                                     while (!isValidDigit(opcao)) {
                                         System.out.println("\n--/ opcao invalida =( /--\n");
                                         opcao = scan.nextLine();
@@ -172,6 +203,15 @@ public class Main {
             }
         }
         scan.close();
+    }
+
+    private static boolean indiceEhValido(int opcao, int ultimoIndice) {
+        if(opcao > ultimoIndice ||
+                opcao < 0){
+            System.out.println("Index de pet inválido");
+            return false;
+        }
+        return true;
     }
 
     private static void telaInicialLoginCadastro() {

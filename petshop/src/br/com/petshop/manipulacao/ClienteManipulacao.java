@@ -129,7 +129,7 @@ public class ClienteManipulacao {
 
 
 
-    public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<Login,Cliente> mapa){
+    public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa){
 //        System.out.println("ultimo login criado:");
 //        System.out.println(login);
 
@@ -142,8 +142,8 @@ public class ClienteManipulacao {
         String nomeAux = inserirNome(scan.nextLine(), scan);
         cliente.setNome(nomeAux);
 
-        // Inserir id:
-//        cliente.setId(++ID);
+//         Inserir id:
+        cliente.setId(ID++);
 //
 //        // Inserir endereco:
 //        cliente.setEndereco(inserirEndereco(scan));
@@ -157,7 +157,7 @@ public class ClienteManipulacao {
         cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
 
         System.out.println("Cadastro realizado com sucesso.\n==================================");
-        mapa.put(login, cliente);
+        mapa.put(login.getLogin(), cliente);
         this.adicionarCliente(cliente);
         return true;
     }
@@ -166,6 +166,15 @@ public class ClienteManipulacao {
     public ClienteManipulacao() {
         this.listaCliente = new ArrayList<>();
     }
+
+    public List<Cliente> getListaCliente() {
+        return listaCliente;
+    }
+
+    public void setListaCliente(List<Cliente> listaCliente) {
+        this.listaCliente = listaCliente;
+    }
+
     public void adicionarCliente(Cliente cliente){
         this.listaCliente.add(cliente);
     }

@@ -35,9 +35,13 @@ public class PetManipulacao {
         this.listaDeAnimais.remove(index.intValue());
     }
 
-    public Animal adicionarNovoPet(Scanner scan, ArrayList<Animal> listaDeAnimais){
+    public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
         Animal animalCriado = popularNovoAnimal(scan);
+        // Busco a lista de pets do cliente
+        ArrayList<Animal> listaDeAnimais = clienteVigente.getPets();
+        // Adiciono meu novo animal no final da lista
         listaDeAnimais.add(animalCriado);
+        clienteVigente.setPets(listaDeAnimais);
         return animalCriado;
     }
 
@@ -66,11 +70,9 @@ public class PetManipulacao {
         String stringAux;
         System.out.println("Deseja cadastrar mais animais ?\n1 - sim\n2 - nao");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("Indique se deseja cadastrar mais animais com\n1 - para sim\n2 - para nao");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         if(stringAux.equals("2")){
             temMaisAnimaisParaCadastrar = false;
@@ -105,36 +107,30 @@ public class PetManipulacao {
         // ============= NOME DO ANIMAL ===============
         System.out.println("Insira o nome do seu animal:");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidName(stringAux)){
             System.out.println("Infelizmente, o nome do seu animal nao pode ter digitos nem simbolos");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         animal.setNome(stringAux);
 
         // ============= RACA DO ANIMAL ===============
         System.out.println("Insira a raca do seu animal:");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidName(stringAux)){
             System.out.println("Infelizmente, a raca do seu animal nao pode ter digitos nem simbolos");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         animal.setRaca(stringAux);
 
         // ============= PELAGEM DO ANIMAL ===============
         System.out.println("Insira o nivel de pelagem do seu animal(0-pelado ate 9-pelo maximo da raca):");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
-            stringAux = scan.nextLine();
             System.out.println("""
                     Insira valores de 0 a 9 referentes a pelagem do seu animal, sendo
                     0 - pelado
                     9 - Com o maximo de pelo da raca""");
-            System.out.println("stringAux: "+stringAux);
+            stringAux = scan.nextLine();
         }
         animal.setPelagem(Integer.parseInt(stringAux));
 
@@ -144,25 +140,21 @@ public class PetManipulacao {
                 "0 - Pinscher, Maltes, Shih Tzu, Yorkshire\n" +
                 "9 - Pastor Alemao, Dobberman, Labrador, Dalmata\"\"\");");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: " + stringAux);
         while(!isValidDigit(stringAux)){
-            stringAux = scan.nextLine();
             System.out.println("""
                     Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:
                     0 - Pinscher, Maltes, Shih Tzu, Yorkshire
                     9 - Pastor Alemao, Dobberman, Labrador, Dalmata""");
-            System.out.println("stringAux: "+stringAux);
+            stringAux = scan.nextLine();
         }
         animal.setPorte(Integer.parseInt(stringAux));
 
         // ============= IDADE DO ANIMAL ===============
         System.out.println("Insira a idade do seu animal:");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidNUM(stringAux)){
             System.out.println("Insira a idade do seu animal, apenas digitos");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         animal.setIdade(Integer.parseInt(stringAux));
     }
@@ -170,21 +162,18 @@ public class PetManipulacao {
         // ============= O CACHORRO PODE ROER OSSO ? ===============
         System.out.println("Nos indique se seu cachorro pode roer osso:\n1 - para sim\n2 - para nao");
         String stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("""
                     Insira um valor valido:
                     1 - pode roer o osso ou\s
                     2 - nao pode roer o osso:""");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         cachorro.setPodeRoerOsso(stringAux.equals("1"));
     }
     private void popularCaracteristicasEspecificasGato(Scanner scan, Gato gato){
         System.out.println("Nos indique se seu gato pode brincar com a bolinha! \n1 - sim\n2 - nao");
         String stringAux = scan.nextLine();
-        System.out.println("stringAux: "+ stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("" +
                     "Insira um valor valido:" +
@@ -199,14 +188,12 @@ public class PetManipulacao {
     private String selecionarTipoDeAnimal(Scanner scan) {
         System.out.println("Insira a especie do seu animal\n1- Cachorro\n2- Gato\n");
         String stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidDigit(stringAux)){
             System.out.println("""
                     Insira uma espécie como especificado.
                     1- Caso seu pet seja um cachorro
                     2- Caso seu pet seja um gato""");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
         }
         return stringAux;
     }
@@ -224,7 +211,9 @@ public class PetManipulacao {
      }
 
     public void listarAnimais(Cliente cliente) {
-        System.out.println(cliente.getPets());
+        for(int i = 0; i < cliente.getPets().size(); i++){
+            System.out.println("ID = ["+i+ "]\n"+cliente.getPets().get(i));
+        }
     }
     public void adicionarContratoDeBanho(Cliente cliente, int i){
         cliente.getPets().get(i).contratarBanho();
