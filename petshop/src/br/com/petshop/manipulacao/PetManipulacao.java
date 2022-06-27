@@ -226,4 +226,20 @@ public class PetManipulacao {
     public void listarAnimais(Cliente cliente) {
         System.out.println(cliente.getPets());
     }
+    public void adicionarContratoDeBanho(Cliente cliente, int i){
+        cliente.getPets().get(i).contratarBanho();
+    }
+    public void adicionarContratoDeTosa(Cliente cliente, int i){
+        cliente.getPets().get(i).contratarTosa();
+    }
+    public void adicionarContratoDeCorteDeUnha(Cliente cliente, int i){
+        cliente.getPets().get(i).corteDeUnha();
+    }
+    public void adicionarContratoDeAdestramento(Cliente cliente, int i) {
+        cliente.getPets().get(i).adestrar();
+    }
+    public void valorContrato (Cliente cliente, int i){
+        System.out.println("Valor total sem desconto: " + cliente.getPets().get(i).getValorDoContrato());
+        System.out.println("Valor com desconto: " + cliente.getPets().get(i).valorDesconto());
+    }
 }

@@ -95,12 +95,10 @@ public class Main {
                             System.out.println("Quais contratos voce quer contratar?\n" +
                                     "1- Banho\n" +
                                     "2- Tosa\n" +
-                                    "3- Banho + tosa\n" +
-                                    "4- Banho + tosa + unha\n" +
-                                    "5- Adestramento\n" +
-                                    "6- Todos os contratos\n" +
-                                    "7- Meu valor atual\n" +
-                                    "8- Confirmar");
+                                    "3- Corte de unha\n" +
+                                    "4- Adestramento\n" +
+                                    "5- Meu valor atual\n" +
+                                    "6- Confirmar");
                             opcao = scan.nextLine();
                             while(!isValidDigit(opcao)) {
                                 System.out.println("\n--/ opcao invalida =( /--\n");
@@ -108,12 +106,66 @@ public class Main {
                             }
                             switch (opcao){
                                 case "1" -> {
-                                    System.out.println("Selecione o index do pet: ");
+                                    System.out.println("Selecione o index do pet que deseja adicionar o banho: ");
+                                    petManipulacao.listarAnimais(clienteVigente);
+                                    opcao = scan.nextLine();
+                                    while (!isValidDigit(opcao)) {
+                                        System.out.println("\n--/ opcao invalida =( /--\n");
+                                        opcao = scan.nextLine();
+                                    }
+                                    int opcaoConvertida = Integer.parseInt(opcao);
+                                    petManipulacao.adicionarContratoDeBanho(clienteVigente, opcaoConvertida);
                                 }
+                                case "2" -> {
+                                    System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");
+                                    petManipulacao.listarAnimais(clienteVigente);
+                                    opcao = scan.nextLine();
+                                    while (!isValidDigit(opcao)) {
+                                        System.out.println("\n--/ opcao invalida =( /--\n");
+                                        opcao = scan.nextLine();
+                                    }
+                                    int opcaoConvertida = Integer.parseInt(opcao);
+                                    petManipulacao.adicionarContratoDeTosa(clienteVigente, opcaoConvertida);
+                                }
+                                case "3" -> {
+                                    System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
+                                    petManipulacao.listarAnimais(clienteVigente);
+                                    opcao = scan.nextLine();
+                                    while (!isValidDigit(opcao)) {
+                                        System.out.println("\n--/ opcao invalida =( /--\n");
+                                        opcao = scan.nextLine();
+                                    }
+                                    int opcaoConvertida = Integer.parseInt(opcao);
+                                    petManipulacao.adicionarContratoDeCorteDeUnha(clienteVigente, opcaoConvertida);
+                                }
+                                case "4" -> {
+                                    System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
+                                    petManipulacao.listarAnimais(clienteVigente);
+                                    opcao = scan.nextLine();
+                                    while (!isValidDigit(opcao)) {
+                                        System.out.println("\n--/ opcao invalida =( /--\n");
+                                        opcao = scan.nextLine();
+                                    }
+                                    int opcaoConvertida = Integer.parseInt(opcao);
+                                    petManipulacao.adicionarContratoDeAdestramento(clienteVigente, opcaoConvertida);
+                                }
+                                case "5" -> {
+                                    System.out.println("Selecione o index do pet para ver o valor: ");
+                                    opcao = scan.nextLine();
+                                    while (!isValidDigit(opcao)) {
+                                        System.out.println("\n--/ opcao invalida =( /--\n");
+                                        opcao = scan.nextLine();
+                                    }
+                                    int opcaoConvertida = Integer.parseInt(opcao);
 
-
+                                    petManipulacao.valorContrato(clienteVigente, opcaoConvertida);
+                                }
+                                case "6" -> {
+                                    System.out.println("Obrigado por contratar nosso servicos, seu pet sera bem cuidado =)!!" +
+                                            "");
+                                    continue;
+                                }
                             }
-                            loginManipulacao.selecionarContratosDeServico();
                         }
                     }
                 }

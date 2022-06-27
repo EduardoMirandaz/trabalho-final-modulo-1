@@ -42,7 +42,7 @@ public abstract class Animal implements Servicos, Desconto {
         System.out.println("O servico de adestramento no valor de R$200 foi contratado com sucesso");
     }
 
-    public void contratarCorteDeUnha() {
+    public void corteDeUnha() {
         this.adicionarValorNoContrato(20);
         setQuantidadeContratos(getQuantidadeContratos() +1);
         System.out.println("O servico de cortar unha no valor de R$20 foi contratado com sucesso");
@@ -60,6 +60,7 @@ public abstract class Animal implements Servicos, Desconto {
             return this.valorDoContrato;
         }
     }
+
 
     public String getNome() {
         return nome;

@@ -143,15 +143,15 @@ public class ClienteManipulacao {
         cliente.setNome(nomeAux);
 
         // Inserir id:
-        cliente.setId(++ID);
-
-        // Inserir endereco:
-        cliente.setEndereco(inserirEndereco(scan));
-        System.out.println(cliente.getEndereco());
-
-        // Inserir contatos:
-        cliente.setContatos(inserirContatos(scan));
-        System.out.println(cliente.getContatos());
+//        cliente.setId(++ID);
+//
+//        // Inserir endereco:
+//        cliente.setEndereco(inserirEndereco(scan));
+//        System.out.println(cliente.getEndereco());
+//
+//        // Inserir contatos:
+//        cliente.setContatos(inserirContatos(scan));
+//        System.out.println(cliente.getContatos());
 
         // Inserir pets:
         cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
@@ -168,22 +168,5 @@ public class ClienteManipulacao {
     }
     public void adicionarCliente(Cliente cliente){
         this.listaCliente.add(cliente);
-    }
-    public void removerClientePorIndice(Integer index){
-        this.listaCliente.remove(index.intValue());
-    }
-    public void editarCliente(Integer index, Cliente cliente){
-        Cliente clienteProcurado = listaCliente.get(index);
-        clienteProcurado.setNome(cliente.getNome());
-        clienteProcurado.setContatos(cliente.getContatos());
-        clienteProcurado.setEndereco(cliente.getEndereco());
-        clienteProcurado.setPets(cliente.getPets());
-    }
-    public void listarCliente (){
-        if (listaCliente != null) {
-            for (int i = 0; i < listaCliente.size(); i++) {
-                System.out.println("id = " + i + " | " + listaCliente.get(i).toString());
-            }
-        }
     }
 }
