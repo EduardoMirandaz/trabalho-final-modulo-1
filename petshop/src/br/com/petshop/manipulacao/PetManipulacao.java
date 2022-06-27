@@ -1,5 +1,6 @@
 package br.com.petshop.manipulacao;
 
+import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.moldes.pets.Cachorro;
 import br.com.petshop.moldes.pets.Gato;
@@ -34,9 +35,10 @@ public class PetManipulacao {
         this.listaDeAnimais.remove(index.intValue());
     }
 
-    public boolean adicionarNovoPet(Scanner scan, ArrayList<Animal> listaDeAnimais){
-        listaDeAnimais.add(popularNovoAnimal(scan));
-        return true;
+    public Animal adicionarNovoPet(Scanner scan, ArrayList<Animal> listaDeAnimais){
+        Animal animalCriado = popularNovoAnimal(scan);
+        listaDeAnimais.add(animalCriado);
+        return animalCriado;
     }
 
     public ArrayList<Animal> inserirPets(Scanner scan, ArrayList<Animal> listaDeAnimais){
@@ -209,17 +211,19 @@ public class PetManipulacao {
         return stringAux;
     }
 
-    public void editarAnimal(Integer index, Animal animal) {
-        Animal animalProcurado = listaDeAnimais.get(index);
+    public void editarAnimal(Cliente cliente, Animal animal, int i) {
+        Animal animalProcurado = cliente.getPets().get(i);
         animalProcurado.setNome(animal.getNome());
         animalProcurado.setRaca(animal.getRaca());
         animalProcurado.setPorte(animal.getPorte());
         animalProcurado.setPelagem(animal.getPelagem());
     }
 
-    public void listarAnimais() {
-        for(int i=0; i < listaDeAnimais.size(); i++) {
-            System.out.println("id=" + i + "||" + listaDeAnimais.get(i).toString());
-        }
+     public void removerPetPorIndice(int index, Cliente cliente){
+        cliente.getPets().remove(index);
+     }
+
+    public void listarAnimais(Cliente cliente) {
+        System.out.println(cliente.getPets());
     }
 }

@@ -5,6 +5,7 @@ import br.com.petshop.manipulacao.LoginManipulacao;
 import br.com.petshop.manipulacao.PetManipulacao;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
+import br.com.petshop.moldes.pets.Animal;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,13 +70,19 @@ public class Main {
                             System.out.println(clienteVigente.getPets());
                         }
                         case 2 -> {
-
+                            System.out.println("Informe o id do pet que deseja editar");
+                            petManipulacao.listarAnimais(clienteVigente);
+                            int index = scan.nextInt();
+                            scan.nextLine();
+                            Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente.getPets());
+                            petManipulacao.editarAnimal(clienteVigente, petEditado, index);
+                            petManipulacao.removerPetPorIndice(index, clienteVigente);
                         }
                         case 3 -> {
 
                         }
                         case 4 -> {
-
+                            petManipulacao.listarAnimais(clienteVigente);
                         }
                     }
                     loginManipulacao.selecionarContratosDeServico();
