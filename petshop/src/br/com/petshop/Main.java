@@ -82,13 +82,40 @@ public class Main {
                             petManipulacao.removerPetPorIndice(index, clienteVigente);
                         }
                         case "3" -> {
-
+                            System.out.println("Qual pet voce deseja excluir?");
+                            int index = scan.nextInt();
+                            petManipulacao.removerPetPorIndice(index, clienteVigente);
+                            System.out.println("Lista atualizada: ");
+                            petManipulacao.listarAnimais(clienteVigente);
                         }
                         case "4" -> {
                             petManipulacao.listarAnimais(clienteVigente);
                         }
+                        case "5" -> {
+                            System.out.println("Quais contratos voce quer contratar?\n" +
+                                    "1- Banho\n" +
+                                    "2- Tosa\n" +
+                                    "3- Banho + tosa\n" +
+                                    "4- Banho + tosa + unha\n" +
+                                    "5- Adestramento\n" +
+                                    "6- Todos os contratos\n" +
+                                    "7- Meu valor atual\n" +
+                                    "8- Confirmar");
+                            opcao = scan.nextLine();
+                            while(!isValidDigit(opcao)) {
+                                System.out.println("\n--/ opcao invalida =( /--\n");
+                                opcao = scan.nextLine();
+                            }
+                            switch (opcao){
+                                case "1" -> {
+                                    System.out.println("Selecione o index do pet: ");
+                                }
+
+
+                            }
+                            loginManipulacao.selecionarContratosDeServico();
+                        }
                     }
-                    loginManipulacao.selecionarContratosDeServico();
                 }
             }
         }
