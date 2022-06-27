@@ -10,20 +10,32 @@ import static br.com.petshop.manipulacao.UsernameValidator.isValidSenha;
 
 public class LoginManipulacao {
     public boolean cadastrarNovoLogin(Scanner scan, ArrayList<Login> logins){
-        System.out.println("Insira o login desejado");
+        System.out.println("Insira o login desejado\n[9 para sair]");
         String loginDesejado = scan.nextLine();
-        while (!isValidLogin(loginDesejado) || loginJaExiste(logins, loginDesejado)){
-            System.out.println("Login inválido ou já existente, tente outro por favor");
+        if(loginDesejado.equals("9")){
+            System.out.println("Voltando ao menu principal");
+            return false;
+        }
+        while ((!isValidLogin(loginDesejado) || loginJaExiste(logins, loginDesejado))){
+            if(loginDesejado.equals("9")){
+                System.out.println("Voltando ao menu principal");
+                return false;
+            }
+            System.out.println("Login inválido ou já existente, tente outro por favor\n[9 para sair]");
             loginDesejado = scan.nextLine();
         }
-        System.out.println("Insira a senha desejada, apenas números");
+        System.out.println("Insira a senha desejada, apenas números\n[9 para sair]");
         String senhaDesejada = scan.nextLine();
         while (!isValidSenha(senhaDesejada)){
-            System.out.println("Senha inválida, insira uma senha numérica com 6 a 8 dígitos");
+            if(senhaDesejada.equals("9")){
+                System.out.println("Voltando ao menu principal");
+                return false;
+            }
+            System.out.println("Senha inválida, insira uma senha numérica com 6 a 8 dígitos\n[9 para sair]");
             senhaDesejada = scan.nextLine();
         }
         logins.add(new Login(loginDesejado, senhaDesejada));
-        System.out.println("Login e senha válidos, vamos agora preencher seus dados e dos seus bixinhos\n=============================");
+        System.out.println("Login e senha válidos, vamos agora preencher seus dados e dos seus pets\n=============================");
         return true;
     }
     public Login verificarLogin(Scanner scan, ArrayList<Login> logins) {
@@ -71,7 +83,7 @@ public class LoginManipulacao {
                 3 - Para remover um pet existente.
                 4 - Para listar seus pets.
                 5 - Para contratar servicos.
-                -1 - Para sair""");
+                0 - Para sair""");
 
     }
     public void selecionarContratosDeServico() {

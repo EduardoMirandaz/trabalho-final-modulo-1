@@ -160,8 +160,8 @@ public class PetManipulacao {
         stringAux = scan.nextLine();
         System.out.println("stringAux: "+stringAux);
         while(!isValidNUM(stringAux)){
-            stringAux = scan.nextLine();
             System.out.println("Insira a idade do seu animal, apenas digitos");
+            stringAux = scan.nextLine();
             System.out.println("stringAux: "+stringAux);
         }
         animal.setIdade(Integer.parseInt(stringAux));

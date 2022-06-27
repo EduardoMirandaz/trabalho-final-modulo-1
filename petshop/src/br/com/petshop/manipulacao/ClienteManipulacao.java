@@ -31,44 +31,36 @@ public class ClienteManipulacao {
         //  ============ TELEFONEMOVEL ============
         System.out.println("Insira seu telefone móvel para contato:\nUtilize o formato 00 90000-0000");
         String stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidFONENUMBER(stringAux)){
             System.out.println("Utilize o formato 00 00000-0000");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
-        }
+            }
         telefonePrincipal.setTelefone(stringAux);
         //  ============ DESCRICAO TELEFONEMOVEL ============
         System.out.println("Insira a descricao do contato");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidName(stringAux)){
             System.out.println("A descricao não pode conter símbolos ou números");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
-        }
+            }
         telefonePrincipal.setDescricao(stringAux);
 
         Contato telefoneReserva = new Contato();
         //  ============ TELEFONEMOVEL ============
         System.out.println("Insira seu telefone reserva para contato:\nUtilize o formato 00 90000-0000");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidFONENUMBER(stringAux)){
             System.out.println("Utilize o formato 00 00000-0000");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
-        }
+            }
         telefoneReserva.setTelefone(stringAux);
         //  ============ DESCRICAO TELEFONEMOVEL ============
         System.out.println("Insira a descricao do contato");
         stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidName(stringAux)){
             System.out.println("A descricao não pode conter símbolos ou números");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
-        }
+            }
         telefoneReserva.setDescricao(stringAux);
 
         return new ArrayList<Contato>(List.of(telefonePrincipal, telefoneReserva));
@@ -80,12 +72,10 @@ public class ClienteManipulacao {
         //  ============ CEP ============
         System.out.println("Insira seu CEP no formato 00000-000:");
         String stringAux = scan.nextLine();
-        System.out.println("stringAux: "+stringAux);
         while(!isValidCEP(stringAux)){
             System.out.println("O CEP deve estar no formato 00000-000");
             stringAux = scan.nextLine();
-            System.out.println("stringAux: "+stringAux);
-        }
+            }
         endereco.setCep(stringAux);
 
         //  ============ LOGRADOURO ============
@@ -151,20 +141,20 @@ public class ClienteManipulacao {
         System.out.println("Insira seu nome completo:");
         String nomeAux = inserirNome(scan.nextLine(), scan);
         cliente.setNome(nomeAux);
-//
-//        // Inserir id:
-//        cliente.setId(++ID);
-//
-//        // Inserir endereco:
-//        cliente.setEndereco(inserirEndereco(scan));
-//        System.out.println(cliente.getEndereco());
-//
-//        // Inserir contatos:
-//        cliente.setContatos(inserirContatos(scan));
-//        System.out.println(cliente.getContatos());
 
-//        // Inserir pets:
-//        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
+        // Inserir id:
+        cliente.setId(++ID);
+
+        // Inserir endereco:
+        cliente.setEndereco(inserirEndereco(scan));
+        System.out.println(cliente.getEndereco());
+
+        // Inserir contatos:
+        cliente.setContatos(inserirContatos(scan));
+        System.out.println(cliente.getContatos());
+
+        // Inserir pets:
+        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
 
         System.out.println("Cadastro realizado com sucesso.\n==================================");
         mapa.put(login, cliente);
