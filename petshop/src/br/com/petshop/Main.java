@@ -24,20 +24,19 @@ public class Main {
         Cliente clienteVigente = new Cliente();
 
         System.out.println("BEM-VINDO AO SISTEMA DE OPERAÇÕES DO PETSHOP");
-        int opcao = -1;
-        while(opcao != 0){
+        String opcao = "0";
+        while(!opcao.equals("-1")){
             telaInicialLoginCadastro();
-            opcao = scan.nextInt();
-            scan.nextLine();
-            if(opcao > 2 || opcao < 0){
+            opcao = scan.nextLine();
+            while(!isValidDigit(opcao)){
                 System.out.println("\n--/ opcao invalida =( /--\n");
-                continue;
+                opcao = scan.nextLine();
             }
-            if(opcao == 0){
+            if(opcao.equals("0")){
                 System.out.println("/-- Obrigado por visitar nosso PetShop! /--\n/-- Volte sempre que precisar! =) /--\n");
                 break;
             }
-            if(opcao == 1) {
+            if(opcao.equals("1")) {
                 System.out.println("/-- Cadastro /--\n");
                 boolean novoLoginEhValido = loginManipulacao.cadastrarNovoLogin(scan, logins);
                 if (novoLoginEhValido) {
@@ -48,7 +47,7 @@ public class Main {
                     System.out.println("Houve algum erro no cadastro =(");
                 }
             }
-            if(opcao == 2){
+            if(opcao.equals("2")){
                 Login loginVigente = loginManipulacao.verificarLogin(scan, logins);
                 while(loginVigente != null){
                     for (Login login : mapaDeAssociacaoLoginCliente.keySet()) {
@@ -56,25 +55,28 @@ public class Main {
                         clienteVigente = mapaDeAssociacaoLoginCliente.get(login);
                     }
                     loginManipulacao.telaInicialLogin();
-                    opcao = scan.nextInt();
-                    scan.nextLine();
+                    opcao = scan.nextLine();
+                    while(!isValidDigit(opcao)){
+                        System.out.println("\n--/ opcao invalida =( /--\n");
+                        opcao = scan.nextLine();
+                    }
                     switch (opcao) {
-                        case -1 -> {
+                        case "0" -> {
                             loginVigente = null;
                             continue;
                         }
-                        case 1 -> {
+                        case "1" -> {
                             petManipulacao.adicionarNovoPet(scan, clienteVigente.getPets());
                             System.out.println("Lista de pets atualizada!");
                             System.out.println(clienteVigente.getPets());
                         }
-                        case 2 -> {
+                        case "2" -> {
 
                         }
-                        case 3 -> {
+                        case "3" -> {
 
                         }
-                        case 4 -> {
+                        case "4" -> {
 
                         }
                     }
