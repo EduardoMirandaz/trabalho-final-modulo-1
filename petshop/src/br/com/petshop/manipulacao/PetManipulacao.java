@@ -228,7 +228,7 @@ public class PetManipulacao {
         cliente.getPets().get(i).adestrar();
     }
     public void valorContrato (Cliente cliente, int i){
-        System.out.println("Valor total sem desconto: " + cliente.getPets().get(i).getValorDoContrato());
-        System.out.println("Valor com desconto: " + cliente.getPets().get(i).valorDesconto());
+        System.out.println("Valor total sem desconto: R$" + cliente.getPets().get(i).getValorDoContrato());
+        System.out.println("Valor com desconto: R$" + String.format("%.2f",cliente.getPets().get(i).valorDesconto()));
     }
 }
