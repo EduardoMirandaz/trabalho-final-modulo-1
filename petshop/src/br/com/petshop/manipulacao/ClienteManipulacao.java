@@ -130,10 +130,7 @@ public class ClienteManipulacao {
 
 
     public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa){
-//        System.out.println("ultimo login criado:");
-//        System.out.println(login);
 
-//        private ArrayList<Animal> pets = new ArrayList<Animal>();
         Cliente cliente = new Cliente();
         Scanner scan = new Scanner(System.in);
 
@@ -146,12 +143,12 @@ public class ClienteManipulacao {
         cliente.setId(ID++);
 //
 //        // Inserir endereco:
-//        cliente.setEndereco(inserirEndereco(scan));
-//        System.out.println(cliente.getEndereco());
-//
+        cliente.setEndereco(inserirEndereco(scan));
+        System.out.println(cliente.getEndereco());
+
 //        // Inserir contatos:
-//        cliente.setContatos(inserirContatos(scan));
-//        System.out.println(cliente.getContatos());
+       cliente.setContatos(inserirContatos(scan));
+       System.out.println(cliente.getContatos());
 
         // Inserir pets:
         cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
