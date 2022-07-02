@@ -134,14 +134,21 @@ public class ClienteManipulacao {
     public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa) throws BancoDeDadosException {
 
         Cliente cliente = new Cliente();
-//        Scanner scan = new Scanner(System.in);
-//
-//        // Inserir nome:
-//        System.out.println("Insira seu nome completo:");
-//        String nomeAux = inserirNome(scan.nextLine(), scan);
-//        cliente.setNome(nomeAux);
-//
-////
+        Scanner scan = new Scanner(System.in);
+
+        // Inserir nome:
+        System.out.println("Insira seu nome completo:");
+        String nomeAux = inserirNome(scan.nextLine(), scan);
+        cliente.setNome(nomeAux);
+
+        // Inserir quantidade de contratos
+        cliente.setQuantidadeDePedidos(0);
+
+        mapa.put(login.getLogin(), cliente);
+        this.adicionarCliente(cliente);
+        ClienteRepository clienteRepository = new ClienteRepository();
+        return clienteRepository.adicionar(cliente) != null;
+
 ////        // Inserir endereco:
 //        cliente.setEndereco(inserirEndereco(scan));
 //        System.out.println(cliente.getEndereco());
@@ -152,13 +159,6 @@ public class ClienteManipulacao {
 //
 //        // Inserir pets:
 //        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
-//
-//        System.out.println("Cadastro realizado com sucesso.\n==================================");
-//        mapa.put(login.getLogin(), cliente);
-//        this.adicionarCliente(cliente);
-        ClienteRepository clienteRepository = new ClienteRepository();
-        clienteRepository.adicionar(cliente);
-        return true;
     }
     private List<Cliente> listaCliente;
 

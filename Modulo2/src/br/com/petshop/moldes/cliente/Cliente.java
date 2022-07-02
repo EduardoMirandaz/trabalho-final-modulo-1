@@ -7,18 +7,14 @@ import java.util.ArrayList;
 public class Cliente {
     private String nome;
     private Integer id;
-    private Endereco endereco;
-    private ArrayList<Contato> contatos = new ArrayList<Contato>();
-    private ArrayList<Animal> pets = new ArrayList<Animal>();
 
+    private Integer quantidadeDePedidos;
     @Override
     public String toString() {
         return "Cliente{" +
                 "nome='" + nome + '\'' +
                 ", id=" + id +
-                ", endereco=" + endereco +
-                ", contatos=" + contatos +
-                ", pets=" + pets +
+                ", quantidadeDePedidos=" + quantidadeDePedidos +
                 '}';
     }
 
@@ -38,27 +34,11 @@ public class Cliente {
         this.id = id;
     }
 
-    public Endereco getEndereco() {
-        return endereco;
+    public Integer getQuantidadeDePedidos() {
+        return quantidadeDePedidos;
     }
 
-    public void setEndereco(Endereco endereco) {
-        this.endereco = endereco;
-    }
-
-    public ArrayList<Contato> getContatos() {
-        return contatos;
-    }
-
-    public void setContatos(ArrayList<Contato> contatos) {
-        this.contatos = contatos;
-    }
-
-    public ArrayList<Animal> getPets() {
-        return pets;
-    }
-
-    public void setPets(ArrayList<Animal> pets) {
-        this.pets = pets;
+    public void setQuantidadeDePedidos(Integer quantidadeDePedidos) {
+        this.quantidadeDePedidos = quantidadeDePedidos;
     }
 }

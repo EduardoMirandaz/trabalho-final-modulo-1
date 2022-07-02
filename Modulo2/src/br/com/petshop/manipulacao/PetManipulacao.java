@@ -35,15 +35,15 @@ public class PetManipulacao {
         this.listaDeAnimais.remove(index.intValue());
     }
 
-    public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
-        Animal animalCriado = popularNovoAnimal(scan);
-        // Busco a lista de pets do cliente
-        ArrayList<Animal> listaDeAnimais = clienteVigente.getPets();
-        // Adiciono meu novo animal no final da lista
-        listaDeAnimais.add(animalCriado);
-        clienteVigente.setPets(listaDeAnimais);
-        return animalCriado;
-    }
+//    public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
+//        Animal animalCriado = popularNovoAnimal(scan);
+//        // Busco a lista de pets do cliente
+//        ArrayList<Animal> listaDeAnimais = clienteVigente.getPets();
+//        // Adiciono meu novo animal no final da lista
+//        listaDeAnimais.add(animalCriado);
+//        clienteVigente.setPets(listaDeAnimais);
+//        return animalCriado;
+//    }
 
     public ArrayList<Animal> inserirPets(Scanner scan, ArrayList<Animal> listaDeAnimais){
         boolean temMaisAnimaisParaCadastrar = true;
@@ -197,38 +197,38 @@ public class PetManipulacao {
         }
         return stringAux;
     }
-
-    public void editarAnimal(Cliente cliente, Animal animal, int i) {
-        Animal animalProcurado = cliente.getPets().get(i);
-        animalProcurado.setNome(animal.getNome());
-        animalProcurado.setRaca(animal.getRaca());
-        animalProcurado.setPorte(animal.getPorte());
-        animalProcurado.setPelagem(animal.getPelagem());
-    }
-
-     public void removerPetPorIndice(int index, Cliente cliente){
-        cliente.getPets().remove(index);
-     }
-
-    public void listarAnimais(Cliente cliente) {
-        for(int i = 0; i < cliente.getPets().size(); i++){
-            System.out.println("ID = ["+i+ "]\n"+cliente.getPets().get(i));
-        }
-    }
-    public void adicionarContratoDeBanho(Cliente cliente, int i){
-        cliente.getPets().get(i).contratarBanho();
-    }
-    public void adicionarContratoDeTosa(Cliente cliente, int i){
-        cliente.getPets().get(i).contratarTosa();
-    }
-    public void adicionarContratoDeCorteDeUnha(Cliente cliente, int i){
-        cliente.getPets().get(i).corteDeUnha();
-    }
-    public void adicionarContratoDeAdestramento(Cliente cliente, int i) {
-        cliente.getPets().get(i).adestrar();
-    }
-    public void valorContrato (Cliente cliente, int i){
-        System.out.println("Valor total sem desconto: R$" + cliente.getPets().get(i).getValorDoContrato());
-        System.out.println("Valor com desconto: R$" + String.format("%.2f",cliente.getPets().get(i).valorDesconto()));
-    }
+//
+//    public void editarAnimal(Cliente cliente, Animal animal, int i) {
+//        Animal animalProcurado = cliente.getPets().get(i);
+//        animalProcurado.setNome(animal.getNome());
+//        animalProcurado.setRaca(animal.getRaca());
+//        animalProcurado.setPorte(animal.getPorte());
+//        animalProcurado.setPelagem(animal.getPelagem());
+//    }
+//
+//     public void removerPetPorIndice(int index, Cliente cliente){
+//        cliente.getPets().remove(index);
+//     }
+//
+//    public void listarAnimais(Cliente cliente) {
+//        for(int i = 0; i < cliente.getPets().size(); i++){
+//            System.out.println("ID = ["+i+ "]\n"+cliente.getPets().get(i));
+//        }
+//    }
+//    public void adicionarContratoDeBanho(Cliente cliente, int i){
+//        cliente.getPets().get(i).contratarBanho();
+//    }
+//    public void adicionarContratoDeTosa(Cliente cliente, int i){
+//        cliente.getPets().get(i).contratarTosa();
+//    }
+//    public void adicionarContratoDeCorteDeUnha(Cliente cliente, int i){
+//        cliente.getPets().get(i).corteDeUnha();
+//    }
+//    public void adicionarContratoDeAdestramento(Cliente cliente, int i) {
+//        cliente.getPets().get(i).adestrar();
+//    }
+//    public void valorContrato (Cliente cliente, int i){
+//        System.out.println("Valor total sem desconto: R$" + cliente.getPets().get(i).getValorDoContrato());
+//        System.out.println("Valor com desconto: R$" + String.format("%.2f",cliente.getPets().get(i).valorDesconto()));
+//    }
 }

@@ -38,11 +38,44 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
 
             stmt.setInt(1, cliente.getId());
             stmt.setString(2, cliente.getNome());
-            stmt.setInt(3, 14);
+            stmt.setInt(3, cliente.getQuantidadeDePedidos());
 
-            int res = stmt.executeUpdate();
-            System.out.println("adicionarPessoa.res=" + res);
-            return cliente;
+            if(stmt.executeUpdate() != 0){
+                System.out.println("Cliente adicionado com sucesso");
+                return cliente;
+            }
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean remover(Integer id) throws BancoDeDadosException {
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+            String sql = "DELETE FROM CLIENTE WHERE id_pessoa = ?";
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            stmt.setInt(1, id);
+
+            // Executa-se a consulta
+            if(stmt.executeUpdate() > 0){
+                System.out.println("Cliente removido com sucesso");
+                return true;
+            }
+            return false;
         } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());
         } finally {
@@ -57,38 +90,58 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
     }
 
     @Override
-    public boolean remover(Integer id) throws BancoDeDadosException {
-        return true;
-//        Connection con = null;
-//        try {
-//            con = ConexaoBancoDeDados.getConnection();
-//
-//            String sql = "DELETE FROM PESSOA WHERE id_pessoa = ?";
-//
-//            PreparedStatement stmt = con.prepareStatement(sql);
-//
-//            stmt.setInt(1, id);
-//
-//            // Executa-se a consulta
-//            int res = stmt.executeUpdate();
-//            System.out.println("removerPessoaPorId.res=" + res);
-//
-//            return res > 0;
-//        } catch (SQLException e) {
-//            throw new BancoDeDadosException(e.getCause());
-//        } finally {
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-    }
-
-    @Override
     public boolean editar(Integer id, Cliente cliente) throws BancoDeDadosException {
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE contato SET \n");
+            if (cliente != null) {
+                if (cliente.getId() != null) {
+                    sql.append(" id_cliente = ?,");
+                }
+            }
+            assert cliente != null;
+            if (cliente.getNome() != null) {
+                sql.append(" nome = ?,");
+            }
+            if (cliente.getQuantidadeDePedidos() != null) {
+                sql.append(" descricao = ?,");
+            }
+            sql.deleteCharAt(sql.length() - 1); //remove o ultimo ','
+            sql.append(" WHERE id_contato = ? ");
+
+            PreparedStatement stmt = con.prepareStatement(sql.toString());
+
+            int index = 1;
+            if (cliente.getId() != null) {
+                stmt.setInt(index++, cliente.getId());
+            }
+            if (cliente.getNome() != null) {
+                stmt.setString(index++, cliente.getNome());
+            }
+            if (cliente.getQuantidadeDePedidos() != null) {
+                stmt.setInt(index, cliente.getQuantidadeDePedidos());
+            }
+
+            // Executa-se a consulta
+            if(stmt.executeUpdate() > 0){
+                System.out.println("Cliente editado com sucesso");
+                return true;
+            }
+
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return false;
     }
 
@@ -97,36 +150,34 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
     public List<Cliente> listar() throws BancoDeDadosException {
 
         List<Cliente> clientes = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            Statement stmt = con.createStatement();
+
+            String sql = "SELECT * FROM PESSOA";
+
+            // Executa-se a consulta
+            ResultSet res = stmt.executeQuery(sql);
+
+            while (res.next()) {
+                Cliente cliente = new Cliente();
+                cliente.setId(res.getInt("ID_CLIENTE"));
+                cliente.setNome(res.getString("NOME"));
+                cliente.setId(res.getInt("QUANTIDADE_PEDIDOS"));
+                clientes.add(cliente);
+            }
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
         return clientes;
-//        Connection con = null;
-//        try {
-//            con = ConexaoBancoDeDados.getConnection();
-//            Statement stmt = con.createStatement();
-//
-//            String sql = "SELECT * FROM PESSOA";
-//
-//            // Executa-se a consulta
-//            ResultSet res = stmt.executeQuery(sql);
-//
-//            while (res.next()) {
-//                Pessoa pessoa = new Pessoa();
-//                pessoa.setIdPessoa(res.getInt("id_pessoa"));
-//                pessoa.setNome(res.getString("nome"));
-//                pessoa.setDataNascimento(res.getDate("data_nascimento").toLocalDate());
-//                pessoa.setCpf(res.getString("cpf"));
-//                pessoas.add(pessoa);
-//            }
-//        } catch (SQLException e) {
-//            throw new BancoDeDadosException(e.getCause());
-//        } finally {
-//            try {
-//                if (con != null) {
-//                    con.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//        return pessoas;
     }
 }
