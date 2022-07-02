@@ -1,5 +1,6 @@
 package br.com.petshop;
 
+import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.manipulacao.ClienteManipulacao;
 import br.com.petshop.manipulacao.LoginManipulacao;
 import br.com.petshop.manipulacao.PetManipulacao;
@@ -12,7 +13,7 @@ import java.util.*;
 import static br.com.petshop.manipulacao.UsernameValidator.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws BancoDeDadosException {
         Scanner scan = new Scanner(System.in);
         LoginManipulacao loginManipulacao = new LoginManipulacao();
         PetManipulacao petManipulacao = new PetManipulacao();
@@ -205,7 +206,7 @@ public class Main {
         scan.close();
     }
 
-    private static boolean indiceEhValido(int opcao, int ultimoIndice) {
+    public static boolean indiceEhValido(int opcao, int ultimoIndice) {
         if(opcao > ultimoIndice ||
                 opcao < 0){
             System.out.println("Index de pet inválido");

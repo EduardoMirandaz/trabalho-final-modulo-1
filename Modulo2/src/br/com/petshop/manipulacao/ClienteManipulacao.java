@@ -1,5 +1,6 @@
 package br.com.petshop.manipulacao;
 
+import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Contato;
 import br.com.petshop.moldes.cliente.Endereco;
@@ -7,6 +8,7 @@ import br.com.petshop.moldes.cliente.Login;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.moldes.pets.Cachorro;
 import br.com.petshop.moldes.pets.Gato;
+import br.com.petshop.repository.ClienteRepository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -129,33 +131,33 @@ public class ClienteManipulacao {
 
 
 
-    public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa){
+    public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa) throws BancoDeDadosException {
 
         Cliente cliente = new Cliente();
-        Scanner scan = new Scanner(System.in);
-
-        // Inserir nome:
-        System.out.println("Insira seu nome completo:");
-        String nomeAux = inserirNome(scan.nextLine(), scan);
-        cliente.setNome(nomeAux);
-
-//         Inserir id:
-        cliente.setId(ID++);
+//        Scanner scan = new Scanner(System.in);
 //
-//        // Inserir endereco:
-        cliente.setEndereco(inserirEndereco(scan));
-        System.out.println(cliente.getEndereco());
-
-//        // Inserir contatos:
-       cliente.setContatos(inserirContatos(scan));
-       System.out.println(cliente.getContatos());
-
-        // Inserir pets:
-        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
-
-        System.out.println("Cadastro realizado com sucesso.\n==================================");
-        mapa.put(login.getLogin(), cliente);
-        this.adicionarCliente(cliente);
+//        // Inserir nome:
+//        System.out.println("Insira seu nome completo:");
+//        String nomeAux = inserirNome(scan.nextLine(), scan);
+//        cliente.setNome(nomeAux);
+//
+////
+////        // Inserir endereco:
+//        cliente.setEndereco(inserirEndereco(scan));
+//        System.out.println(cliente.getEndereco());
+//
+////        // Inserir contatos:
+//        cliente.setContatos(inserirContatos(scan));
+//        System.out.println(cliente.getContatos());
+//
+//        // Inserir pets:
+//        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
+//
+//        System.out.println("Cadastro realizado com sucesso.\n==================================");
+//        mapa.put(login.getLogin(), cliente);
+//        this.adicionarCliente(cliente);
+        ClienteRepository clienteRepository = new ClienteRepository();
+        clienteRepository.adicionar(cliente);
         return true;
     }
     private List<Cliente> listaCliente;
