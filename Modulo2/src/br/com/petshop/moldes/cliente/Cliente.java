@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class Cliente {
     private String nome;
     private Integer id;
-
     private Integer quantidadeDePedidos;
     @Override
     public String toString() {

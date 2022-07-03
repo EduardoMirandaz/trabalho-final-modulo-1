@@ -31,13 +31,13 @@ public class ClienteManipulacao {
     public ArrayList<Contato> inserirContatos(Scanner scan){
         Contato telefonePrincipal = new Contato();
         //  ============ TELEFONEMOVEL ============
-        System.out.println("Insira seu telefone móvel para contato:\nUtilize o formato 00 90000-0000");
+        System.out.println("Insira seu telefone móvel para contato:\nUtilize o formato 00 900000000");
         String stringAux = scan.nextLine();
         while(!isValidFONENUMBER(stringAux)){
-            System.out.println("Utilize o formato 00 00000-0000");
+            System.out.println("Utilize o formato 00 000000000");
             stringAux = scan.nextLine();
             }
-        telefonePrincipal.setTelefone(stringAux);
+        telefonePrincipal.setTelefone(Integer.parseInt(stringAux));
         //  ============ DESCRICAO TELEFONEMOVEL ============
         System.out.println("Insira a descricao do contato");
         stringAux = scan.nextLine();
@@ -49,13 +49,13 @@ public class ClienteManipulacao {
 
         Contato telefoneReserva = new Contato();
         //  ============ TELEFONEMOVEL ============
-        System.out.println("Insira seu telefone reserva para contato:\nUtilize o formato 00 90000-0000");
+        System.out.println("Insira seu telefone reserva para contato:\nUtilize o formato 00 900000000");
         stringAux = scan.nextLine();
         while(!isValidFONENUMBER(stringAux)){
-            System.out.println("Utilize o formato 00 00000-0000");
+            System.out.println("Utilize o formato 00 000000000");
             stringAux = scan.nextLine();
             }
-        telefoneReserva.setTelefone(stringAux);
+        telefoneReserva.setTelefone(Integer.parseInt(stringAux));
         //  ============ DESCRICAO TELEFONEMOVEL ============
         System.out.println("Insira a descricao do contato");
         stringAux = scan.nextLine();
@@ -144,7 +144,8 @@ public class ClienteManipulacao {
         mapa.put(login.getLogin(), cliente);
         this.adicionarCliente(cliente);
         ClienteRepository clienteRepository = new ClienteRepository();
-        return clienteRepository.adicionar(cliente) != null;
+        cliente = clienteRepository.adicionar(cliente);
+        return cliente != null;
 
 ////        // Inserir endereco:
 //        cliente.setEndereco(inserirEndereco(scan));

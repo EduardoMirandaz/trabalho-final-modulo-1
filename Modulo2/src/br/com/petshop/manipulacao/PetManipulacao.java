@@ -44,6 +44,8 @@ public class PetManipulacao {
     public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
         Animal animalCriado = popularNovoAnimal(scan);
         animalCriado.setCliente(clienteVigente);
+        animalCriado.getCliente().setId(clienteVigente.getId());
+        animalCriado.getCliente().setNome(clienteVigente.getNome());
         return animalCriado;
     }
 
@@ -171,7 +173,8 @@ public class PetManipulacao {
             case "1" -> {
                 AnimalRepository animalRepository = new AnimalRepository();
                 try{
-                    animalRepository.adicionar(petManipulacao.adicionarNovoPet(scan, clienteVigente));
+                    Animal animalCriado = petManipulacao.adicionarNovoPet(scan, clienteVigente);
+                    animalRepository.adicionar(animalCriado);
                 }catch (SQLException e){
                     System.out.println("Erro ao adicionar pet no bd");
                     e.getCause();
@@ -180,14 +183,13 @@ public class PetManipulacao {
             }
             // EDITAR PETS
             case "2" -> {
-                System.out.println("Informe o id do pet que deseja editar");
                 AnimalRepository animalRepository = new AnimalRepository();
                 try{
-                    System.out.println("vou tentar listar os animais!");
                     System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
                 }catch (SQLException e){
                     e.getCause();
                 }
+                System.out.println("Informe o id do pet que deseja editar");
                 opcao = scan.nextLine();
                 while(!isValidNUM(opcao)){
                     System.out.println("Infelizmente, esse ID não é válido");
@@ -207,7 +209,7 @@ public class PetManipulacao {
                 System.out.println("Qual pet voce deseja excluir?\nInsira o ID");
                 AnimalRepository animalRepository = new AnimalRepository();
                 try{
-                    System.out.println("vou tentar listar os animais!");
+                    System.out.println("LISTANDO SEUS ANIMAIS CADASTRADOS!");
                     System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
                 }catch (SQLException e){
                     e.getCause();
@@ -228,9 +230,9 @@ public class PetManipulacao {
                 }
             }
             case "4" -> {
+                System.out.println("LISTANDO SEUS ANIMAIS CADASTRADOS!");
                 AnimalRepository animalRepository = new AnimalRepository();
                 try{
-                    System.out.println("vou tentar listar os animais!");
                     System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
                 }catch (SQLException e){
                     e.getCause();

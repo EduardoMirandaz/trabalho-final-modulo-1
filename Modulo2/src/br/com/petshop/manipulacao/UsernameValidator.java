@@ -23,7 +23,7 @@ public class UsernameValidator {
             "^[\\d]{0,5}+$";
 
     private static final String FONE_NUMBER_PATTERN =
-            "^[\\d]{2} [\\d]{4,5}-[\\d]{4}+$";
+            "^[\\d]{2} [\\d]{8,9}+$";
 
     private static final String DIGIT_NUMBER_PATTERN =
             "^[\\d]{1}+$";

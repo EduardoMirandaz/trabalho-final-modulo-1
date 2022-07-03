@@ -217,28 +217,27 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
     }
 
     public List<Animal> listarAnimalPorCliente(Integer idCliente) throws BancoDeDadosException {
-        System.out.println("VOU LISTAR OS ANIMAIS");
         List<Animal> animais = new ArrayList<>();
         Connection con = null;
         try {
             con = ConexaoBancoDeDados.getConnection();
-            String sql = "SELECT ANIMAL.*, CLIENTE.NOME, " +
-                    "FROM ANIMAL, " +
-                    "INNER JOIN CLIENTE ON (CLIENTE.ID_CLIENTE = ANIMAL.ID_CLIENTE) " +
-                    "WHERE ANIMAL.ID_CLIENTE = ? ";
+            String sql = """
+                            SELECT A.*, C.NOME
+                            FROM ANIMAL A
+                            LEFT JOIN CLIENTE C ON (C.ID_CLIENTE = A.ID_CLIENTE)
+                            WHERE A.ID_CLIENTE = ?
+                    """;
+
             PreparedStatement stmt = con.prepareStatement(sql);
-            System.out.println("id cliente");
-            System.out.println(idCliente);
+            System.out.println(stmt);
             stmt.setInt(1, idCliente);
 
-            ResultSet res = stmt.executeQuery();
+            ResultSet res = stmt.executeQuery(sql);
 
             while(res.next()) {
                 Animal animal = getAnimalFromResultSet(res);
                 animais.add(animal);
             }
-            System.out.println("ANIMAIS");
-            System.out.println(animais);
             return animais;
         } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());
@@ -265,6 +264,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         Cliente cliente = new Cliente();
         cliente.setNome(res.getString("nome"));
         cliente.setId(res.getInt("id_cliente"));
+        animal.setCliente(cliente);
         return animal;
     }
 }
