@@ -7,7 +7,7 @@ public class Pedido {
     private Cliente cliente;
     private Animal animal;
     private Double valor;
-    private Double descricao;
+    private String descricao;
 
     public Integer getIdPedido() {
         return idPedido;
@@ -41,11 +41,11 @@ public class Pedido {
         this.valor = valor;
     }
 
-    public Double getDescricao() {
+    public String getDescricao() {
         return descricao;
     }
 
-    public void setDescricao(Double descricao) {
+    public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
 
