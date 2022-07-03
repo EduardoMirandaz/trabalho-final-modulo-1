@@ -1,7 +1,5 @@
 package br.com.petshop.moldes.pets;
 
-import br.com.petshop.interfaces.Desconto;
-import br.com.petshop.interfaces.Servicos;
 import br.com.petshop.moldes.cliente.Cliente;
 
 public class Animal {
@@ -10,7 +8,7 @@ public class Animal {
 
     private Cliente cliente;
     private String nome;
-    private EnumTipoAnimal tipo;
+    private EnumTipoAnimal tipoAnimal;
     private String raca;
     private Integer pelagem;
     private Integer porte;
@@ -36,10 +34,10 @@ public class Animal {
         this.nome = nome;
     }
     public EnumTipoAnimal getTipoAnimal() {
-        return tipo;
+        return tipoAnimal;
     }
     public void setTipoAnimal(EnumTipoAnimal tipo) {
-        this.tipo = tipo;
+        this.tipoAnimal = tipo;
     }
 
     public String getRaca() {

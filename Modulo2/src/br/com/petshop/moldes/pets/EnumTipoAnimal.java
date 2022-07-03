@@ -16,9 +16,9 @@ public enum EnumTipoAnimal {
         return tipo;
     }
 
-    public static EnumTipoAnimal ofTipo(Integer tipo){
+    public static EnumTipoAnimal ofTipo(Integer tipoAnimal){
         return Arrays.stream(EnumTipoAnimal.values())
-                .filter(tp -> tp.getTipo().equals(tipo))
+                .filter(tp -> tp.getTipo().equals(tipoAnimal))
                 .findFirst()
                 .get();
     }

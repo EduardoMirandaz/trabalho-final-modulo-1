@@ -13,12 +13,12 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
     @Override
     public Integer getProximoId(Connection connection) throws BancoDeDadosException {
         try {
-            String sql = "SELECT seq_animal.nextval animalSequence from DUAL";
+            String sql = "SELECT seq_animal.nextval seqAnimal from DUAL";
             Statement stmt = connection.createStatement();
             ResultSet res = stmt.executeQuery(sql);
 
             if(res.next()) {
-                return res.getInt("animalSequence");
+                return res.getInt("seqAnimal");
             }
 
             return null;
