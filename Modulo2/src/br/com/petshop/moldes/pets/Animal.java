@@ -77,7 +77,7 @@ public class Animal {
     public String toString() {
         return "Animal{" +
                 "ID= [" + idAnimal +
-                "]\nnome=\n" + nome +
+                "]\nnome=" + nome +
                 "\n  tipo=" + tipoAnimal +
                 "\n  raca=" + raca +
                 "\n  pelagem=" + pelagem +

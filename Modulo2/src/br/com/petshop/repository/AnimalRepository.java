@@ -222,17 +222,17 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         try {
             con = ConexaoBancoDeDados.getConnection();
             String sql = """
-                            SELECT A.*, C.NOME
-                            FROM ANIMAL A
-                            LEFT JOIN CLIENTE C ON (C.ID_CLIENTE = A.ID_CLIENTE)
-                            WHERE A.ID_CLIENTE = ?
+                                SELECT a.*
+                                , c.NOME
+                                FROM ANIMAL a
+                                INNER JOIN CLIENTE c ON (c.ID_CLIENTE = a.ID_CLIENTE)
+                                WHERE a.ID_CLIENTE = ?
                     """;
 
             PreparedStatement stmt = con.prepareStatement(sql);
-            System.out.println(stmt);
             stmt.setInt(1, idCliente);
 
-            ResultSet res = stmt.executeQuery(sql);
+            ResultSet res = stmt.executeQuery();
 
             while(res.next()) {
                 Animal animal = getAnimalFromResultSet(res);
