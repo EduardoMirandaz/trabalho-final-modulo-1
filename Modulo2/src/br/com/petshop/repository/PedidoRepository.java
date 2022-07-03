@@ -3,8 +3,11 @@ package br.com.petshop.repository;
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Pedido;
+import br.com.petshop.moldes.pets.Animal;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PedidoRepository implements Repositorio<Integer, Pedido>{
     @Override
@@ -90,16 +93,145 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
         }
     }
 
-//    @Override
-//    public boolean editar(Integer id, Pedido pedido) throws  BancoDeDadosException {
-//        Connection con = null;
-//        try {
-//            con = ConexaoBancoDeDados.getConnection();
-//
-//            StringBuilder sql = new StringBuilder();
-//            sql.append("UPDATE pedido SET \n");
-//            if (pedido.)
-//        }
-//    }
+    @Override
+    public boolean editar(Integer id, Pedido pedido) throws  BancoDeDadosException {
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+            StringBuilder sql = new StringBuilder();
+            sql.append("UPDATE pedido SET \n");
+            Animal animal = pedido.getAnimal();
+            if (animal != null) {
+                if(animal.getIdAnimal() != null) {
+                    sql.append(" id_animal = ?,");
+                }
+            }
+            if(pedido.getValor() != null) {
+                sql.append(" valor = ?,");
+            }
+            if(pedido.getDescricao() != null) {
+                sql.append(" descricao = ?,");
+            }
+
+            sql.deleteCharAt(sql.length() -1);
+            sql.append("WHERE id_pedido = ? ");
+
+            PreparedStatement  stmt = con.prepareStatement(sql.toString());
+
+            int index = 1;
+            if(animal != null) {
+                if(animal.getIdAnimal() != null) {
+                    stmt.setInt(index++, animal.getIdAnimal());
+                }
+            }
+            if(pedido.getValor() != null) {
+                stmt.setDouble(index++, pedido.getValor());
+            }
+            if(pedido.getDescricao() != null) {
+                stmt.setString(index++, pedido.getDescricao());
+            }
+
+            stmt.setInt(index++, id);
+
+            int res = stmt.executeUpdate();
+            System.out.println("editarPedido.res=" + res);
+
+            return res>0;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public List<Pedido> listar() throws BancoDeDadosException {
+        List<Pedido> pedidos = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            Statement stmt = con.createStatement();
+
+            String sql = "SELECT P.*" +
+                    "          , C.NOME AS NOME_CLIENTE " +
+                    "       FROM PEDIDO P " +
+                    "       LEFT JOIN CLIENTE C ON (C.ID_CLIENTE = P.ID_CLIENTE) ";
+
+            ResultSet res = stmt.executeQuery(sql);
+
+            while (res.next()) {
+                Pedido pedido = getPedidoFromResultSet(res);
+                pedidos.add(pedido);
+            }
+            return pedidos;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try{
+                if(con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<Pedido> listarPedidosPorCliente(Integer idCliente) throws BancoDeDadosException {
+        List<Pedido> pedidos = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+
+            String sql = "SELECT P.*" +
+                    "          , C.NOME AS NOME_CLIENTE " +
+                    "       FROM PEDIDO P " +
+                    "      INNER JOIN CLIENTE C ON (C.ID_CLIENTE = P.ID_CLIENTE) " +
+                    "      WHERE P.ID_PESSOA = ? ";
+
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idCliente);
+
+            ResultSet res = stmt.executeQuery();
+
+            while (res.next()) {
+                Pedido pedido = getPedidoFromResultSet(res);
+                pedidos.add(pedido);
+            }
+            return pedidos;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Pedido getPedidoFromResultSet(ResultSet res) throws  SQLException {
+        Pedido pedido = new Pedido();
+        pedido.setIdPedido(res.getInt("id_pedido"));
+        Cliente cliente = new Cliente();
+        cliente.setNome(res.getString("nome"));
+        cliente.setId(res.getInt("id_cliente"));
+        Animal animal = new Animal();
+        animal.setIdAnimal(res.getInt("id_animal"));
+        pedido.setValor(res.getDouble("valor"));
+        pedido.setDescricao(res.getString("descricao"));
+        return pedido;
+    }
 
 }
