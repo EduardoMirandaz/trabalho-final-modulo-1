@@ -74,17 +74,9 @@ public class LoginManipulacao {
         return logins.stream().anyMatch(login -> login.getLogin().equals(loginDesejado));
     }
 
-    public void telaInicialLogin() {
+    public void telaInicialPosLogin() {
         System.out.println("[USUARIO LOGADO]");
-        System.out.println("""
-                Insira o que deseja fazer
-                1 - Para adicionar novo pet.
-                2 - Para editar um pet existente.
-                3 - Para remover um pet existente.
-                4 - Para listar seus pets.
-                5 - Para contratar servicos.
-                0 - Para sair""");
-
+        System.out.println("Insira o que deseja fazer\n1- Para operacoes de CONTA.\n2- Para operacoes de PET.\n0- Para sair.");
     }
     public void selecionarContratosDeServico() {
 

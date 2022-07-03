@@ -70,66 +70,63 @@ public class ClienteManipulacao {
 
     public Endereco inserirEndereco(Scanner scan){
 
-        Endereco endereco = new Endereco();
-        //  ============ CEP ============
-        System.out.println("Insira seu CEP no formato 00000-000:");
-        String stringAux = scan.nextLine();
-        while(!isValidCEP(stringAux)){
-            System.out.println("O CEP deve estar no formato 00000-000");
-            stringAux = scan.nextLine();
-            }
-        endereco.setCep(stringAux);
-
-        //  ============ LOGRADOURO ============
-        System.out.println("Insira seu logradouro:");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("O logradouro não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-        }
-        endereco.setLogradouro(stringAux);
-
-        //  ============ CIDADE ============
-        System.out.println("Insira sua cidade:");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("O nome da cidade não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-        }
-        endereco.setCidade(stringAux);
-
-        //  ============ BAIRRO ============
-        System.out.println("Insira seu bairro:");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("O nome do bairro não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-        }
-        endereco.setBairro(stringAux);
-
-        //  ============ NUMERO ============
-        System.out.println("Insira o número da residencia (0 se não houver):");
-        stringAux = scan.nextLine();
-        while(!isValidNUM(stringAux)){
-            System.out.println("Você deve inserir apenas números nesse campo");
-            stringAux = scan.nextLine();
-        }
-        endereco.setNumero(stringAux);
-
-        //  ============ COMPLEMENTO ============
-        System.out.println("Um complemento do endereço:");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("O complemento não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-        }
-        endereco.setComplemento(stringAux);
-
-        return endereco;
+//        Endereco endereco = new Endereco();
+//        //  ============ CEP ============
+//        System.out.println("Insira seu CEP no formato 00000-000:");
+//        String stringAux = scan.nextLine();
+//        while(!isValidCEP(stringAux)){
+//            System.out.println("O CEP deve estar no formato 00000-000");
+//            stringAux = scan.nextLine();
+//            }
+//        endereco.setCep(stringAux);
+//
+//        //  ============ LOGRADOURO ============
+//        System.out.println("Insira seu logradouro:");
+//        stringAux = scan.nextLine();
+//        while(!isValidName(stringAux)){
+//            System.out.println("O logradouro não pode conter símbolos ou números");
+//            stringAux = scan.nextLine();
+//        }
+//        endereco.setLogradouro(stringAux);
+//
+//        //  ============ CIDADE ============
+//        System.out.println("Insira sua cidade:");
+//        stringAux = scan.nextLine();
+//        while(!isValidName(stringAux)){
+//            System.out.println("O nome da cidade não pode conter símbolos ou números");
+//            stringAux = scan.nextLine();
+//        }
+//        endereco.setCidade(stringAux);
+//
+//        //  ============ BAIRRO ============
+//        System.out.println("Insira seu bairro:");
+//        stringAux = scan.nextLine();
+//        while(!isValidName(stringAux)){
+//            System.out.println("O nome do bairro não pode conter símbolos ou números");
+//            stringAux = scan.nextLine();
+//        }
+//        endereco.setBairro(stringAux);
+//
+//        //  ============ NUMERO ============
+//        System.out.println("Insira o número da residencia (0 se não houver):");
+//        stringAux = scan.nextLine();
+//        while(!isValidNUM(stringAux)){
+//            System.out.println("Você deve inserir apenas números nesse campo");
+//            stringAux = scan.nextLine();
+//        }
+//        endereco.setNumero(stringAux);
+//
+//        //  ============ COMPLEMENTO ============
+//        System.out.println("Um complemento do endereço:");
+//        stringAux = scan.nextLine();
+//        while(!isValidName(stringAux)){
+//            System.out.println("O complemento não pode conter símbolos ou números");
+//            stringAux = scan.nextLine();
+//        }
+//        endereco.setComplemento(stringAux);
+//
+        return new Endereco();
     }
-
-
-
 
     public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa) throws BancoDeDadosException {
 

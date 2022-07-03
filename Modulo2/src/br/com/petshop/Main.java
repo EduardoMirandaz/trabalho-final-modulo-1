@@ -7,6 +7,9 @@ import br.com.petshop.manipulacao.PetManipulacao;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
 import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.moldes.pets.Cachorro;
+import br.com.petshop.moldes.pets.EnumTipoAnimal;
+import br.com.petshop.repository.AnimalRepository;
 
 import java.util.*;
 
@@ -46,17 +49,20 @@ public class Main {
                 }
             }
             if(opcao.equals("2")){
+                // Verifico se a pessoa está com um login válido
                 Login loginVigente = loginManipulacao.verificarLogin(scan, logins);
-                while(loginVigente != null){
+                while(loginVigente != null) {
                     Cliente clienteVigente = null;
                     clienteVigente = mapaDeAssociacaoLoginCliente.get(loginVigente.getLogin());
-                    if(clienteVigente == null){
+                    if (clienteVigente == null) {
                         System.out.println("Não foi possível encontrar o cliente");
                         break;
                     }
-                    loginManipulacao.telaInicialLogin();
+
+                    // Vejo se a pessoa quer fazer operacoes de conta ou operacoes sobre o pet.
+                    loginManipulacao.telaInicialPosLogin();
                     opcao = scan.nextLine();
-                    while(!isValidDigit(opcao)){
+                    while (!isValidDigit(opcao)) {
                         System.out.println("\n--/ opcao invalida =( /--\n");
                         opcao = scan.nextLine();
                     }
@@ -64,141 +70,10 @@ public class Main {
                         case "0" -> {
                             loginVigente = null;
                             clienteVigente = null;
-                            continue;
                         }
-//                        case "1" -> {
-//                                petManipulacao.adicionarNovoPet(scan, clienteVigente);
-//                                System.out.println("Lista de pets atualizada!");
-//                        }
-//                        case "2" -> {
-//                            System.out.println("Informe o id do pet que deseja editar");
-//                            petManipulacao.listarAnimais(clienteVigente);
-//                            opcao = scan.nextLine();
-//                            while(!isValidNUM(opcao)){
-//                                System.out.println("Infelizmente, esse ID não é válido");
-//                                opcao = scan.nextLine();
-//                            }
-//                            // Verifico se é um pet possivel na lista
-//                            if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                break;
-//                            }
-//                            System.out.println("Insira agora as informacoes corrigidas");
-//                            Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente);
-//                            petManipulacao.editarAnimal(clienteVigente, petEditado, Integer.parseInt(opcao));
-//                            petManipulacao.removerPetPorIndice(Integer.parseInt(opcao), clienteVigente);
-//                        }
-//                        case "3" -> {
-//                            System.out.println("Qual pet voce deseja excluir?");
-//                            petManipulacao.listarAnimais(clienteVigente);
-//                            opcao = scan.nextLine();
-//                            while(!isValidNUM(opcao)){
-//                                System.out.println("Infelizmente, o nome do seu animal nao pode ter digitos nem simbolos");
-//                                opcao = scan.nextLine();
-//                            }
-//                            if(Integer.parseInt(opcao) > clienteVigente.getPets().size()-1 ||
-//                                    Integer.parseInt(opcao) < 0){
-//                                System.out.println("Index de pet inválido");
-//                                break;
-//                            }
-//                            petManipulacao.removerPetPorIndice(Integer.parseInt(opcao), clienteVigente);
-//                        }
-//                        case "4" -> {
-//                            petManipulacao.listarAnimais(clienteVigente);
-//                        }
-//                        case "5" -> {
-//                            System.out.println("""
-//                                    Quais contratos voce quer contratar?
-//                                    1- Banho
-//                                    2- Tosa
-//                                    3- Corte de unha
-//                                    4- Adestramento
-//                                    5- Meu valor atual
-//                                    6- Confirmar""");
-//                            opcao = scan.nextLine();
-//                            while(!isValidDigit(opcao)) {
-//                                System.out.println("\n--/ opcao invalida =( /--\n");
-//                                opcao = scan.nextLine();
-//                            }
-//
-//                            switch (opcao){
-//                                case "1" -> {
-//                                    System.out.println("Selecione o index do pet que deseja adicionar o banho: ");
-//                                    petManipulacao.listarAnimais(clienteVigente);
-//                                    opcao = scan.nextLine();
-//                                    while (!isValidDigit(opcao)) {
-//                                        System.out.println("\n--/ opcao invalida =( /--\n");
-//                                        opcao = scan.nextLine();
-//                                    }
-//                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                        break;
-//                                    }
-//                                    int opcaoConvertida = Integer.parseInt(opcao);
-//                                    petManipulacao.adicionarContratoDeBanho(clienteVigente, opcaoConvertida);
-//                                }
-//                                case "2" -> {
-//                                    System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");
-//                                    petManipulacao.listarAnimais(clienteVigente);
-//                                    opcao = scan.nextLine();
-//                                    while (!isValidDigit(opcao)) {
-//                                        System.out.println("\n--/ opcao invalida =( /--\n");
-//                                        opcao = scan.nextLine();
-//                                    }
-//                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                        break;
-//                                    }
-//                                    int opcaoConvertida = Integer.parseInt(opcao);
-//                                    petManipulacao.adicionarContratoDeTosa(clienteVigente, opcaoConvertida);
-//                                }
-//                                case "3" -> {
-//                                    System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
-//                                    petManipulacao.listarAnimais(clienteVigente);
-//                                    opcao = scan.nextLine();
-//                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                        break;
-//                                    }
-//                                    while (!isValidDigit(opcao)) {
-//                                        System.out.println("\n--/ opcao invalida =( /--\n");
-//                                        opcao = scan.nextLine();
-//                                    }
-//                                    int opcaoConvertida = Integer.parseInt(opcao);
-//                                    petManipulacao.adicionarContratoDeCorteDeUnha(clienteVigente, opcaoConvertida);
-//                                }
-//                                case "4" -> {
-//                                    System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
-//                                    petManipulacao.listarAnimais(clienteVigente);
-//                                    opcao = scan.nextLine();
-//                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                        break;
-//                                    }
-//                                    while (!isValidDigit(opcao)) {
-//                                        System.out.println("\n--/ opcao invalida =( /--\n");
-//                                        opcao = scan.nextLine();
-//                                    }
-//                                    int opcaoConvertida = Integer.parseInt(opcao);
-//                                    petManipulacao.adicionarContratoDeAdestramento(clienteVigente, opcaoConvertida);
-//                                }
-//                                case "5" -> {
-//                                    System.out.println("Selecione o index do pet para ver o valor: ");
-//                                    opcao = scan.nextLine();
-//                                    if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                                        break;
-//                                    }
-//
-//                                    while (!isValidDigit(opcao)) {
-//                                        System.out.println("\n--/ opcao invalida =( /--\n");
-//                                        opcao = scan.nextLine();
-//                                    }
-//                                    int opcaoConvertida = Integer.parseInt(opcao);
-//
-//                                    petManipulacao.valorContrato(clienteVigente, opcaoConvertida);
-//                                }
-//                                case "6" -> {
-//                                    System.out.println("Obrigado por contratar nosso servicos, seu pet sera bem cuidado =)!!" +
-//                                            "");
-//                                    continue;
-//                                }
-//                            }
-//                        }
+                        case "2" -> {
+                            petManipulacao.operacionarPets(scan, petManipulacao, clienteVigente);
+                        }
                     }
                 }
             }
@@ -215,6 +90,13 @@ public class Main {
         return true;
     }
 
+    public void telaInicialManipularCadastros() {
+
+    }
+
+    public void telaInicialManipularPedidos() {
+
+    }
     private static void telaInicialLoginCadastro() {
         System.out.println("DIGITE:");
         System.out.println("1 - caso seja um(a) novo(a) cliente");

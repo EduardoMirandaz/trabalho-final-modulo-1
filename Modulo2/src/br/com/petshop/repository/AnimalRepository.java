@@ -13,12 +13,12 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
     @Override
     public Integer getProximoId(Connection connection) throws BancoDeDadosException {
         try {
-            String sql = "SELECT seq_animal.nextval seqAnimal from DUAL";
+            String sql = "SELECT SEQ_ID_ANIMAL.nextval SEQ_ID_ANIMAL from DUAL";
             Statement stmt = connection.createStatement();
             ResultSet res = stmt.executeQuery(sql);
 
             if(res.next()) {
-                return res.getInt("seqAnimal");
+                return res.getInt("SEQ_ID_ANIMAL");
             }
 
             return null;
@@ -32,12 +32,27 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         try {
             con = ConexaoBancoDeDados.getConnection();
 
-            Integer proximoId = this.getProximoId((con));
+            Integer proximoId = this.getProximoId(con);
             animal.setIdAnimal(proximoId);
 
-            String sql = "INSERT INTO ANIMAL \n" +
-                    "(ID_ANIMAL, ID_CLIENTE, NOME, TIPO, RACA, PELAGEM, PORTE, IDADE)\n" +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?)\n";
+            String sql = """
+                    INSERT INTO ANIMAL\s
+                    (ID_ANIMAL, ID_CLIENTE, NOME, TIPO, RACA, PELAGEM, PORTE, IDADE)
+                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                    """;
+
+            if(animal.getIdAnimal() == null
+            || animal.getCliente().getId() == null
+            || animal.getNome() == null
+            || animal.getTipoAnimal() == null
+            || animal.getTipoAnimal().getTipo() == null
+            || animal.getPelagem() == null
+            || animal.getRaca() == null
+            || animal.getIdade() == null
+            || animal.getPorte() == null)
+            {
+                return null;
+            }
 
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setInt(1, animal.getIdAnimal());
@@ -123,7 +138,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
             }
 
             sql.deleteCharAt(sql.length() - 1);
-            sql.append("WHERE id_animal = ?");
+            sql.append("WHERE id_animal = ? and animal.id_cliente = ?");
 
             PreparedStatement stmt = con.prepareStatement(sql.toString());
 
@@ -147,11 +162,15 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
                 stmt.setInt(index++, animal.getIdade());
             }
             stmt.setInt(index++, id);
-
+            stmt.setInt(index, animal.getCliente().getId());
             int res = stmt.executeUpdate();
             System.out.println("editarAnimal.res=" + res);
 
-            return res > 0;
+            if(res <= 0){
+                System.out.println("Não foi possível editar esse animal =(");
+                return false;
+            }
+            return true;
 
         } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());
@@ -198,26 +217,28 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
     }
 
     public List<Animal> listarAnimalPorCliente(Integer idCliente) throws BancoDeDadosException {
+        System.out.println("VOU LISTAR OS ANIMAIS");
         List<Animal> animais = new ArrayList<>();
         Connection con = null;
         try {
             con = ConexaoBancoDeDados.getConnection();
-            String sql = "SELECT A.* " +
-                    "          , C.NOME AS NOME_DONO " +
-                    "       FROM ANIMAL A " +
-                    "      INNER JOIN CLIENTE C ON (C.ID_CLIENTE = A.ID_CLIENTE) " +
-                    "      WHERE A.ID_CLIENTE = ? ";
-
-
+            String sql = "SELECT ANIMAL.*, CLIENTE.NOME, " +
+                    "FROM ANIMAL, " +
+                    "INNER JOIN CLIENTE ON (CLIENTE.ID_CLIENTE = ANIMAL.ID_CLIENTE) " +
+                    "WHERE ANIMAL.ID_CLIENTE = ? ";
             PreparedStatement stmt = con.prepareStatement(sql);
+            System.out.println("id cliente");
+            System.out.println(idCliente);
             stmt.setInt(1, idCliente);
 
-            ResultSet res = stmt.executeQuery(sql);
+            ResultSet res = stmt.executeQuery();
 
             while(res.next()) {
                 Animal animal = getAnimalFromResultSet(res);
                 animais.add(animal);
             }
+            System.out.println("ANIMAIS");
+            System.out.println(animais);
             return animais;
         } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());

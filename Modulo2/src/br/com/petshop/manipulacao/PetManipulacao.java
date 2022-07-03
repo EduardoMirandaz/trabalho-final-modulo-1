@@ -1,15 +1,21 @@
 package br.com.petshop.manipulacao;
 
+import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.moldes.pets.Cachorro;
 import br.com.petshop.moldes.pets.Gato;
+import br.com.petshop.repository.AnimalRepository;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import static br.com.petshop.Main.indiceEhValido;
 import static br.com.petshop.manipulacao.UsernameValidator.*;
+import static br.com.petshop.moldes.pets.EnumTipoAnimal.CACHORRO;
+import static br.com.petshop.moldes.pets.EnumTipoAnimal.GATO;
 
 public class PetManipulacao {
     private List<Animal> listaDeAnimais;
@@ -35,49 +41,10 @@ public class PetManipulacao {
         this.listaDeAnimais.remove(index.intValue());
     }
 
-//    public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
-//        Animal animalCriado = popularNovoAnimal(scan);
-//        // Busco a lista de pets do cliente
-//        ArrayList<Animal> listaDeAnimais = clienteVigente.getPets();
-//        // Adiciono meu novo animal no final da lista
-//        listaDeAnimais.add(animalCriado);
-//        clienteVigente.setPets(listaDeAnimais);
-//        return animalCriado;
-//    }
-
-    public ArrayList<Animal> inserirPets(Scanner scan, ArrayList<Animal> listaDeAnimais){
-        boolean temMaisAnimaisParaCadastrar = true;
-        Animal novoAnimal = null;
-        while(temMaisAnimaisParaCadastrar && listaDeAnimais.size() <= 5){
-            novoAnimal = popularNovoAnimal(scan);
-            String stringAux;
-            if(novoAnimal != null){
-                listaDeAnimais.add(novoAnimal);
-            }
-            temMaisAnimaisParaCadastrar = temMaisAnimaisParaCadastrar(scan);
-        }
-        if (listaDeAnimais.size() == 5) {
-            System.out.println("Limite de animais atingido!\n" +
-                    "Não será possivel cadastrar mais animais agora!");
-        }
-        System.out.println("Cadastro de pets finalizado!");
-        this.setListaDeAnimais(listaDeAnimais);
-        return listaDeAnimais;
-    }
-
-    private boolean temMaisAnimaisParaCadastrar(Scanner scan) {
-        boolean temMaisAnimaisParaCadastrar = true;
-        String stringAux;
-        System.out.println("Deseja cadastrar mais animais ?\n1 - sim\n2 - nao");
-        stringAux = scan.nextLine();
-        while(!isValidDigit(stringAux)){
-            System.out.println("Indique se deseja cadastrar mais animais com\n1 - para sim\n2 - para nao");
-            stringAux = scan.nextLine();
-        }
-        if(stringAux.equals("2")){
-            temMaisAnimaisParaCadastrar = false;
-        }
-        return temMaisAnimaisParaCadastrar;
+    public Animal adicionarNovoPet(Scanner scan, Cliente clienteVigente){
+        Animal animalCriado = popularNovoAnimal(scan);
+        animalCriado.setCliente(clienteVigente);
+        return animalCriado;
     }
 
     private Animal popularNovoAnimal(Scanner scan) {
@@ -88,14 +55,14 @@ public class PetManipulacao {
         switch (Integer.parseInt(stringAux)){
             case 1 -> {
                 Cachorro cachorro = new Cachorro();
+                cachorro.setTipoAnimal(CACHORRO);
                 popularCaracteristicasGeraisDoAnimal(scan, cachorro);
-                popularCaracteristicasEspecificasCachorro(scan, cachorro);
                 novoAnimal = cachorro;
             }
             case 2 -> {
                 Gato gato = new Gato();
+                gato.setTipoAnimal(GATO);
                 popularCaracteristicasGeraisDoAnimal(scan, gato);
-                popularCaracteristicasEspecificasGato(scan, gato);
                 novoAnimal = gato;
             }
         }
@@ -158,32 +125,6 @@ public class PetManipulacao {
         }
         animal.setIdade(Integer.parseInt(stringAux));
     }
-    private void popularCaracteristicasEspecificasCachorro(Scanner scan, Cachorro cachorro){
-        // ============= O CACHORRO PODE ROER OSSO ? ===============
-        System.out.println("Nos indique se seu cachorro pode roer osso:\n1 - para sim\n2 - para nao");
-        String stringAux = scan.nextLine();
-        while(!isValidDigit(stringAux)){
-            System.out.println("""
-                    Insira um valor valido:
-                    1 - pode roer o osso ou\s
-                    2 - nao pode roer o osso:""");
-            stringAux = scan.nextLine();
-        }
-        cachorro.setPodeRoerOsso(stringAux.equals("1"));
-    }
-    private void popularCaracteristicasEspecificasGato(Scanner scan, Gato gato){
-        System.out.println("Nos indique se seu gato pode brincar com a bolinha! \n1 - sim\n2 - nao");
-        String stringAux = scan.nextLine();
-        while(!isValidDigit(stringAux)){
-            System.out.println("" +
-                    "Insira um valor valido:" +
-                    "1 - pode brincar com bola ou\s" +
-                    "2 - nao pode brincar com a bola");
-            stringAux = scan.nextLine();
-            System.out.println("stringAux: " +stringAux);
-        }
-        gato.setPodeBrincarComBolaDeLa(stringAux.equals("1"));
-    }
 
     private String selecionarTipoDeAnimal(Scanner scan) {
         System.out.println("Insira a especie do seu animal\n1- Cachorro\n2- Gato\n");
@@ -197,24 +138,7 @@ public class PetManipulacao {
         }
         return stringAux;
     }
-//
-//    public void editarAnimal(Cliente cliente, Animal animal, int i) {
-//        Animal animalProcurado = cliente.getPets().get(i);
-//        animalProcurado.setNome(animal.getNome());
-//        animalProcurado.setRaca(animal.getRaca());
-//        animalProcurado.setPorte(animal.getPorte());
-//        animalProcurado.setPelagem(animal.getPelagem());
-//    }
-//
-//     public void removerPetPorIndice(int index, Cliente cliente){
-//        cliente.getPets().remove(index);
-//     }
-//
-//    public void listarAnimais(Cliente cliente) {
-//        for(int i = 0; i < cliente.getPets().size(); i++){
-//            System.out.println("ID = ["+i+ "]\n"+cliente.getPets().get(i));
-//        }
-//    }
+
 //    public void adicionarContratoDeBanho(Cliente cliente, int i){
 //        cliente.getPets().get(i).contratarBanho();
 //    }
@@ -231,4 +155,199 @@ public class PetManipulacao {
 //        System.out.println("Valor total sem desconto: R$" + cliente.getPets().get(i).getValorDoContrato());
 //        System.out.println("Valor com desconto: R$" + String.format("%.2f",cliente.getPets().get(i).valorDesconto()));
 //    }
+    public void operacionarPets(Scanner scan, PetManipulacao petManipulacao, Cliente clienteVigente){
+        // CRUD pets + contratar servicos
+        telaInicialManipularPets();
+        String opcao = scan.nextLine();
+        while(!isValidDigit(opcao)){
+            System.out.println("\n--/ opcao invalida =( /--\n");
+            opcao = scan.nextLine();
+        }
+        switch (opcao){
+            case "0" -> {
+                System.out.println("Voltando ao menu inicial");
+            }
+            // ADICIONAR PETS
+            case "1" -> {
+                AnimalRepository animalRepository = new AnimalRepository();
+                try{
+                    animalRepository.adicionar(petManipulacao.adicionarNovoPet(scan, clienteVigente));
+                }catch (SQLException e){
+                    System.out.println("Erro ao adicionar pet no bd");
+                    e.getCause();
+                }
+                System.out.println("Lista de pets atualizada!");
+            }
+            // EDITAR PETS
+            case "2" -> {
+                System.out.println("Informe o id do pet que deseja editar");
+                AnimalRepository animalRepository = new AnimalRepository();
+                try{
+                    System.out.println("vou tentar listar os animais!");
+                    System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
+                }catch (SQLException e){
+                    e.getCause();
+                }
+                opcao = scan.nextLine();
+                while(!isValidNUM(opcao)){
+                    System.out.println("Infelizmente, esse ID não é válido");
+                    opcao = scan.nextLine();
+                }
+                System.out.println("Insira agora as informacoes corrigidas");
+                Animal petEditado = petManipulacao.adicionarNovoPet(scan, clienteVigente);
+                petEditado.setIdAnimal(Integer.parseInt(opcao));
+                try {
+                    animalRepository.editar(Integer.parseInt(opcao), petEditado);
+                } catch (BancoDeDadosException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+             //REMOVER PETS
+            case "3" -> {
+                System.out.println("Qual pet voce deseja excluir?\nInsira o ID");
+                AnimalRepository animalRepository = new AnimalRepository();
+                try{
+                    System.out.println("vou tentar listar os animais!");
+                    System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
+                }catch (SQLException e){
+                    e.getCause();
+                }
+                opcao = scan.nextLine();
+                while(!isValidNUM(opcao)){
+                    System.out.println("ID invalido");
+                    opcao = scan.nextLine();
+                }
+                if(Integer.parseInt(opcao) < 0){
+                    System.out.println("Index de pet inválido");
+                    break;
+                }
+                try {
+                    animalRepository.remover(Integer.parseInt(opcao));
+                } catch (BancoDeDadosException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "4" -> {
+                AnimalRepository animalRepository = new AnimalRepository();
+                try{
+                    System.out.println("vou tentar listar os animais!");
+                    System.out.println(animalRepository.listarAnimalPorCliente(clienteVigente.getId()));
+                }catch (SQLException e){
+                    e.getCause();
+                }
+            }
+//            case "5" -> {
+//                telaInicialContratarServicosPet();
+//                operacionarContratosServicosPet(scan, petManipulacao, clienteVigente);
+//            }
+        }
+    }
+
+//    public void operacionarContratosServicosPet(Scanner scan, PetManipulacao petManipulacao, Cliente clienteVigente) {
+//        String opcao = scan.nextLine();
+//        while(!isValidDigit(opcao)) {
+//            System.out.println("\n--/ opcao invalida =( /--\n");
+//            opcao = scan.nextLine();
+//        }
+//        switch (opcao){
+//            case "1" -> {
+//                System.out.println("Selecione o index do pet que deseja adicionar o banho: ");
+//                petManipulacao.listarAnimais(clienteVigente);
+//                opcao = scan.nextLine();
+//                while (!isValidDigit(opcao)) {
+//                    System.out.println("\n--/ opcao invalida =( /--\n");
+//                    opcao = scan.nextLine();
+//                }
+//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+//                    break;
+//                }
+//                int opcaoConvertida = Integer.parseInt(opcao);
+//                petManipulacao.adicionarContratoDeBanho(clienteVigente, opcaoConvertida);
+//            }
+//            case "2" -> {
+//                System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");
+//                petManipulacao.listarAnimais(clienteVigente);
+//                opcao = scan.nextLine();
+//                while (!isValidDigit(opcao)) {
+//                    System.out.println("\n--/ opcao invalida =( /--\n");
+//                    opcao = scan.nextLine();
+//                }
+//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+//                    break;
+//                }
+//                int opcaoConvertida = Integer.parseInt(opcao);
+//                petManipulacao.adicionarContratoDeTosa(clienteVigente, opcaoConvertida);
+//            }
+//            case "3" -> {
+//                System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
+//                petManipulacao.listarAnimais(clienteVigente);
+//                opcao = scan.nextLine();
+//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+//                    break;
+//                }
+//                while (!isValidDigit(opcao)) {
+//                    System.out.println("\n--/ opcao invalida =( /--\n");
+//                    opcao = scan.nextLine();
+//                }
+//                int opcaoConvertida = Integer.parseInt(opcao);
+//                petManipulacao.adicionarContratoDeCorteDeUnha(clienteVigente, opcaoConvertida);
+//            }
+//            case "4" -> {
+//                System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
+//                petManipulacao.listarAnimais(clienteVigente);
+//                opcao = scan.nextLine();
+//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+//                    break;
+//                }
+//                while (!isValidDigit(opcao)) {
+//                    System.out.println("\n--/ opcao invalida =( /--\n");
+//                    opcao = scan.nextLine();
+//                }
+//                int opcaoConvertida = Integer.parseInt(opcao);
+//                petManipulacao.adicionarContratoDeAdestramento(clienteVigente, opcaoConvertida);
+//            }
+//            case "5" -> {
+//                System.out.println("Selecione o index do pet para ver o valor: ");
+//                opcao = scan.nextLine();
+//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
+//                    break;
+//                }
+//
+//                while (!isValidDigit(opcao)) {
+//                    System.out.println("\n--/ opcao invalida =( /--\n");
+//                    opcao = scan.nextLine();
+//                }
+//                int opcaoConvertida = Integer.parseInt(opcao);
+//
+//                petManipulacao.valorContrato(clienteVigente, opcaoConvertida);
+//            }
+//            case "6" -> {
+//                System.out.println("Obrigado por contratar nosso servicos, seu pet sera bem cuidado =)!!" +
+//                        "");
+//            }
+//        }
+//    }
+
+    public void telaInicialManipularPets() {
+        System.out.println("""
+            Insira o que deseja fazer
+            1 - Para adicionar novo pet.
+            2 - Para editar um pet existente.
+            3 - Para remover um pet existente.
+            4 - Para listar seus pets.
+            5 - Para contratar servicos.
+            0 - Para sair""");
+    }
+    public void telaInicialContratarServicosPet() {
+        System.out.println("""
+            Bem vindo a tela de servicos para o pet!
+            Insira o que deseja fazer
+            Quais contratos voce quer contratar?
+            1- Banho
+            2- Tosa
+            3- Corte de unha
+            4- Adestramento
+            5- Meu valor atual
+            6- Confirmar""");
+    }
 }
