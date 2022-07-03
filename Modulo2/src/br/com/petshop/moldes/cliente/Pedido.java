@@ -48,4 +48,17 @@ public class Pedido {
     public void setDescricao(Double descricao) {
         this.descricao = descricao;
     }
+
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "idPedido=" + idPedido +
+                ", idCliente=" + cliente.getId() +
+                ", nomeCliente=" + cliente.getNome() +
+                ", idPet=" + animal.getIdAnimal() +
+                ", nomePet=" + animal.getNome() +
+                ", valor=" + valor +
+                ", descricao=" + descricao +
+                "}";
+    }
 }
