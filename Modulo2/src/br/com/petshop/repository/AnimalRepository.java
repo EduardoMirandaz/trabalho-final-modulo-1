@@ -234,7 +234,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
 
     private Animal getAnimalFromResultSet(ResultSet res) throws SQLException {
         Animal animal = new Animal();
-        animal.setIdAnimal(res.getInt("id_contato"));
+        animal.setIdAnimal(res.getInt("id_animal"));
         animal.setNome(res.getString("nome"));
         animal.setTipoAnimal(EnumTipoAnimal.ofTipo(res.getInt("tipo")));
         animal.setRaca(res.getString("raca"));

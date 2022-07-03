@@ -71,4 +71,20 @@ public class Animal {
     public void setIdade(int idade) {
         this.idade = idade;
     }
+
+
+    @Override
+    public String toString() {
+        return "Animal{" +
+                "idAnimal=" + idAnimal +
+                ", nome=" + nome +
+                ", tipo=" + tipoAnimal +
+                ", raca=" + raca +
+                ", pelagem=" + pelagem +
+                ", porte=" + porte +
+                ", idade=" + idade +
+                ", idDono=" + (cliente != null ? cliente.getId() : null) +
+                ", nomeDono=" + (cliente != null ? cliente.getNome() : null) +
+                "}";
+    }
 }

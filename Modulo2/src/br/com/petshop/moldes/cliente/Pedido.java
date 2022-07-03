@@ -4,7 +4,7 @@ import br.com.petshop.moldes.pets.Animal;
 
 public class Pedido {
     private Integer idPedido;
-    private Cliente dono;
+    private Cliente cliente;
     private Animal animal;
     private Double valor;
     private Double descricao;
@@ -18,11 +18,11 @@ public class Pedido {
     }
 
     public Cliente getCliente() {
-        return dono;
+        return cliente;
     }
 
     public void setCliente(Cliente cliente) {
-        this.dono = cliente;
+        this.cliente = cliente;
     }
 
     public Animal getAnimal() {
