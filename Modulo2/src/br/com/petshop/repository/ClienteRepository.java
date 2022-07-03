@@ -64,7 +64,7 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
         try {
             con = ConexaoBancoDeDados.getConnection();
 
-            String sql = "DELETE FROM CLIENTE WHERE id_pessoa = ?";
+            String sql = "DELETE FROM CLIENTE WHERE ID_CLIENTE = ?";
 
             PreparedStatement stmt = con.prepareStatement(sql);
 

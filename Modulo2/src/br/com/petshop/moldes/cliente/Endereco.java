@@ -2,10 +2,14 @@ package br.com.petshop.moldes.cliente;
 
 public class Endereco {
     private String cep;
+
+    private Cliente cliente;
+    private Integer id;
+
     private String logradouro;
     private String cidade;
     private String bairro;
-    private String numero;
+    private Integer numero;
     private String complemento;
 
     @Override
@@ -52,11 +56,11 @@ public class Endereco {
         this.bairro = bairro;
     }
 
-    public String getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -67,4 +71,21 @@ public class Endereco {
     public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
 }
