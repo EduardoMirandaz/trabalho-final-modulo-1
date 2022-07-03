@@ -1,19 +1,15 @@
-package br.com.petshop;
+package br.com.petshop.view;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.manipulacao.ClienteManipulacao;
-import br.com.petshop.manipulacao.LoginManipulacao;
-import br.com.petshop.manipulacao.PetManipulacao;
+import br.com.petshop.view.manipulacao.ClienteManipulacao;
+import br.com.petshop.view.manipulacao.LoginManipulacao;
+import br.com.petshop.view.manipulacao.PetManipulacao;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
-import br.com.petshop.moldes.pets.Animal;
-import br.com.petshop.moldes.pets.Cachorro;
-import br.com.petshop.moldes.pets.EnumTipoAnimal;
-import br.com.petshop.repository.AnimalRepository;
 
 import java.util.*;
 
-import static br.com.petshop.manipulacao.UsernameValidator.*;
+import static br.com.petshop.util.UsernameValidator.*;
 
 public class Main {
     public static void main(String[] args) throws BancoDeDadosException {

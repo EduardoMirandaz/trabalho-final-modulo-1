@@ -1,4 +1,4 @@
-package br.com.petshop.manipulacao;
+package br.com.petshop.util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

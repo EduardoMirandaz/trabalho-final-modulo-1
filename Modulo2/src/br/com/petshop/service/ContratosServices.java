@@ -10,15 +10,28 @@ import static br.com.petshop.moldes.pets.EnumTipoAnimal.CACHORRO;
 import static br.com.petshop.moldes.pets.EnumTipoAnimal.GATO;
 
 public class ContratosServices {
+    private AnimalService animalService;
+    private AnimalRepository animalRepository;
+    private PedidoService pedidoService;
+    public ContratosServices() {
+        animalService = new AnimalService();
+        animalRepository = new AnimalRepository();
+        pedidoService = new PedidoService();
+    }
 
-    public void contratarBanho(Cliente cliente, Integer id) throws BancoDeDadosException {
+    public void contratarBanho(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
         Pedido novoPedido = new Pedido();
-        AnimalRepository repository = new AnimalRepository();
         novoPedido.setCliente(cliente);
-        Animal animal = repository.getAnimalPorId(id);
+        Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
+
+        if(animal == null) {
+            System.err.println("O animal não existe ou não é seu!");
+            return;
+        }
+
         novoPedido.setAnimal(animal);
 
-        if(animal.getTipoAnimal().getTipo().equals(CACHORRO)) {
+        if(animal.getTipoAnimal() == CACHORRO) {
             switch (verificarPorte(animal)) {
                 case 1-> {
                     novoPedido.setValor(50.0);
@@ -32,7 +45,7 @@ public class ContratosServices {
                 default -> System.out.println("Desculpe, ocorreu um erro");
             }
         }
-        if(animal.getTipoAnimal().getTipo().equals(GATO)) {
+        if(animal.getTipoAnimal() == GATO) {
             switch (verificarPorte(animal)) {
                 case 1 -> {
                     novoPedido.setValor(25.0);
@@ -47,17 +60,13 @@ public class ContratosServices {
             }
         }
         novoPedido.setDescricao("Banho");
-        PedidoService service = new PedidoService();
-        service.adicionarPedido(novoPedido);
+        pedidoService.adicionarPedido(novoPedido);
     }
 
 
     public void contratarTosa(Cliente cliente, Integer id) throws BancoDeDadosException {
-        PedidoService service = new PedidoService();
-        Pedido novoPedido = service.gerarPedido(cliente, id);
-
-        AnimalRepository repository = new AnimalRepository();
-        Animal animal = repository.getAnimalPorId(id);
+        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
+        Animal animal = animalRepository.getAnimalPorId(id, cliente.getId());
 
         if(animal.getTipoAnimal().getTipo().equals(CACHORRO)) {
             switch (verificarPelagem(animal)) {
@@ -88,21 +97,20 @@ public class ContratosServices {
             }
         }
         novoPedido.setDescricao("Tosa");
-        service.adicionarPedido(novoPedido);
+        pedidoService.adicionarPedido(novoPedido);
     }
     public void contratarCorteDeUnha(Cliente cliente, Integer id) throws BancoDeDadosException {
-        PedidoService service = new PedidoService();
-        Pedido novoPedido = service.gerarPedido(cliente, id);
+
+        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
         novoPedido.setDescricao("Corte de unha");
         novoPedido.setValor(20.0);
-        service.adicionarPedido(novoPedido);
+        pedidoService.adicionarPedido(novoPedido);
     }
     public void contratarAdestramento(Cliente cliente, Integer id) throws BancoDeDadosException {
-        PedidoService service = new PedidoService();
-        Pedido novoPedido = service.gerarPedido(cliente, id);
+        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
         novoPedido.setDescricao("Adestramento");
         novoPedido.setValor(200.0);
-        service.adicionarPedido(novoPedido);
+        pedidoService.adicionarPedido(novoPedido);
     }
 
 

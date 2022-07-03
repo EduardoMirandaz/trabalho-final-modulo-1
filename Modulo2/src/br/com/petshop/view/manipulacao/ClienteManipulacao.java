@@ -1,13 +1,10 @@
-package br.com.petshop.manipulacao;
+package br.com.petshop.view.manipulacao;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Contato;
 import br.com.petshop.moldes.cliente.Endereco;
 import br.com.petshop.moldes.cliente.Login;
-import br.com.petshop.moldes.pets.Animal;
-import br.com.petshop.moldes.pets.Cachorro;
-import br.com.petshop.moldes.pets.Gato;
 import br.com.petshop.repository.ClienteRepository;
 
 import java.util.ArrayList;
@@ -15,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
-import static br.com.petshop.manipulacao.UsernameValidator.*;
+import static br.com.petshop.util.UsernameValidator.*;
 
 public class ClienteManipulacao {
     static int ID = 0;

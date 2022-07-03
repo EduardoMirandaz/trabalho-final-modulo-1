@@ -1,11 +1,4 @@
-package br.com.petshop.manipulacao;
-
-import br.com.petshop.moldes.cliente.Cliente;
-
-import java.util.Scanner;
-
-import static br.com.petshop.Main.indiceEhValido;
-import static br.com.petshop.manipulacao.UsernameValidator.isValidDigit;
+package br.com.petshop.view.manipulacao;
 
 public class ContratoManipulacao {
     public void menuContratos() {

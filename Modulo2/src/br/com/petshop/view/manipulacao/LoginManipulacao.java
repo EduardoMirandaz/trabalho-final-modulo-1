@@ -1,12 +1,12 @@
-package br.com.petshop.manipulacao;
+package br.com.petshop.view.manipulacao;
 
 import br.com.petshop.moldes.cliente.Login;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static br.com.petshop.manipulacao.UsernameValidator.isValidLogin;
-import static br.com.petshop.manipulacao.UsernameValidator.isValidSenha;
+import static br.com.petshop.util.UsernameValidator.isValidLogin;
+import static br.com.petshop.util.UsernameValidator.isValidSenha;
 
 public class LoginManipulacao {
     public boolean cadastrarNovoLogin(Scanner scan, ArrayList<Login> logins){
