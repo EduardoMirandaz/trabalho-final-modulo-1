@@ -166,7 +166,7 @@ public class ContatoRepository implements Repositorio <Integer, Contato> {
             String sql = "SELECT CTT.*, " +
             "                    C.NOME AS NOME_CLIENTE " +
             "               FROM CONTATO CTT " +
-            "               LEFT JOIN CLIENTE C ON (C.ID_PESSOA = CTT.ID_PESSOA) ";
+            "               LEFT JOIN CLIENTE C ON (C.ID_CLIENTE = CTT.ID_CLIENTE) ";
 
             // Executa-se a consulta
             ResultSet res = stmt.executeQuery(sql);
@@ -196,11 +196,11 @@ public class ContatoRepository implements Repositorio <Integer, Contato> {
                 con = ConexaoBancoDeDados.getConnection();
 
 
-                String sql = "SELECT C.* " +
-                "                  , P.NOME AS NOME_PESSOA " +
-                "               FROM CONTATO C " +
-                "             INNER JOIN PESSOA P ON (P.ID_PESSOA = C.ID_PESSOA) " +
-                "             WHERE C.ID_PESSOA = ? ";
+                String sql = "SELECT ctt.* " +
+                "                  , ctt.NOME AS NOME_PESSOA " +
+                "               FROM CONTATO ctt " +
+                "             INNER JOIN CLIENTE c ON (c.ID_CLIENTE = ctt.ID_CLIENTE) " +
+                "             WHERE ctt.ID_CLIENTE = ? ";
 
             // Executa-se a consulta
                 PreparedStatement stmt = con.prepareStatement(sql);

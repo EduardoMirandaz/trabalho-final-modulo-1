@@ -2,6 +2,7 @@ package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
+import br.com.petshop.moldes.cliente.Contato;
 import br.com.petshop.moldes.cliente.Endereco;
 
 import java.sql.*;
@@ -188,6 +189,43 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
 
 
             ResultSet res = stmt.executeQuery(sql);
+
+            while (res.next()) {
+                Endereco endereco = getResultadoDosEnderecoSet(res);
+                enderecos.add(endereco);
+            }
+            return enderecos;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public List<Endereco> listarEnderecoPorCliente(Integer idCliente) throws BancoDeDadosException {
+        List<Endereco> enderecos = new ArrayList<>();
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+
+            String sql = "SELECT e.* " +
+                    "                  , c.NOME AS NOME_PESSOA " +
+                    "               FROM ENDERECO e " +
+                    "             INNER JOIN CLIENTE c ON (c.ID_CLIENTE = e.ID_CLIENTE) " +
+                    "             WHERE e.ID_CLIENTE = ? ";
+
+            // Executa-se a consulta
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idCliente);
+
+            ResultSet res = stmt.executeQuery();
 
             while (res.next()) {
                 Endereco endereco = getResultadoDosEnderecoSet(res);
