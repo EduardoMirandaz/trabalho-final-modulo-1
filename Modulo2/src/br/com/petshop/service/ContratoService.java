@@ -9,11 +9,11 @@ import br.com.petshop.repository.AnimalRepository;
 import static br.com.petshop.moldes.pets.EnumTipoAnimal.CACHORRO;
 import static br.com.petshop.moldes.pets.EnumTipoAnimal.GATO;
 
-public class ContratosServices {
+public class ContratoService {
     private AnimalService animalService;
     private AnimalRepository animalRepository;
     private PedidoService pedidoService;
-    public ContratosServices() {
+    public ContratoService() {
         animalService = new AnimalService();
         animalRepository = new AnimalRepository();
         pedidoService = new PedidoService();
@@ -68,6 +68,11 @@ public class ContratosServices {
         Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
         Animal animal = animalRepository.getAnimalPorId(id, cliente.getId());
 
+        if(animal == null) {
+            System.err.println("O animal não existe ou não é seu!");
+            return;
+        }
+
         if(animal.getTipoAnimal().getTipo().equals(CACHORRO)) {
             switch (verificarPelagem(animal)) {
                 case 1-> {
@@ -102,12 +107,18 @@ public class ContratosServices {
     public void contratarCorteDeUnha(Cliente cliente, Integer id) throws BancoDeDadosException {
 
         Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
+        if(novoPedido == null) {
+            return;
+        }
         novoPedido.setDescricao("Corte de unha");
         novoPedido.setValor(20.0);
         pedidoService.adicionarPedido(novoPedido);
     }
     public void contratarAdestramento(Cliente cliente, Integer id) throws BancoDeDadosException {
         Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
+        if(novoPedido == null) {
+            return;
+        }
         novoPedido.setDescricao("Adestramento");
         novoPedido.setValor(200.0);
         pedidoService.adicionarPedido(novoPedido);

@@ -15,7 +15,7 @@ public class AnimalService {
     public void adicionarAnimal(Animal animal) {
         try {
             Animal animalAdd = animalRepository.adicionar(animal);
-            System.out.println("contato adicinado com sucesso! " + animalAdd);
+            System.out.println("animal adicinado com sucesso! " + animalAdd);
         } catch (BancoDeDadosException e) {
             e.printStackTrace();
         }
