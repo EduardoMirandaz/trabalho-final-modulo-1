@@ -252,6 +252,36 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         }
     }
 
+    public Animal getAnimalPorId(int idPet) throws BancoDeDadosException {
+        Animal animal = new Animal();
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            String sql = """
+                                SELECT a.*
+                                FROM ANIMAL a
+                                WHERE a.ID_ANIMAL = ?
+                    """;
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idPet);
+
+            ResultSet res = stmt.executeQuery();
+            animal = getAnimalFromResultSet(res);
+            return animal;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if( con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private Animal getAnimalFromResultSet(ResultSet res) throws SQLException {
         Animal animal = new Animal();
         animal.setIdAnimal(res.getInt("id_animal"));

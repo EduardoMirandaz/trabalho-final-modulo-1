@@ -11,7 +11,7 @@ public class Cachorro extends Animal {
 //    public void setPodeRoerOsso(boolean podeRoerOsso) {
 //        this.podeRoerOsso = podeRoerOsso;
 //    }
-//
+////
 //    @Override
 //    public void contratarBanho() {
 //        if(this.getPorte() >= 0 && this.getPorte() <= 4){

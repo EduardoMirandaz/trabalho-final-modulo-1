@@ -1,6 +1,8 @@
 package br.com.petshop.moldes.cliente;
 
+import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.repository.ClienteRepository;
 
 import java.util.ArrayList;
 
@@ -37,7 +39,13 @@ public class Cliente {
         return quantidadeDePedidos;
     }
 
-    public void setQuantidadeDePedidos(Integer quantidadeDePedidos) {
+    public void setQuantidadeDePedidos(Integer quantidadeDePedidos/*, int idCliente*/) {
+//        ClienteRepository clienteRepository = new ClienteRepository();
+//        try {
+//            clienteRepository.setPedidosBanco(idCliente, quantidadeDePedidos);
+//        } catch (BancoDeDadosException e) {
+//            throw new RuntimeException(e);
+//        }
         this.quantidadeDePedidos = quantidadeDePedidos;
     }
 }

@@ -2,6 +2,7 @@ package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
+import br.com.petshop.moldes.pets.Animal;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -179,5 +180,66 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
             }
         }
         return clientes;
+    }
+
+    public int incrementarQuantidadeDePedidosNoBanco(int idCliente) throws BancoDeDadosException {
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            String sql = """
+                                SELECT c.QUANTIDADE_PEDIDOS
+                                FROM CLIENTE c
+                                WHERE c.ID_CLIENTE = ?
+                    """;
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idCliente);
+            ResultSet res = stmt.executeQuery();
+            return res.getInt("QUANTIDADE_PEDIDOS");
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if( con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void setPedidosBanco(int idCliente, int novaQuantidade) throws BancoDeDadosException {
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+
+            String sql = """
+                    UPDATE CLIENTE
+                    SET QUANTIDADE_PEDIDOS = ?
+                    WHERE ID_CLIENTE = ?
+                    """;
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+
+            int index = 1;
+            stmt.setInt(index++, novaQuantidade);
+            stmt.setInt(index, idCliente);
+
+            // Executa-se a consulta
+            if(stmt.executeUpdate() > 0){
+                System.out.println("Cliente editado com sucesso");
+            }
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
