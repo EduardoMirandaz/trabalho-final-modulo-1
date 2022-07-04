@@ -1,11 +1,11 @@
 package br.com.petshop.view.manipulacao;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Contato;
-import br.com.petshop.moldes.cliente.Endereco;
-import br.com.petshop.moldes.cliente.Login;
+import br.com.petshop.moldes.cliente.*;
+import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.repository.AnimalRepository;
 import br.com.petshop.repository.ClienteRepository;
+import br.com.petshop.service.ClienteService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,106 +24,6 @@ public class ClienteManipulacao {
         return nome;
     }
 
-
-    public ArrayList<Contato> inserirContatos(Scanner scan){
-        Contato telefonePrincipal = new Contato();
-        //  ============ TELEFONEMOVEL ============
-        System.out.println("Insira seu telefone móvel para contato:\nUtilize o formato 00 900000000");
-        String stringAux = scan.nextLine();
-        while(!isValidFONENUMBER(stringAux)){
-            System.out.println("Utilize o formato 00 000000000");
-            stringAux = scan.nextLine();
-            }
-        telefonePrincipal.setTelefone(Integer.parseInt(stringAux));
-        //  ============ DESCRICAO TELEFONEMOVEL ============
-        System.out.println("Insira a descricao do contato");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("A descricao não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-            }
-        telefonePrincipal.setDescricao(stringAux);
-
-        Contato telefoneReserva = new Contato();
-        //  ============ TELEFONEMOVEL ============
-        System.out.println("Insira seu telefone reserva para contato:\nUtilize o formato 00 900000000");
-        stringAux = scan.nextLine();
-        while(!isValidFONENUMBER(stringAux)){
-            System.out.println("Utilize o formato 00 000000000");
-            stringAux = scan.nextLine();
-            }
-        telefoneReserva.setTelefone(Integer.parseInt(stringAux));
-        //  ============ DESCRICAO TELEFONEMOVEL ============
-        System.out.println("Insira a descricao do contato");
-        stringAux = scan.nextLine();
-        while(!isValidName(stringAux)){
-            System.out.println("A descricao não pode conter símbolos ou números");
-            stringAux = scan.nextLine();
-            }
-        telefoneReserva.setDescricao(stringAux);
-
-        return new ArrayList<Contato>(List.of(telefonePrincipal, telefoneReserva));
-    }
-
-    public Endereco inserirEndereco(Scanner scan){
-
-//        Endereco endereco = new Endereco();
-//        //  ============ CEP ============
-//        System.out.println("Insira seu CEP no formato 00000-000:");
-//        String stringAux = scan.nextLine();
-//        while(!isValidCEP(stringAux)){
-//            System.out.println("O CEP deve estar no formato 00000-000");
-//            stringAux = scan.nextLine();
-//            }
-//        endereco.setCep(stringAux);
-//
-//        //  ============ LOGRADOURO ============
-//        System.out.println("Insira seu logradouro:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("O logradouro não pode conter símbolos ou números");
-//            stringAux = scan.nextLine();
-//        }
-//        endereco.setLogradouro(stringAux);
-//
-//        //  ============ CIDADE ============
-//        System.out.println("Insira sua cidade:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("O nome da cidade não pode conter símbolos ou números");
-//            stringAux = scan.nextLine();
-//        }
-//        endereco.setCidade(stringAux);
-//
-//        //  ============ BAIRRO ============
-//        System.out.println("Insira seu bairro:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("O nome do bairro não pode conter símbolos ou números");
-//            stringAux = scan.nextLine();
-//        }
-//        endereco.setBairro(stringAux);
-//
-//        //  ============ NUMERO ============
-//        System.out.println("Insira o número da residencia (0 se não houver):");
-//        stringAux = scan.nextLine();
-//        while(!isValidNUM(stringAux)){
-//            System.out.println("Você deve inserir apenas números nesse campo");
-//            stringAux = scan.nextLine();
-//        }
-//        endereco.setNumero(stringAux);
-//
-//        //  ============ COMPLEMENTO ============
-//        System.out.println("Um complemento do endereço:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("O complemento não pode conter símbolos ou números");
-//            stringAux = scan.nextLine();
-//        }
-//        endereco.setComplemento(stringAux);
-//
-        return new Endereco();
-    }
 
     public boolean cadastrarNovoCliente(Login login, PetManipulacao petManipulacao, HashMap<String,Cliente> mapa) throws BancoDeDadosException {
 
@@ -171,5 +71,51 @@ public class ClienteManipulacao {
 
     public void adicionarCliente(Cliente cliente){
         this.listaCliente.add(cliente);
+    }
+
+    public void operacionarClientes(Scanner scan, ClienteRepository clienteRepository, Cliente clienteVigente) {
+        telaInicialCrudCliente();
+        String opcao = scan.nextLine();
+        while(!isValidDigit(opcao)){
+            System.out.println("\n--/ opcao invalida =( /--\n");
+            opcao = scan.nextLine();
+        }
+        switch (opcao) {
+            // VOLTAR AO MENU ANTERIOR
+            case "0" -> {
+                System.out.println("Voltando ao menu inicial");
+            }
+            case "1" -> {
+                try {
+                    Cliente cliente = clienteRepository.getClientePeloId(clienteVigente.getId());
+                    Cliente novoCliente = new Cliente();
+                    String novoNome = scan.nextLine();
+                    while(!isValidName(opcao)){
+                        System.out.println("\n--/ opcao invalida =( /--\n");
+                        novoNome = scan.nextLine();
+                    }
+                    novoCliente.setNome(novoNome);
+                    novoCliente.setQuantidadeDePedidos(cliente.getQuantidadeDePedidos());
+                    novoCliente.setId(cliente.getId());
+                    clienteRepository.editar(cliente.getId(), novoCliente);
+                } catch (BancoDeDadosException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            case "2" -> {
+                try {
+                    clienteRepository.remover(clienteVigente.getId());
+                } catch (BancoDeDadosException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            default -> throw new IllegalStateException("Unexpected value: " + opcao);
+        }
+
+    }
+
+    private void telaInicialCrudCliente() {
+        System.out.println("Bem vindo ao menu de alteracao de pedidos!");
+        System.out.println("Insira:\n1- Para editar seu cadastro.\n2- Para remover seu cadastro\n0- Para sair.");
     }
 }

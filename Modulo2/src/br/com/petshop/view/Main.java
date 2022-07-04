@@ -1,8 +1,12 @@
 package br.com.petshop.view;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
+import br.com.petshop.repository.ClienteRepository;
+import br.com.petshop.repository.PedidoRepository;
+import br.com.petshop.service.ClienteService;
 import br.com.petshop.view.manipulacao.ClienteManipulacao;
 import br.com.petshop.view.manipulacao.LoginManipulacao;
+import br.com.petshop.view.manipulacao.PedidoManipulacao;
 import br.com.petshop.view.manipulacao.PetManipulacao;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.cliente.Login;
@@ -67,8 +71,17 @@ public class Main {
                             loginVigente = null;
                             clienteVigente = null;
                         }
+                        case "1" -> {
+                            clienteManipulacao.operacionarClientes(scan, new ClienteRepository(), clienteVigente);
+                            // preciso deslogar pois a pessoa pode alterar/deletar a conta nesse módulo
+                            loginVigente = null;
+                        }
                         case "2" -> {
                             petManipulacao.operacionarPets(scan, petManipulacao, clienteVigente);
+                        }
+                        case "3" -> {
+                            PedidoManipulacao pedidoManipulacao = new PedidoManipulacao();
+                            pedidoManipulacao.operacionarPedidos(scan, new PedidoRepository(), clienteVigente);
                         }
                     }
                 }
@@ -77,22 +90,6 @@ public class Main {
         scan.close();
     }
 
-    public static boolean indiceEhValido(int opcao, int ultimoIndice) {
-        if(opcao > ultimoIndice ||
-                opcao < 0){
-            System.out.println("Index de pet inválido");
-            return false;
-        }
-        return true;
-    }
-
-    public void telaInicialManipularCadastros() {
-
-    }
-
-    public void telaInicialManipularPedidos() {
-
-    }
     private static void telaInicialLoginCadastro() {
         System.out.println("DIGITE:");
         System.out.println("1 - caso seja um(a) novo(a) cliente");

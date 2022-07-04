@@ -76,7 +76,7 @@ public class Animal {
     @Override
     public String toString() {
         return "Animal{" +
-                "ID= [" + idAnimal +
+                "ID= --------------->[" + idAnimal +
                 "]\nnome=" + nome +
                 "\n  tipo=" + tipoAnimal +
                 "\n  raca=" + raca +

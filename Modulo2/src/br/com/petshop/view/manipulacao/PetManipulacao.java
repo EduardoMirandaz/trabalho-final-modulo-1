@@ -307,7 +307,7 @@ public class PetManipulacao {
                 int idPetSelecionado = Integer.parseInt(opcao);
                 ContratoService contratoService = new ContratoService();
                 try {
-                    contratoService.contratarBanho(clienteVigente, idPetSelecionado);
+                    contratoService.contratarBanho(clienteVigente, idPetSelecionado, false);
                 } catch (BancoDeDadosException e) {
                     throw new RuntimeException(e);
                 }
@@ -323,72 +323,48 @@ public class PetManipulacao {
                 int idPetSelecionado = Integer.parseInt(opcao);
                 ContratoService contratoService = new ContratoService();
                 try {
-                    contratoService.contratarTosa(clienteVigente, idPetSelecionado);
+                    contratoService.contratarTosa(clienteVigente, idPetSelecionado, false);
                 } catch (BancoDeDadosException e){
                     throw new RuntimeException(e);
                 }
             }
-//            case "2" -> {
-//                System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");
-//                petManipulacao.listarAnimais(clienteVigente);
-//                opcao = scan.nextLine();
-//                while (!isValidDigit(opcao)) {
-//                    System.out.println("\n--/ opcao invalida =( /--\n");
-//                    opcao = scan.nextLine();
-//                }
-//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                    break;
-//                }
-//                int opcaoConvertida = Integer.parseInt(opcao);
-//                petManipulacao.adicionarContratoDeTosa(clienteVigente, opcaoConvertida);
-//            }
-//            case "3" -> {
-//                System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
-//                petManipulacao.listarAnimais(clienteVigente);
-//                opcao = scan.nextLine();
-//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                    break;
-//                }
-//                while (!isValidDigit(opcao)) {
-//                    System.out.println("\n--/ opcao invalida =( /--\n");
-//                    opcao = scan.nextLine();
-//                }
-//                int opcaoConvertida = Integer.parseInt(opcao);
-//                petManipulacao.adicionarContratoDeCorteDeUnha(clienteVigente, opcaoConvertida);
-//            }
-//            case "4" -> {
-//                System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
-//                petManipulacao.listarAnimais(clienteVigente);
-//                opcao = scan.nextLine();
-//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                    break;
-//                }
-//                while (!isValidDigit(opcao)) {
-//                    System.out.println("\n--/ opcao invalida =( /--\n");
-//                    opcao = scan.nextLine();
-//                }
-//                int opcaoConvertida = Integer.parseInt(opcao);
-//                petManipulacao.adicionarContratoDeAdestramento(clienteVigente, opcaoConvertida);
-//            }
-//            case "5" -> {
-//                System.out.println("Selecione o index do pet para ver o valor: ");
-//                opcao = scan.nextLine();
-//                if(!indiceEhValido(Integer.parseInt(opcao), clienteVigente.getPets().size()-1)){
-//                    break;
-//                }
-//
-//                while (!isValidDigit(opcao)) {
-//                    System.out.println("\n--/ opcao invalida =( /--\n");
-//                    opcao = scan.nextLine();
-//                }
-//                int opcaoConvertida = Integer.parseInt(opcao);
-//
-//                petManipulacao.valorContrato(clienteVigente, opcaoConvertida);
-//            }
-//            case "6" -> {
-//                System.out.println("Obrigado por contratar nosso servicos, seu pet sera bem cuidado =)!!" +
-//                        "");
-//            }
+            case "3" -> {
+                System.out.println("Selecione o index do pet que deseja adicionar o corte de unha: ");
+                listarPetsPorCliente(clienteVigente);
+                opcao = scan.nextLine();
+                while (!isValidNUM(opcao)) {
+                    System.out.println("\n--/ opcao invalida =( /--\n");
+                    opcao = scan.nextLine();
+                }
+                int idPetSelecionado = Integer.parseInt(opcao);
+                ContratoService contratoService = new ContratoService();
+                try {
+                    contratoService.contratarCorteDeUnha(clienteVigente, idPetSelecionado, false);
+                } catch (BancoDeDadosException e){
+                    throw new RuntimeException(e);
+                }
+            }
+            case "4" -> {
+                System.out.println("Selecione o index do pet que deseja adicionar o adestramento: ");
+                listarPetsPorCliente(clienteVigente);
+                opcao = scan.nextLine();
+                while (!isValidNUM(opcao)) {
+                    System.out.println("\n--/ opcao invalida =( /--\n");
+                    opcao = scan.nextLine();
+                }
+                int idPetSelecionado = Integer.parseInt(opcao);
+                ContratoService contratoService = new ContratoService();
+                try {
+                    contratoService.contratarAdestramento(clienteVigente, idPetSelecionado, false);
+                } catch (BancoDeDadosException e){
+                    throw new RuntimeException(e);
+                }
+            }
+            // todo fazer operacao que mostrará valor total com select pelo id_cliente
+            case "5" -> {
+                System.out.println("Obrigado por contratar nosso servicos, seu pet sera bem cuidado =)!!" +
+                        "");
+            }
         }
     }
 
@@ -406,12 +382,11 @@ public class PetManipulacao {
         System.out.println("""
             Bem vindo a tela de servicos para o pet!
             Insira o que deseja fazer
-            Quais contratos voce quer contratar?
+            Quais contratos voce quer adquirir?
             1- Banho
             2- Tosa
             3- Corte de unha
             4- Adestramento
-            5- Meu valor atual
-            6- Confirmar""");
+            5- Voltar ao menu anterior""");
     }
 }

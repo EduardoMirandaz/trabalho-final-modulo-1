@@ -76,9 +76,7 @@ public class LoginManipulacao {
 
     public void telaInicialPosLogin() {
         System.out.println("[USUARIO LOGADO]");
-        System.out.println("Insira o que deseja fazer\n1- Para operacoes de CONTA.\n2- Para operacoes de PET.\n0- Para sair.");
+        System.out.println("Insira o que deseja fazer\n1- Para operacoes de CONTA.\n2- Para operacoes de PET.\n3- Para gerenciar pedidos(editar/remover).\n0- Para sair.");
     }
-    public void selecionarContratosDeServico() {
 
-    }
 }

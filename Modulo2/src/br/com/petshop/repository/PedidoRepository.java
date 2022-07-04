@@ -79,8 +79,9 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
             stmt.setInt(1, id);
 
             int res = stmt.executeUpdate();
-            System.out.println("removerPedidoPorId.res=" + res);
-
+            if(res > 0){
+                System.out.println("Pedido removido com sucesso!");
+            }
             return res > 0;
         } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());
@@ -137,7 +138,9 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
             stmt.setInt(index++, id);
 
             int res = stmt.executeUpdate();
-            System.out.println("editarPedido.res=" + res);
+            if(res > 0){
+                System.out.println("Pedido alterado com sucesso!!");
+            }
 
             return res>0;
         } catch (SQLException e) {
@@ -186,27 +189,26 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
         }
     }
 
-    public List<Pedido> listarPedidosPorCliente(Integer idCliente) throws BancoDeDadosException {
+    public List<Pedido> listarPedidosPorCliente(Cliente cliente) throws BancoDeDadosException {
         List<Pedido> pedidos = new ArrayList<>();
         Connection con = null;
         try {
             con = ConexaoBancoDeDados.getConnection();
-
-
             String sql = "SELECT P.*" +
                     "          , C.NOME AS NOME_CLIENTE " +
                     "       FROM PEDIDO P " +
                     "      INNER JOIN CLIENTE C ON (C.ID_CLIENTE = P.ID_CLIENTE) " +
-                    "      WHERE P.ID_PESSOA = ? ";
-
+                    "      WHERE P.ID_CLIENTE = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, idCliente);
+            stmt.setInt(1, cliente.getId());
 
             ResultSet res = stmt.executeQuery();
-
-            while (res.next()) {
+            AnimalRepository animalRepository = new AnimalRepository();
+            while(res.next()) {
                 Pedido pedido = getPedidoFromResultSet(res);
+                pedido.setCliente(cliente);
+                pedido.setAnimal(animalRepository.getAnimalPorId(pedido.getIdAnimal(), cliente.getId()));
                 pedidos.add(pedido);
             }
             return pedidos;
@@ -214,7 +216,40 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
             throw new BancoDeDadosException(e.getCause());
         } finally {
             try {
-                if (con != null) {
+                if( con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public Pedido getPedidoPorId(int idPedido) throws BancoDeDadosException {
+        Pedido pedido = null;
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            String sql = """
+                                SELECT p.*
+                                FROM PEDIDO p
+                                WHERE p.ID_PEDIDO = ?
+                    """;
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, idPedido);
+
+            ResultSet res = stmt.executeQuery();
+
+            if(res.next()) {
+                pedido = getPedidoFromResultSet(res);
+            }
+            return pedido;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if( con != null) {
                     con.close();
                 }
             } catch (SQLException e) {
@@ -226,14 +261,13 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
     private Pedido getPedidoFromResultSet(ResultSet res) throws  SQLException {
         Pedido pedido = new Pedido();
         pedido.setIdPedido(res.getInt("id_pedido"));
-        Cliente cliente = new Cliente();
-        cliente.setNome(res.getString("nome"));
-        cliente.setId(res.getInt("id_cliente"));
-        Animal animal = new Animal();
-        animal.setIdAnimal(res.getInt("id_animal"));
         pedido.setValor(res.getDouble("valor"));
         pedido.setDescricao(res.getString("descricao"));
+        pedido.setIdAnimal(res.getInt("id_animal"));
         return pedido;
     }
+
+
+
 
 }

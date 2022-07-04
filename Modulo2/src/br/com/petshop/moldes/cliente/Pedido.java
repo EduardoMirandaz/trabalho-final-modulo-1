@@ -8,6 +8,8 @@ public class Pedido {
     private Animal animal;
     private Double valor;
     private String descricao;
+    private Integer IdAnimal;
+
 
     public Integer getIdPedido() {
         return idPedido;
@@ -51,14 +53,22 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{" +
-                "idPedido=" + idPedido +
-                ", idCliente=" + cliente.getId() +
-                ", nomeCliente=" + cliente.getNome() +
-                ", idPet=" + animal.getIdAnimal() +
-                ", nomePet=" + animal.getNome() +
-                ", valor=" + valor +
-                ", descricao=" + descricao +
-                "}";
+        return "Pedido{\n" +
+                "\t--------->idPedido=[" + idPedido +
+                "]\t\n idCliente=[" + cliente.getId() +
+                "],\t\n nomeCliente=" + cliente.getNome() +
+                ",\t\n idPet=[" + animal.getIdAnimal() +
+                "],\t\n nomePet=" + animal.getNome() +
+                ",\t\n valor=" + valor +
+                ",\t\n descricao=" + descricao +
+                "\n}";
+    }
+
+    public void setIdAnimal(Integer id_animal) {
+        this.IdAnimal = id_animal;
+    }
+
+    public Integer getIdAnimal() {
+        return IdAnimal;
     }
 }

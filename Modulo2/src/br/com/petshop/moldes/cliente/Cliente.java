@@ -12,10 +12,10 @@ public class Cliente {
     private Integer quantidadeDePedidos;
     @Override
     public String toString() {
-        return "Cliente{" +
+        return "Cliente{\n" +
                 "nome='" + nome + '\'' +
-                ", id=" + id +
-                ", quantidadeDePedidos=" + quantidadeDePedidos +
+                ", id--------->" + id +
+                "\nquantidadeDePedidos=" + quantidadeDePedidos +
                 '}';
     }
 

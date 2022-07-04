@@ -2,7 +2,7 @@ package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.moldes.cliente.Pedido;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -242,4 +242,46 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
             }
         }
     }
+
+    public Cliente getClientePeloId(Integer id) throws BancoDeDadosException {
+        Cliente cliente = null;
+        Connection con = null;
+        try {
+            con = ConexaoBancoDeDados.getConnection();
+            String sql = """
+                            SELECT c.*
+                            FROM CLIENTE c
+                            WHERE c.ID_CLIENTE = ?
+                """;
+
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setInt(1, id);
+
+            ResultSet res = stmt.executeQuery();
+
+            if(res.next()) {
+                cliente = getClienteFromResultSet(res);
+            }
+            return cliente;
+        } catch (SQLException e) {
+            throw new BancoDeDadosException(e.getCause());
+        } finally {
+            try {
+                if( con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private Cliente getClienteFromResultSet(ResultSet res) throws  SQLException {
+        Cliente cliente = new Cliente();
+        cliente.setId(res.getInt("id_cliente"));
+        cliente.setNome(res.getString("nome"));
+        cliente.setQuantidadeDePedidos(res.getInt("quantidade_pedidos"));
+        return cliente;
+    }
 }
+

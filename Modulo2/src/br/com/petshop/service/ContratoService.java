@@ -19,15 +19,11 @@ public class ContratoService {
         pedidoService = new PedidoService();
     }
 
-    public void contratarBanho(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+    public Pedido contratarBanho(Cliente cliente, Integer idAnimal, boolean ehUpdate) throws BancoDeDadosException {
         Pedido novoPedido = new Pedido();
         novoPedido.setCliente(cliente);
         Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
-
-        if(animal == null) {
-            System.err.println("O animal não existe ou não é seu!");
-            return;
-        }
+        animal.setCliente(cliente);
 
         novoPedido.setAnimal(animal);
 
@@ -60,20 +56,20 @@ public class ContratoService {
             }
         }
         novoPedido.setDescricao("Banho");
+        if(ehUpdate){
+            return novoPedido;
+        }
         pedidoService.adicionarPedido(novoPedido);
+        return null;
     }
 
 
-    public void contratarTosa(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+    public Pedido contratarTosa(Cliente cliente, Integer idAnimal, boolean ehUpdate) throws BancoDeDadosException {
         Pedido novoPedido = new Pedido();
         novoPedido.setCliente(cliente);
         Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
         animal.setCliente(cliente);
         novoPedido.setAnimal(animal);
-        if(animal == null) {
-            System.err.println("O animal não existe ou não é seu!");
-            return;
-        }
 
         if(animal.getTipoAnimal() == CACHORRO) {
             switch (verificarPelagem(animal)) {
@@ -104,30 +100,40 @@ public class ContratoService {
             }
         }
         novoPedido.setDescricao("Tosa");
+        if(ehUpdate) {
+            return novoPedido;
+        }
         pedidoService.adicionarPedido(novoPedido);
+        return null;
     }
-    public void contratarCorteDeUnha(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+    public Pedido contratarCorteDeUnha(Cliente cliente, Integer idAnimal, boolean ehUpdate) throws BancoDeDadosException {
 
         Pedido novoPedido = new Pedido();
         novoPedido.setCliente(cliente);
         Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
-        if(novoPedido == null) {
-            return;
-        }
+        animal.setCliente(cliente);
+        novoPedido.setAnimal(animal);
         novoPedido.setDescricao("Corte de unha");
         novoPedido.setValor(20.0);
+        if(ehUpdate){
+            return novoPedido;
+        }
         pedidoService.adicionarPedido(novoPedido);
+        return null;
     }
-    public void contratarAdestramento(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+    public Pedido contratarAdestramento(Cliente cliente, Integer idAnimal, boolean ehUpdate) throws BancoDeDadosException {
         Pedido novoPedido = new Pedido();
         novoPedido.setCliente(cliente);
         Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
-        if(novoPedido == null) {
-            return;
-        }
+        animal.setCliente(cliente);
+        novoPedido.setAnimal(animal);
         novoPedido.setDescricao("Adestramento");
         novoPedido.setValor(200.0);
+        if(ehUpdate){
+            return novoPedido;
+        }
         pedidoService.adicionarPedido(novoPedido);
+        return null;
     }
 
 
