@@ -58,7 +58,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
             stmt.setInt(1, animal.getIdAnimal());
             stmt.setInt(2, animal.getCliente().getId());
             stmt.setString(3, animal.getNome());
-            stmt.setInt(4, animal.getTipoAnimal().getTipo());
+            stmt.setString(4, animal.getTipoAnimal().toString());
             stmt.setString(5, animal.getRaca());
             stmt.setInt(6, animal.getPelagem());
             stmt.setInt(7, animal.getPorte());
@@ -147,7 +147,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
                 stmt.setString(index++, animal.getNome());
             }
             if(animal.getTipoAnimal() != null) {
-                stmt.setInt(index++, animal.getTipoAnimal().getTipo());
+                stmt.setString(index++, animal.getTipoAnimal().toString());
             }
             if(animal.getRaca() != null) {
                 stmt.setString(index++, animal.getRaca());
@@ -321,7 +321,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         Animal animal = new Animal();
         animal.setIdAnimal(res.getInt("id_animal"));
         animal.setNome(res.getString("nome"));
-        animal.setTipoAnimal(EnumTipoAnimal.ofTipo(res.getInt("tipo")));
+        animal.setTipoAnimal(EnumTipoAnimal.ofTipo(Integer.valueOf(res.getString("tipo"))));
         animal.setRaca(res.getString("raca"));
         animal.setPelagem(res.getInt("pelagem"));
         animal.setPorte(res.getInt("porte"));

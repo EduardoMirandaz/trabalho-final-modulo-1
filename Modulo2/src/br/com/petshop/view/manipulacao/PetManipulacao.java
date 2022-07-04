@@ -53,13 +53,13 @@ public class PetManipulacao {
         //  ============ CRIANDO ANIMAL DEPENDENDO DO TIPO ============
         switch (Integer.parseInt(stringAux)){
             case 1 -> {
-                Cachorro cachorro = new Cachorro();
+                Animal cachorro = new Animal();
                 cachorro.setTipoAnimal(CACHORRO);
                 popularCaracteristicasGeraisDoAnimal(scan, cachorro);
                 novoAnimal = cachorro;
             }
             case 2 -> {
-                Gato gato = new Gato();
+                Animal gato = new Animal();
                 gato.setTipoAnimal(GATO);
                 popularCaracteristicasGeraisDoAnimal(scan, gato);
                 novoAnimal = gato;
