@@ -64,16 +64,18 @@ public class ContratoService {
     }
 
 
-    public void contratarTosa(Cliente cliente, Integer id) throws BancoDeDadosException {
-        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
-        Animal animal = animalRepository.getAnimalPorId(id, cliente.getId());
-
+    public void contratarTosa(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+        Pedido novoPedido = new Pedido();
+        novoPedido.setCliente(cliente);
+        Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
+        animal.setCliente(cliente);
+        novoPedido.setAnimal(animal);
         if(animal == null) {
             System.err.println("O animal não existe ou não é seu!");
             return;
         }
 
-        if(animal.getTipoAnimal().getTipo().equals(CACHORRO)) {
+        if(animal.getTipoAnimal() == CACHORRO) {
             switch (verificarPelagem(animal)) {
                 case 1-> {
                     novoPedido.setValor(45.0);
@@ -87,7 +89,7 @@ public class ContratoService {
                 default -> System.out.println("Desculpe, ocorreu um erro");
             }
         }
-        if(animal.getTipoAnimal().getTipo().equals(GATO)) {
+        else if(animal.getTipoAnimal() == GATO) {
             switch (verificarPelagem(animal)) {
                 case 1 -> {
                     novoPedido.setValor(20.0);
@@ -104,9 +106,11 @@ public class ContratoService {
         novoPedido.setDescricao("Tosa");
         pedidoService.adicionarPedido(novoPedido);
     }
-    public void contratarCorteDeUnha(Cliente cliente, Integer id) throws BancoDeDadosException {
+    public void contratarCorteDeUnha(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
 
-        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
+        Pedido novoPedido = new Pedido();
+        novoPedido.setCliente(cliente);
+        Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
         if(novoPedido == null) {
             return;
         }
@@ -114,8 +118,10 @@ public class ContratoService {
         novoPedido.setValor(20.0);
         pedidoService.adicionarPedido(novoPedido);
     }
-    public void contratarAdestramento(Cliente cliente, Integer id) throws BancoDeDadosException {
-        Pedido novoPedido = pedidoService.gerarPedido(cliente, id);
+    public void contratarAdestramento(Cliente cliente, Integer idAnimal) throws BancoDeDadosException {
+        Pedido novoPedido = new Pedido();
+        novoPedido.setCliente(cliente);
+        Animal animal = animalRepository.getAnimalPorId(idAnimal, cliente.getId());
         if(novoPedido == null) {
             return;
         }

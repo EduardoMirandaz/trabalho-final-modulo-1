@@ -312,6 +312,22 @@ public class PetManipulacao {
                     throw new RuntimeException(e);
                 }
             }
+            case "2" -> {
+                System.out.println("Indique o ID do pet que deseja adicionar a tosa: ");
+                listarPetsPorCliente(clienteVigente);
+                opcao = scan.nextLine();
+                while (!isValidNUM(opcao)) {
+                    System.out.println("\n--/ opcao invalida =( /--\n");
+                    opcao = scan.nextLine();
+                }
+                int idPetSelecionado = Integer.parseInt(opcao);
+                ContratoService contratoService = new ContratoService();
+                try {
+                    contratoService.contratarTosa(clienteVigente, idPetSelecionado);
+                } catch (BancoDeDadosException e){
+                    throw new RuntimeException(e);
+                }
+            }
 //            case "2" -> {
 //                System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");
 //                petManipulacao.listarAnimais(clienteVigente);

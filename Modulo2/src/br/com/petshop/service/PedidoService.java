@@ -46,16 +46,16 @@ public class PedidoService {
         }
     }
 
-    public Pedido gerarPedido(Cliente cliente, Integer id) throws BancoDeDadosException {
-        Pedido novoPedido = new Pedido();
-        novoPedido.setCliente(cliente);
-        AnimalRepository repository = new AnimalRepository();
-        Animal animal = repository.getAnimalPorId(id);
-        if(animal == null) {
-            System.err.println("O animal não existe ou não é seu!");
-            return null;
-        }
-        novoPedido.setAnimal(animal);
-        return novoPedido;
-    }
+//    public Pedido gerarPedido(Cliente cliente, Integer id) throws BancoDeDadosException {
+//        Pedido novoPedido = new Pedido();
+//        novoPedido.setCliente(cliente);
+//        AnimalRepository repository = new AnimalRepository();
+//        Animal animal = repository.getAnimalPorId(id);
+//        if(animal == null) {
+//            System.err.println("O animal não existe ou não é seu!");
+//            return null;
+//        }
+//        novoPedido.setAnimal(animal);
+//        return novoPedido;
+//    }
 }
