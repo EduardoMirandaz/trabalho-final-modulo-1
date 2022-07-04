@@ -97,7 +97,7 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
             con = ConexaoBancoDeDados.getConnection();
 
             StringBuilder sql = new StringBuilder();
-            sql.append("UPDATE contato SET \n");
+            sql.append("UPDATE cliente SET \n");
             if (cliente != null) {
                 if (cliente.getId() != null) {
                     sql.append(" id_cliente = ?,");
@@ -108,10 +108,10 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
                 sql.append(" nome = ?,");
             }
             if (cliente.getQuantidadeDePedidos() != null) {
-                sql.append(" descricao = ?,");
+                sql.append(" QUANTIDADE_PEDIDOS = ?,");
             }
             sql.deleteCharAt(sql.length() - 1); //remove o ultimo ','
-            sql.append(" WHERE id_contato = ? ");
+            sql.append(" WHERE id_cliente = ? ");
 
             PreparedStatement stmt = con.prepareStatement(sql.toString());
 
@@ -123,9 +123,9 @@ public class ClienteRepository implements Repositorio<Integer, Cliente> {
                 stmt.setString(index++, cliente.getNome());
             }
             if (cliente.getQuantidadeDePedidos() != null) {
-                stmt.setInt(index, cliente.getQuantidadeDePedidos());
+                stmt.setInt(index++, cliente.getQuantidadeDePedidos());
             }
-
+            stmt.setInt(index, id);
             // Executa-se a consulta
             if(stmt.executeUpdate() > 0){
                 System.out.println("Cliente editado com sucesso");

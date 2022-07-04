@@ -80,8 +80,9 @@ public class ClienteManipulacao {
                 try {
                     Cliente cliente = clienteRepository.getClientePeloId(clienteVigente.getId());
                     Cliente novoCliente = new Cliente();
+                    System.out.println("Insira seu novo nome:");
                     String novoNome = scan.nextLine();
-                    while(!isValidName(opcao)){
+                    while(!isValidName(novoNome)){
                         System.out.println("\n--/ opcao invalida =( /--\n");
                         novoNome = scan.nextLine();
                     }
