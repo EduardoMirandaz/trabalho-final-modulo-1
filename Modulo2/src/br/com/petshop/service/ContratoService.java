@@ -45,7 +45,7 @@ public class ContratoService {
                 default -> System.out.println("Desculpe, ocorreu um erro");
             }
         }
-        if(animal.getTipoAnimal() == GATO) {
+        else if(animal.getTipoAnimal() == GATO) {
             switch (verificarPorte(animal)) {
                 case 1 -> {
                     novoPedido.setValor(25.0);

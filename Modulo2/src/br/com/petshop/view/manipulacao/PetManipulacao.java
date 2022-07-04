@@ -4,6 +4,7 @@ import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.moldes.cliente.Cliente;
 import br.com.petshop.moldes.pets.Animal;
 import br.com.petshop.repository.AnimalRepository;
+import br.com.petshop.service.ContratoService;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -276,7 +277,7 @@ public class PetManipulacao {
         System.out.println("LISTANDO SEUS ANIMAIS CADASTRADOS!");
         AnimalRepository animalRepository = new AnimalRepository();
         try{
-            List<Animal> animais = animalRepository.listarAnimalPorCliente(clienteVigente.getId());
+            List<Animal> animais = animalRepository.listarAnimalPorCliente(clienteVigente);
             if(animais.size() != 0){
                 System.out.println(animais);
             }
@@ -299,12 +300,17 @@ public class PetManipulacao {
                 System.out.println("Indique o ID do pet que deseja adicionar o banho: ");
                 listarPetsPorCliente(clienteVigente);
                 opcao = scan.nextLine();
-                while (!isValidDigit(opcao)) {
+                while (!isValidNUM(opcao)) {
                     System.out.println("\n--/ opcao invalida =( /--\n");
                     opcao = scan.nextLine();
                 }
                 int idPetSelecionado = Integer.parseInt(opcao);
-                petManipulacao.adicionarContratoDeBanho(clienteVigente, idPetSelecionado);
+                ContratoService contratoService = new ContratoService();
+                try {
+                    contratoService.contratarBanho(clienteVigente, idPetSelecionado);
+                } catch (BancoDeDadosException e) {
+                    throw new RuntimeException(e);
+                }
             }
 //            case "2" -> {
 //                System.out.println("Selecione o index do pet que deseja adicionar a tosa: ");

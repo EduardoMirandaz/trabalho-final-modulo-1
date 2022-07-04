@@ -13,12 +13,12 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
     @Override
     public Integer getProximoId(Connection connection) throws BancoDeDadosException {
         try {
-            String sql = "SELECT seq_pedido.nextval seqPedido from DUAL";
+            String sql = "SELECT seq_id_pedido.nextval seqPedido from DUAL";
             Statement stmt = connection.createStatement();
             ResultSet res = stmt.executeQuery(sql);
 
             if(res.next()) {
-                return res.getInt("seqAnimal");
+                return res.getInt("seqPedido");
             }
 
             return null;
@@ -36,9 +36,11 @@ public class PedidoRepository implements Repositorio<Integer, Pedido>{
             Integer proximoId = this.getProximoId(con);
             pedido.setIdPedido(proximoId);
 
-            String sql  = "INSERT INTO PEDIDO\n" +
-                    "(ID_PEDIDO, ID_CLIENTE, ID_ANIMAL, VALOR, DESCRICAO)\n" +
-                    "VALUES(?, ?, ?, ?, ?)\n";
+            String sql  = """
+                    INSERT INTO PEDIDO
+                    (ID_PEDIDO, ID_CLIENTE, ID_ANIMAL, VALOR, DESCRICAO)
+                    VALUES(?, ?, ?, ?, ?)
+                    """;
 
             PreparedStatement stmt = con.prepareStatement(sql);
 

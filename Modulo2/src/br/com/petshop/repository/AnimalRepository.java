@@ -216,7 +216,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         }
     }
 
-    public List<Animal> listarAnimalPorCliente(Integer idCliente) throws BancoDeDadosException {
+    public List<Animal> listarAnimalPorCliente(Cliente cliente) throws BancoDeDadosException {
         List<Animal> animais = new ArrayList<>();
         Connection con = null;
         try {
@@ -230,12 +230,13 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
                     """;
 
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1, idCliente);
+            stmt.setInt(1, cliente.getId());
 
             ResultSet res = stmt.executeQuery();
 
             while(res.next()) {
                 Animal animal = getAnimalFromResultSet(res);
+                animal.setCliente(cliente);
                 animais.add(animal);
             }
             return animais;
@@ -321,15 +322,11 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
         Animal animal = new Animal();
         animal.setIdAnimal(res.getInt("id_animal"));
         animal.setNome(res.getString("nome"));
-        animal.setTipoAnimal(EnumTipoAnimal.ofTipo(Integer.valueOf(res.getString("tipo"))));
+        animal.setTipoAnimal(EnumTipoAnimal.valueOf(res.getString("tipo")));
         animal.setRaca(res.getString("raca"));
         animal.setPelagem(res.getInt("pelagem"));
         animal.setPorte(res.getInt("porte"));
         animal.setIdade(res.getInt("idade"));
-        Cliente cliente = new Cliente();
-        cliente.setNome(res.getString("nome"));
-        cliente.setId(res.getInt("id_cliente"));
-        animal.setCliente(cliente);
         return animal;
     }
 }
