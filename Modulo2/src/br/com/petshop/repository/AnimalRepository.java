@@ -253,7 +253,7 @@ public class AnimalRepository implements Repositorio<Integer, Animal>{
     }
 
     public Animal getAnimalPorId(int idPet) throws BancoDeDadosException {
-        Animal animal = new Animal();
+        Animal animal;
         Connection con = null;
         try {
             con = ConexaoBancoDeDados.getConnection();
