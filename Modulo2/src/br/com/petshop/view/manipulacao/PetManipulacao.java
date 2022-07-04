@@ -72,83 +72,64 @@ public class PetManipulacao {
     private void popularCaracteristicasGeraisDoAnimal(Scanner scan, Animal animal) {
         String stringAux;
         // ============= NOME DO ANIMAL ===============
-//        System.out.println("Insira o nome do seu animal:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("Infelizmente, o nome do seu animal nao pode ter digitos nem simbolos");
-//            stringAux = scan.nextLine();
-//        }
-//        animal.setNome(stringAux);
-
-        /***********************************************
-        ***********************************************/
-        animal.setNome("Fallen Gabriel Toledo");
-
-
-//        // ============= RACA DO ANIMAL ===============
-//        System.out.println("Insira a raca do seu animal:");
-//        stringAux = scan.nextLine();
-//        while(!isValidName(stringAux)){
-//            System.out.println("Infelizmente, a raca do seu animal nao pode ter digitos nem simbolos");
-//            stringAux = scan.nextLine();
-//        }
-//        animal.setRaca(stringAux);
-
-        /***********************************************
-         ***********************************************/
-        animal.setRaca("Raca Dos boi da roca");
+        System.out.println("Insira o nome do seu animal:");
+        stringAux = scan.nextLine();
+        while(!isValidName(stringAux)){
+            System.out.println("Infelizmente, o nome do seu animal nao pode ter digitos nem simbolos");
+            stringAux = scan.nextLine();
+        }
+        animal.setNome(stringAux);
 
 
 
-//        // ============= PELAGEM DO ANIMAL ===============
-//        System.out.println("Insira o nivel de pelagem do seu animal(0-pelado ate 9-pelo maximo da raca):");
-//        stringAux = scan.nextLine();
-//        while(!isValidDigit(stringAux)){
-//            System.out.println("""
-//                    Insira valores de 0 a 9 referentes a pelagem do seu animal, sendo
-//                    0 - pelado
-//                    9 - Com o maximo de pelo da raca""");
-//            stringAux = scan.nextLine();
-//        }
-//        animal.setPelagem(Integer.parseInt(stringAux));
-
-        /***********************************************
-         ***********************************************/
-        animal.setPelagem(2);
+        // ============= RACA DO ANIMAL ===============
+        System.out.println("Insira a raca do seu animal:");
+        stringAux = scan.nextLine();
+        while(!isValidName(stringAux)){
+            System.out.println("Infelizmente, a raca do seu animal nao pode ter digitos nem simbolos");
+            stringAux = scan.nextLine();
+        }
+        animal.setRaca(stringAux);
 
 
-
-//        // ============= PORTE DO ANIMAL ===============
-//        System.out.println(
-//                "Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:\n" +
-//                "0 - Pinscher, Maltes, Shih Tzu, Yorkshire\n" +
-//                "9 - Pastor Alemao, Dobberman, Labrador, Dalmata\"\"\");");
-//        stringAux = scan.nextLine();
-//        while(!isValidDigit(stringAux)){
-//            System.out.println("""
-//                    Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:
-//                    0 - Pinscher, Maltes, Shih Tzu, Yorkshire
-//                    9 - Pastor Alemao, Dobberman, Labrador, Dalmata""");
-//            stringAux = scan.nextLine();
-//        }
-//        animal.setPorte(Integer.parseInt(stringAux));
-
-        /***********************************************
-         ***********************************************/
-        animal.setPorte(2);
+        // ============= PELAGEM DO ANIMAL ===============
+        System.out.println("Insira o nivel de pelagem do seu animal(0-pelado ate 9-pelo maximo da raca):");
+        stringAux = scan.nextLine();
+        while(!isValidDigit(stringAux)){
+            System.out.println("""
+                    Insira valores de 0 a 9 referentes a pelagem do seu animal, sendo
+                    0 - pelado
+                    9 - Com o maximo de pelo da raca""");
+            stringAux = scan.nextLine();
+        }
+        animal.setPelagem(Integer.parseInt(stringAux));
 
 
-//        // ============= IDADE DO ANIMAL ===============
-//        System.out.println("Insira a idade do seu animal:");
-//        stringAux = scan.nextLine();
-//        while(!isValidNUM(stringAux)){
-//            System.out.println("Insira a idade do seu animal, apenas digitos");
-//            stringAux = scan.nextLine();
-//        }
-//        animal.setIdade(Integer.parseInt(stringAux));
-        /***********************************************
-         ***********************************************/
-        animal.setIdade(33);
+        // ============= PORTE DO ANIMAL ===============
+        System.out.println(
+                "Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:\n" +
+                "0 - Pinscher, Maltes, Shih Tzu, Yorkshire\n" +
+                "9 - Pastor Alemao, Dobberman, Labrador, Dalmata\"\"\");");
+        stringAux = scan.nextLine();
+        while(!isValidDigit(stringAux)){
+            System.out.println("""
+                    Insira valores de 0 a 9 referentes ao porte do seu animal, alguns parametros:
+                    0 - Pinscher, Maltes, Shih Tzu, Yorkshire
+                    9 - Pastor Alemao, Dobberman, Labrador, Dalmata""");
+            stringAux = scan.nextLine();
+        }
+        animal.setPorte(Integer.parseInt(stringAux));
+
+
+        // ============= IDADE DO ANIMAL ===============
+        System.out.println("Insira a idade do seu animal:");
+        stringAux = scan.nextLine();
+        while(!isValidNUM(stringAux)){
+            System.out.println("Insira a idade do seu animal, apenas digitos");
+            stringAux = scan.nextLine();
+        }
+        animal.setIdade(Integer.parseInt(stringAux));
+
 
 
     }
@@ -166,36 +147,6 @@ public class PetManipulacao {
         return stringAux;
     }
 
-    public void adicionarContratoDeBanho(Cliente clienteVigente, int idPet){
-//        Pedido pedido = new Pedido();
-//        PedidoRepository pedidoRepository = new PedidoRepository();
-//        AnimalRepository animalRepository = new AnimalRepository();
-//        ClienteRepository clienteRepository = new ClienteRepository();
-//        String descricaoBanho = "Banho em aguas cristalinas com pétalas de rosa";
-//        pedido.setDescricao(descricaoBanho);
-//        pedido.setValor(32.84);
-//        pedido.setCliente(clienteVigente);
-//        try {
-//            pedido.setAnimal(animalRepository.getAnimalPorId(idPet));
-//            clienteVigente.setQuantidadeDePedidos(clienteRepository.incrementarQuantidadeDePedidosNoBanco(clienteVigente.getId())+1, clienteVigente.getId());
-//            pedidoRepository.adicionar(pedido);
-//        } catch (BancoDeDadosException e) {
-//            throw new RuntimeException(e);
-//        }
-    }
-//    public void adicionarContratoDeTosa(Cliente cliente, int i){
-//        cliente.getPets().get(i).contratarTosa();
-//    }
-//    public void adicionarContratoDeCorteDeUnha(Cliente cliente, int i){
-//        cliente.getPets().get(i).corteDeUnha();
-//    }
-//    public void adicionarContratoDeAdestramento(Cliente cliente, int i) {
-//        cliente.getPets().get(i).adestrar();
-//    }
-//    public void valorContrato (Cliente cliente, int i){
-//        System.out.println("Valor total sem desconto: R$" + cliente.getPets().get(i).getValorDoContrato());
-//        System.out.println("Valor com desconto: R$" + String.format("%.2f",cliente.getPets().get(i).valorDesconto()));
-//    }
     public void operacionarPets(Scanner scan, PetManipulacao petManipulacao, Cliente clienteVigente){
         // CRUD pets + contratar servicos
         telaInicialManipularPets();

@@ -9,6 +9,13 @@ import static br.com.petshop.util.UsernameValidator.isValidLogin;
 import static br.com.petshop.util.UsernameValidator.isValidSenha;
 
 public class LoginManipulacao {
+    public static void telaInicialLoginCadastro() {
+        System.out.println("DIGITE:");
+        System.out.println("1 - caso seja um(a) novo(a) cliente");
+        System.out.println("2 - caso já tenha cadastro no sistema");
+        System.out.println("0 - sair");
+    }
+
     public boolean cadastrarNovoLogin(Scanner scan, ArrayList<Login> logins){
         System.out.println("Insira o login desejado\n[9 para sair]");
         String loginDesejado = scan.nextLine();

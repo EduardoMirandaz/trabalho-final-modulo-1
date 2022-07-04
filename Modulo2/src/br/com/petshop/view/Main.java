@@ -3,7 +3,6 @@ package br.com.petshop.view;
 import br.com.petshop.exceptions.BancoDeDadosException;
 import br.com.petshop.repository.ClienteRepository;
 import br.com.petshop.repository.PedidoRepository;
-import br.com.petshop.service.ClienteService;
 import br.com.petshop.view.manipulacao.ClienteManipulacao;
 import br.com.petshop.view.manipulacao.LoginManipulacao;
 import br.com.petshop.view.manipulacao.PedidoManipulacao;
@@ -18,16 +17,21 @@ import static br.com.petshop.util.UsernameValidator.*;
 public class Main {
     public static void main(String[] args) throws BancoDeDadosException {
         Scanner scan = new Scanner(System.in);
+
+        /* manipulacao */
         LoginManipulacao loginManipulacao = new LoginManipulacao();
         PetManipulacao petManipulacao = new PetManipulacao();
         ClienteManipulacao clienteManipulacao = new ClienteManipulacao();
+
+        /* estruturas de dados */
         ArrayList<Login> logins = new ArrayList<>();
         HashMap<String,Cliente>  mapaDeAssociacaoLoginCliente = new HashMap<>();
 
+        /* inicio do sistema */
         System.out.println("BEM-VINDO AO SISTEMA DE OPERAÇÕES DO PETSHOP");
         String opcao = "0";
         while(!opcao.equals("-1")){
-            telaInicialLoginCadastro();
+            LoginManipulacao.telaInicialLoginCadastro();
             opcao = scan.nextLine();
             while(!isValidDigit(opcao)){
                 System.out.println("\n--/ opcao invalida =( /--\n");
@@ -88,13 +92,6 @@ public class Main {
             }
         }
         scan.close();
-    }
-
-    private static void telaInicialLoginCadastro() {
-        System.out.println("DIGITE:");
-        System.out.println("1 - caso seja um(a) novo(a) cliente");
-        System.out.println("2 - caso já tenha cadastro no sistema");
-        System.out.println("0 - sair");
     }
 
 }

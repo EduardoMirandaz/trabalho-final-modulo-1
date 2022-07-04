@@ -42,18 +42,9 @@ public class ClienteManipulacao {
         this.adicionarCliente(cliente);
         ClienteRepository clienteRepository = new ClienteRepository();
         cliente = clienteRepository.adicionar(cliente);
+        System.out.println("Faca login para continuar as operacoes");
         return cliente != null;
 
-////        // Inserir endereco:
-//        cliente.setEndereco(inserirEndereco(scan));
-//        System.out.println(cliente.getEndereco());
-//
-////        // Inserir contatos:
-//        cliente.setContatos(inserirContatos(scan));
-//        System.out.println(cliente.getContatos());
-//
-//        // Inserir pets:
-//        cliente.setPets(petManipulacao.inserirPets(scan, cliente.getPets()));
     }
     private List<Cliente> listaCliente;
 
