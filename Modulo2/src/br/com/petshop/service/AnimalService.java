@@ -1,7 +1,7 @@
 package br.com.petshop.service;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.model.pets.Animal;
 import br.com.petshop.repository.AnimalRepository;
 
 public class AnimalService {

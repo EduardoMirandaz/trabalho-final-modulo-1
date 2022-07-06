@@ -1,4 +1,4 @@
-package br.com.petshop.moldes.cliente;
+package br.com.petshop.model.cliente;
 
 public class Contato {
 

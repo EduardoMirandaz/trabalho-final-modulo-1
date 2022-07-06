@@ -1,4 +1,4 @@
-package br.com.petshop.moldes.cliente;
+package br.com.petshop.model.cliente;
 
 public class Endereco {
     private String cep;
@@ -72,11 +72,11 @@ public class Endereco {
         this.complemento = complemento;
     }
 
-    public Integer getId() {
+    public Integer getIdEndereco() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setIdEndereco(Integer id) {
         this.id = id;
     }
 

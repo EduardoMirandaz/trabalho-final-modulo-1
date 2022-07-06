@@ -1,6 +1,6 @@
 package br.com.petshop.view.manipulacao;
 
-import br.com.petshop.moldes.cliente.Login;
+import br.com.petshop.model.cliente.Login;
 
 import java.util.ArrayList;
 import java.util.Scanner;

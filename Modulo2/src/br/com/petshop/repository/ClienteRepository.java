@@ -1,8 +1,7 @@
 package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Pedido;
+import br.com.petshop.model.cliente.Cliente;
 
 import java.sql.*;
 import java.util.ArrayList;

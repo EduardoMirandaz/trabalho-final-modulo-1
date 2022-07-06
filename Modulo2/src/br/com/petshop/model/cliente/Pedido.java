@@ -1,6 +1,6 @@
-package br.com.petshop.moldes.cliente;
+package br.com.petshop.model.cliente;
 
-import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.model.pets.Animal;
 
 public class Pedido {
     private Integer idPedido;

@@ -1,8 +1,8 @@
 package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Contato;
+import br.com.petshop.model.cliente.Cliente;
+import br.com.petshop.model.cliente.Contato;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -64,8 +64,8 @@ public class ContatoRepository implements Repositorio <Integer, Contato> {
 
     @Override
     public boolean remover(Integer id) throws BancoDeDadosException {
-            Connection con = null;
-            try {
+        Connection con = null;
+        try {
             con = ConexaoBancoDeDados.getConnection();
 
             String sql = "DELETE FROM CONTATO WHERE ID_CONTATO = ?";
@@ -79,18 +79,18 @@ public class ContatoRepository implements Repositorio <Integer, Contato> {
             System.out.println("removerContatoPorId.res=" + res);
 
             return res > 0;
-            } catch (SQLException e) {
+        } catch (SQLException e) {
             throw new BancoDeDadosException(e.getCause());
-            } finally {
+        } finally {
             try {
-            if (con != null) {
-            con.close();
-            }
+                if (con != null) {
+                    con.close();
+                }
             } catch (SQLException e) {
-            e.printStackTrace();
+                e.printStackTrace();
             }
-            }
-            }
+        }
+    }
 
     @Override
     public boolean editar(Integer id, Contato contato) throws BancoDeDadosException {

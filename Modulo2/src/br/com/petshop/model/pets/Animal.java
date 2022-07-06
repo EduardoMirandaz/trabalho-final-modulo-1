@@ -1,6 +1,6 @@
-package br.com.petshop.moldes.pets;
+package br.com.petshop.model.pets;
 
-import br.com.petshop.moldes.cliente.Cliente;
+import br.com.petshop.model.cliente.Cliente;
 
 public class Animal {
 

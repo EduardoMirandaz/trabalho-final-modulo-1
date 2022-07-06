@@ -1,13 +1,13 @@
 package br.com.petshop.service;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Pedido;
-import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.model.cliente.Cliente;
+import br.com.petshop.model.cliente.Pedido;
+import br.com.petshop.model.pets.Animal;
 import br.com.petshop.repository.AnimalRepository;
 
-import static br.com.petshop.moldes.pets.EnumTipoAnimal.CACHORRO;
-import static br.com.petshop.moldes.pets.EnumTipoAnimal.GATO;
+import static br.com.petshop.model.pets.EnumTipoAnimal.CACHORRO;
+import static br.com.petshop.model.pets.EnumTipoAnimal.GATO;
 
 public class ContratoService {
     private AnimalService animalService;

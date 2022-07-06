@@ -1,10 +1,7 @@
 package br.com.petshop.service;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Pedido;
-import br.com.petshop.moldes.pets.Animal;
-import br.com.petshop.repository.AnimalRepository;
+import br.com.petshop.model.cliente.Pedido;
 import br.com.petshop.repository.PedidoRepository;
 
 public class PedidoService {

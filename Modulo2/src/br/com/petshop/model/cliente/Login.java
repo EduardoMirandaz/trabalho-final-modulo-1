@@ -1,6 +1,4 @@
-package br.com.petshop.moldes.cliente;
-
-import br.com.petshop.moldes.cliente.Cliente;
+package br.com.petshop.model.cliente;
 
 public class Login {
     private String login;

@@ -1,11 +1,8 @@
 package br.com.petshop.view.manipulacao;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.*;
-import br.com.petshop.moldes.pets.Animal;
-import br.com.petshop.repository.AnimalRepository;
+import br.com.petshop.model.cliente.*;
 import br.com.petshop.repository.ClienteRepository;
-import br.com.petshop.service.ClienteService;
 
 import java.util.ArrayList;
 import java.util.HashMap;

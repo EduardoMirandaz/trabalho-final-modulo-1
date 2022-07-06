@@ -7,8 +7,8 @@ import br.com.petshop.view.manipulacao.ClienteManipulacao;
 import br.com.petshop.view.manipulacao.LoginManipulacao;
 import br.com.petshop.view.manipulacao.PedidoManipulacao;
 import br.com.petshop.view.manipulacao.PetManipulacao;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Login;
+import br.com.petshop.model.cliente.Cliente;
+import br.com.petshop.model.cliente.Login;
 
 import java.util.*;
 

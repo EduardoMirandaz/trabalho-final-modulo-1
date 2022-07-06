@@ -1,9 +1,8 @@
 package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Contato;
-import br.com.petshop.moldes.cliente.Endereco;
+import br.com.petshop.model.cliente.Cliente;
+import br.com.petshop.model.cliente.Endereco;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -35,6 +34,7 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
             con = ConexaoBancoDeDados.getConnection();
 
             Integer proximoId = this.getProximoId(con);
+            endereco.setIdEndereco(proximoId);
 
             String sql = "INSERT INTO ENDERECO\n" +
                     "(ID_ENDERECO, ID_CLIENTE, CEP, LOGRADOURO, CIDADE, BAIRRO, NUMERO, COMPLEMENTO)\n" +
@@ -42,7 +42,7 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
 
             PreparedStatement stmt = con.prepareStatement(sql);
 
-            stmt.setInt(1, endereco.getId());
+            stmt.setInt(1, endereco.getIdEndereco());
             stmt.setInt(2, endereco.getCliente().getId());
             stmt.setString(3, endereco.getCep());
             stmt.setString(4, endereco.getLogradouro());
@@ -104,7 +104,7 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
             StringBuilder sql = new StringBuilder();
             sql.append("UPDATE endereco SET \n");
             if (endereco != null) {
-                if (endereco.getId() != null) {
+                if (endereco.getIdEndereco() != null) {
                     sql.append("ID_ENDERECO = ?,");
                 }
             }
@@ -132,8 +132,8 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
             PreparedStatement stmt = con.prepareStatement(sql.toString());
 
             int index = 1;
-            if (endereco.getId() != null) {
-                stmt.setInt(index++, endereco.getId());
+            if (endereco.getIdEndereco() != null) {
+                stmt.setInt(index++, endereco.getIdEndereco());
             }
             if (endereco.getCep() != null) {
                 stmt.setString(index++, endereco.getCep());
@@ -247,7 +247,7 @@ public class EnderecoRepository implements Repositorio <Integer, Endereco> {
 
     private Endereco getResultadoDosEnderecoSet(ResultSet res) throws SQLException {
         Endereco endereco = new Endereco();
-        endereco.setId(res.getInt("ID_ENDERECO"));
+        endereco.setIdEndereco(res.getInt("ID_ENDERECO"));
         Cliente cliente = new Cliente();
         cliente.setNome(res.getString("NOME"));
         cliente.setId(res.getInt("ID_CLIENTE"));

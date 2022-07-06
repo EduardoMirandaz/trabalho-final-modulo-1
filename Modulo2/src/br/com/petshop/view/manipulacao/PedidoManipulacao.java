@@ -1,14 +1,13 @@
 package br.com.petshop.view.manipulacao;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Cliente;
-import br.com.petshop.moldes.cliente.Pedido;
-import br.com.petshop.moldes.pets.Animal;
+import br.com.petshop.model.cliente.Cliente;
+import br.com.petshop.model.cliente.Pedido;
+import br.com.petshop.model.pets.Animal;
 import br.com.petshop.repository.AnimalRepository;
 import br.com.petshop.repository.PedidoRepository;
 import br.com.petshop.service.ContratoService;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 
 import static br.com.petshop.util.UsernameValidator.isValidDigit;

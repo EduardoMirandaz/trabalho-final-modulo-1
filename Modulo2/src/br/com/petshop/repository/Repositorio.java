@@ -1,7 +1,6 @@
 package br.com.petshop.repository;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Endereco;
 
 import java.sql.Connection;
 import java.sql.SQLException;

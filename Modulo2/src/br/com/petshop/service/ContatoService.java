@@ -1,7 +1,7 @@
 package br.com.petshop.service;
 
 import br.com.petshop.exceptions.BancoDeDadosException;
-import br.com.petshop.moldes.cliente.Contato;
+import br.com.petshop.model.cliente.Contato;
 import br.com.petshop.repository.ContatoRepository;
 
 

@@ -1,4 +1,4 @@
-package br.com.petshop.moldes.pets;
+package br.com.petshop.model.pets;
 
 import java.util.Arrays;
 
